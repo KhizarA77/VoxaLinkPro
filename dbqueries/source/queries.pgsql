@@ -1,5 +1,6 @@
-CREATE TYPE OAuthProvider AS ENUM ('Google', 'Apple', 'Microsoft');
+CREATE TYPE OAuthProvider AS ENUM ('Google', 'Apple');
 CREATE TYPE SubscriptionType AS ENUM ('free', 'monthly', 'token');
+
 
 CREATE TABLE USERS (
     USERID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

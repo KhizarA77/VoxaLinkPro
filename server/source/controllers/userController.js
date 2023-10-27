@@ -38,23 +38,23 @@ const verifyOAuthToken = async (email, OAuthProvider, token) => {
 
             const appleDecodedToken = jwt.verify(token, appleSigningKey, { algorithms: ['RS256'] });
             return appleDecodedToken.email === email;
-        case 'Microsoft':
+        // case 'Microsoft':
 
-            const msConfig = await axios.get('https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration');
-            const msJwks = await axios.get(msConfig.data.jwks_uri);
+        //     const msConfig = await axios.get('https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration');
+        //     const msJwks = await axios.get(msConfig.data.jwks_uri);
 
-            const msClient = jwksClient({
-                jwksUri: msConfig.data.jwks_uri
-            });
+        //     const msClient = jwksClient({
+        //         jwksUri: msConfig.data.jwks_uri
+        //     });
 
-            const msGetSigningKey = promisify(msClient.getSigningKey);
-            const msKey = await msGetSigningKey(decode(token, { complete: true }).header.kid);
-            const msSigningKey = msKey.publicKey || msKey.rsaPublicKey;
+        //     const msGetSigningKey = promisify(msClient.getSigningKey);
+        //     const msKey = await msGetSigningKey(decode(token, { complete: true }).header.kid);
+        //     const msSigningKey = msKey.publicKey || msKey.rsaPublicKey;
 
-            const msDecodedToken = jwt.verify(token, msSigningKey, { algorithms: ['RS256'] });
-            return msDecodedToken.email === email;
-        default:
-            return false;
+        //     const msDecodedToken = jwt.verify(token, msSigningKey, { algorithms: ['RS256'] });
+        //     return msDecodedToken.email === email;
+        // default:
+        //     return false;
     }
 }
 // POST /api/users/login
@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
     let { email, OAuthProvider, oauthtoken } = req.body;
     email = email.toLowerCase();
     OAuthProvider = capitalize(OAuthProvider);
-    if (OAuthProvider !== 'Apple' && OAuthProvider !== 'Google' && OAuthProvider !== 'Microsoft') {
+    if (OAuthProvider !== 'Apple' && OAuthProvider !== 'Google') {
         return res.status(400).json({
             'status': 'error',
             'message': 'Invalid OAuthProvider'
