@@ -1,16 +1,32 @@
-const express = require('express');
-require('dotenv').config();
+// import express from 'express';
+// import Moralis from 'moralis';
+// import dotenv from 'dotenv';
+// import cors from 'cors';
 
+const express = require('express');
+const Moralis = require('moralis').default;
+const dotenv = require('dotenv');
+const cors = require('cors');
+
+dotenv.config();
 
 const app = express();
 
-const userRoutes = require('./routes/userRoutes');
+app.use(cors());
 
 app.use(express.json());
 
 
-app.use('/api/users', userRoutes);
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+})
 
-app.listen(process.env.PORT || 4000, ()=> {
-    console.log(`Server is running on port http://localhost:${process.env.PORT || 4000}`);
+
+Moralis.start({
+    apiKey: process.env.MORALIS_API_KEY,
+}).then(() => {
+    console.log("Moralis server started");
+    app.listen(process.env.PORT || 4000, ()=> {
+        console.log(`Server is running on port http://localhost:${process.env.PORT || 4000}`);
+    });
 })
