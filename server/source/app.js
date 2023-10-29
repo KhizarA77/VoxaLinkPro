@@ -1,8 +1,3 @@
-// import express from 'express';
-// import Moralis from 'moralis';
-// import dotenv from 'dotenv';
-// import cors from 'cors';
-
 const express = require('express');
 const Moralis = require('moralis').default;
 const dotenv = require('dotenv');
@@ -11,16 +6,13 @@ const cors = require('cors');
 dotenv.config();
 
 const app = express();
+const walletRoutes = require('./routes/walletRoute.js');
 
 app.use(cors());
 
 app.use(express.json());
 
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-})
-
+app.use('/api/wallet', walletRoutes);  
 
 Moralis.start({
     apiKey: process.env.MORALIS_API_KEY,
