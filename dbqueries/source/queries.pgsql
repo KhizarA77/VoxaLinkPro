@@ -1,7 +1,7 @@
 CREATE TABLE WALLETS (
     WALLET_ADDRESS TEXT PRIMARY KEY,
     last_usage_time TIMESTAMP,
-    usage_count INT default 0
+    usage_count INT default 5
 );
 
 

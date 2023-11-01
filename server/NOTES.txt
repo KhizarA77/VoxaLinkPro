@@ -1,2 +1,3 @@
 HERE ARE THE BASIC NOTES ON HOW TO USE THE BACK-END API.
 
+wav, ogg, m4a, mp3, wmv, mov, mpeg, mp4
