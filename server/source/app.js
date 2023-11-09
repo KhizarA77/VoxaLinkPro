@@ -1,11 +1,15 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+
 const Moralis = require('moralis').default;
-const logger = require('morgan');
 const dotenv = require('dotenv');
 const cors = require('cors');
+
 const path = require('path'); 
+const cookieParser = require('cookie-parser');
+const logger = require('./logger');
+
 
 dotenv.config();
 
@@ -13,24 +17,31 @@ const app = express();
 const server = http.createServer(app); 
 const io = socketIo(server); 
 
-// const walletRoutes = require('./routes/walletRoute.js');
+const walletRoutes = require('./routes/walletRoute.js');
 const fileRoutes = require('./routes/fileRoute.js'); 
 
 app.use(cors());
-app.use(logger('dev'));
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((req, res, next) => {
+    const ip = req.ip;
+    const userAgent = req.headers['user-agent'];
+    logger.info(`Incoming request from IP: ${ip} and User Agent: ${userAgent}`);
+    next();
+});
 
 // Static route for serving downloads
 // app.use('/downloads', express.static(path.join(__dirname, 'path_to_your_download_directory')));
 
 // Setup socket.io connections
 io.on('connection', (socket) => {
-    console.log('a user connected:', socket.id);
+    logger.info(`A user connected: ${socket.id}`);
     
     socket.on('disconnect', () => {
-        console.log('user disconnected:', socket.id);
+        logger.info(`User disconnected: ${socket.id}`);
     });
     
     // You can define other socket events here
@@ -43,7 +54,7 @@ app.use((req,res,next) => {
     next();
 })
 
-// app.use('/api/wallet', walletRoutes);
+app.use('/api/wallet', walletRoutes);
 app.use('/services/prescription', fileRoutes);
 
 // Start Moralis Server
@@ -55,7 +66,7 @@ Moralis.start({
     // Start the server with HTTP server instead of the Express app
     const PORT = process.env.PORT || 4000;
     server.listen(PORT, () => {
-        console.log(`Server is running on port http://localhost:${PORT}`);
+        logger.info(`Server is running on port http://localhost:${PORT}`);
     });
 });
 

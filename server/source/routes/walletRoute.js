@@ -14,6 +14,7 @@ const { authorize } = require('../middlewares/authMiddleware');
 Router.post('/connect', walletInputCheck, connectWallet);
 
 // @route GET /api/wallet/getBalance
-Router.get('/getBalance', authorize, returnWalletBalance)
+// Router.get('/getBalance', authorize, returnWalletBalance);
+
 
 module.exports = Router;
