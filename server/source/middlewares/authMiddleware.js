@@ -3,6 +3,7 @@ const pool = require('../connection.js');
 
 
 exports.authorize = async (req, res, next) => {
+    
     const accessToken = req.cookies.accessToken;
     const refreshToken = req.cookies.refreshToken;
 

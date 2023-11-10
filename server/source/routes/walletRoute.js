@@ -13,6 +13,11 @@ const { authorize } = require('../middlewares/authMiddleware');
 // @route POST /api/wallet/connect
 Router.post('/connect', walletInputCheck, connectWallet);
 
+Router.get('/test', authorize, (req, res) => {
+    console.log(`hellowoewo`);
+    res.status(200).json({'message': 'hello world'});
+})
+
 // @route GET /api/wallet/getBalance
 // Router.get('/getBalance', authorize, returnWalletBalance);
 

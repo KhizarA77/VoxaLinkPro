@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
 
 exports.sendEmail = async (email, link) => {
     try {
-        
         const mailOptions = {
             from: {
                 name: "Khizar Asad",
@@ -31,4 +30,3 @@ exports.sendEmail = async (email, link) => {
         return false;
     }
 }
-
