@@ -43,19 +43,28 @@ const processFile = async (req, res) => {
     fs.unlinkSync(file.path);
 
     // Send a response with the download link
-    res.status(200).json({ 'downloadLink': downloadLink });
+    return res.status(200).json({
+      'status': 'success',
+      'message': 'Link sent to email',
+      'downloadLink': downloadLink 
+      });
 
   } catch (error) {
     console.error('Error processing file:', error);
     socket.emit('upload status', { status: 'An error occurred during file processing', error: error.message });
-    res.status(500).send('An error occurred during file processing');
+    return res.status(500).json({
+      'status': 'error',
+      'message':'An error occurred during file processing'});
   }
 };
 
 const downloadFile = async (req, res) => {
   const requestedFileName = req.query.file;
   if (!requestedFileName) {
-    return res.status(400).send('No file specified');
+    return res.status(400).json({
+      'status': 'error',
+      'message':'No file specified'
+    });
   }
 
   try {
@@ -67,19 +76,27 @@ const downloadFile = async (req, res) => {
 
     // Check if the file exists and is a file, not a directory
     if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) {
-      return res.status(404).send('File not found');
+      return res.status(404).json({
+        'status': 'error',
+        'message':'File not found'
+      });
     }
 
     // Send the file
     return res.download(filePath, safeFileName, (err) => {
       if (err) {
         console.error('Error downloading file:', err);
-        return res.status(500).send('An error occurred during file processing');
+        return res.status(500).json({
+          'status': 'error',
+          'message':'An error occurred during file processing'});
       }
     });
   } catch (error) {
     console.error('Error:', error);
-    return res.status(400).send('Invalid request');
+    return res.status(400).json({
+      'status': 'error',
+      'message':'Invalid request'
+    });
   }
 };
 
