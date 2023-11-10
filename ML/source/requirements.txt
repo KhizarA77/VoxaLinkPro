@@ -1,0 +1,12 @@
+torch
+transformers
+pydub
+librosa
+fpdf
+# python-docx # Uncomment this if you need 'docx' 
+flask
+Werkzeug
+numpy
+resemblyzer
+pandas
+requests
