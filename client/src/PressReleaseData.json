@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "imageSrc": "/images/PressReleaseSample.png",
+    "title": "Blockchain Revolution",
+    "description": "Discover the endless possibilities of blockchain technology with our innovative platforms."
+  },
+  {
+    "id": 2,
+    "imageSrc": "/images/PressReleaseSample.png",
+    "title": "Empowering Web3",
+    "description": "Join us as we forge a new path in gaming innovation within the Web3 realm."
+  },
+  {
+    "id": 3,
+    "imageSrc": "/images/PressReleaseSample.png",
+    "title": "Pre-Sale Phase 1",
+    "description": "Be part of our journey from the start. Don't miss out on our pre-sale event."
+  },
+  {
+    "id": 4,
+    "imageSrc": "/images/PressReleaseSample.png",
+    "title": "Token Launch",
+    "description": "Our native token is set to revolutionize how value is exchanged in digital ecosystems."
+  },
+  {
+    "id": 5,
+    "imageSrc": "/images/PressReleaseSample.png",
+    "title": "Join the Kickstart",
+    "description": "We're proud to be part of the BNB Chain Kickstart program. Learn more about our collaboration."
+  },
+  {
+    "id": 5,
+    "imageSrc": "/images/PressReleaseSample.png",
+    "title": "Join the Kickstart",
+    "description": "We're proud to be part of the BNB Chain Kickstart program. Learn more about our collaboration."
+  },
+  {
+    "id": 5,
+    "imageSrc": "/images/PressReleaseSample.png",
+    "title": "Join the Kickstart",
+    "description": "We're proud to be part of the BNB Chain Kickstart program. Learn more about our collaboration."
+  },
+  {
+    "id": 5,
+    "imageSrc": "/images/PressReleaseSample.png",
+    "title": "Join the Kickstart",
+    "description": "We're proud to be part of the BNB Chain Kickstart program. Learn more about our collaboration."
+  }
+]

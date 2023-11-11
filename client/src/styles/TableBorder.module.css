@@ -1,0 +1,10 @@
+.gradientBorderWrapper {
+  background: linear-gradient(to right, #ea3a8a, #6d43e5);
+  border-radius: 1rem; /* Adjust border-radius here */
+  padding: 0.1rem;
+}
+
+.innerWrapper {
+  background-color: #17181d; /* Adjust background-color here */
+  border-radius: 1rem; /* Adjust border-radius here */
+}
