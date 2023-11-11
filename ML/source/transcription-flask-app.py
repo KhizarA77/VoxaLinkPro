@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import transcription
 from flask_cors import CORS
 
-# Load environment variable from .env file
+# Load environment variable from .env files
 load_dotenv()
 
 app = Flask(__name__)

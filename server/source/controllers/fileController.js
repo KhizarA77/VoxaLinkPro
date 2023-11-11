@@ -37,7 +37,7 @@ const processFile = async (req, res) => {
     // VALUES ($1, $2, $3)`, [walletAddress, response.data.fileName, new Date()]);
 
     // Generate download link
-    const downloadLink = `http://localhost:4000/services/transcription/download?file=${encodeURIComponent(fname)}`;
+    const downloadLink = `http://localhost:4000/services/prescriptions/download?file=${encodeURIComponent(fname)}`;
     if (req.body.email) {
       await sendEmail(req.body.email, downloadLink);
   }

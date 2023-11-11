@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/wallet', walletRoutes);
-app.use('/services/prescription', fileRoutes);
+app.use('/services/prescriptions', fileRoutes);
 
 // Start Moralis Server
 try {
