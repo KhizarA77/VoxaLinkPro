@@ -10,3 +10,4 @@ numpy
 resemblyzer
 pandas
 requests
+dotenv #pip install python-dotenv
