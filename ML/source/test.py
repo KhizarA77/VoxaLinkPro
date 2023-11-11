@@ -40,3 +40,4 @@ duration = end_time - start_time
 
 print(f"Transcription saved to: {output_file}")
 print(f"Time taken for the whole process: {duration:.2f} seconds")
+#comment
