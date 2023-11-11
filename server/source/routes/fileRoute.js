@@ -11,7 +11,7 @@ Router.post('/upload',
 // authorize,
 // walletBalanceChecker,
 uploadMiddleware,
-// virusScan, 
+virusScan, 
 processFile);
 
 Router.get('/history', authorize, transcriptionHistory);

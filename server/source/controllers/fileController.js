@@ -26,6 +26,17 @@ const processFile = async (req, res) => {
     socket.emit('upload status', { status: 'File is clean, processing...' });
 
     // Call the Python API
+    const etaResponse = await axios.post(`http://localhost:5000/estimate-time`, 
+    {
+      'fileName': fileName,
+    });
+    let { estimatedTime } = etaResponse.data;
+    estimatedTime = Math.round(estimatedTime/60);
+
+    res.status(200).json({
+      'estimatedTime': estimatedTime
+    })
+
     const response = await axios.post(`http://localhost:5000/transcribe`, //x.pdf/docx/html
     {
       'fileName': fileName,
