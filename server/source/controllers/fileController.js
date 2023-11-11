@@ -11,8 +11,10 @@ const processFile = async (req, res) => {
   const socket = req.io;
   const file = req.file;
   const fileName = file.filename;
-  const { walletAddress } = req.Wallet;
-  console.log(fileName);
+  // const { walletAddress } = req.Wallet;
+  let fname = fileName.split('.')[0];
+  fname = fname + '.' + req.body.outputFormat;
+  console.log(fname);
 
   try {
     // Emit the upload status to the client via WebSocket
@@ -24,20 +26,21 @@ const processFile = async (req, res) => {
     socket.emit('upload status', { status: 'File is clean, processing...' });
 
     // Call the Python API
-    const response = await axios.post(`http://localhost:2000/transcribe`, //x.pdf/docx/html
+    const response = await axios.post(`http://localhost:5000/transcribe`, //x.pdf/docx/html
     {
       'fileName': fileName,
       'outputFormat': req.body.outputFormat, //{'pdf', 'docx', 'html'}
 
     });
-
     // Insert into database
-    await pool.query(`INSERT INTO TRANSCRIPTIONS (wallet_address, transcribed_file_name, transcription_time) 
-    VALUES ($1, $2, $3)`, [walletAddress, response.data.fileName, new Date()]);
+    // await pool.query(`INSERT INTO TRANSCRIPTIONS (wallet_address, transcribed_file_name, transcription_time) 
+    // VALUES ($1, $2, $3)`, [walletAddress, response.data.fileName, new Date()]);
 
     // Generate download link
-    const downloadLink = `http://localhost:4000/download?file=${encodeURIComponent(response.data.fileName)}`;
-    await sendEmail(req.body.email, downloadLink);
+    const downloadLink = `http://localhost:4000/services/transcription/download?file=${encodeURIComponent(fname)}`;
+    if (req.body.email) {
+      await sendEmail(req.body.email, downloadLink);
+  }
 
     // Delete the original uploaded file
     fs.unlinkSync(file.path);

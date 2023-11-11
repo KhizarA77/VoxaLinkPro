@@ -4,8 +4,8 @@ import transcription
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER_PATH = "C:\\Users\\xkens\\Desktop\\VoxaLink\\VoxaLinkPro\\Files\\uploads"
-OUTPUT_FOLDER_PATH = "C:\\Users\\xkens\\Desktop\\VoxaLink\\VoxaLinkPro\\Files\\outputs"
+UPLOAD_FOLDER_PATH = "C:\\Users\\khiza\\OneDrive\\Desktop\\AI Project\\VoxaLink\\Files\\uploads"
+OUTPUT_FOLDER_PATH = "C:\\Users\\khiza\\OneDrive\\Desktop\\AI Project\\VoxaLink\\Files\\outputs"
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe_audio():

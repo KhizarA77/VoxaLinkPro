@@ -119,7 +119,7 @@ def process_audio_file(input_file, output_format="txt"):
         raise ValueError(f"Unsupported output format: {output_format}")
     
     # Save the transcription in the desired format
-    OUTPUT_FOLDER_PATH = "C:\\Users\\xkens\\Desktop\\VoxaLink\\VoxaLinkPro\\Files\\outputs"
+    OUTPUT_FOLDER_PATH = "C:\\Users\\khiza\\OneDrive\\Desktop\\AI Project\\VoxaLink\\Files\\outputs"
     output_file_name = os.path.basename(os.path.splitext(input_file)[0]) + "." + output_format
     output_file = os.path.join(OUTPUT_FOLDER_PATH, output_file_name)
     # Clean up temporary files

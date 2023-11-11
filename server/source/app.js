@@ -6,7 +6,7 @@ const Moralis = require('moralis').default;
 const dotenv = require('dotenv');
 const cors = require('cors');
 
-const path = require('path'); 
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('./logger');
 
@@ -14,11 +14,12 @@ const logger = require('./logger');
 dotenv.config();
 
 const app = express();
-const server = http.createServer(app); 
-const io = socketIo(server); 
+const server = http.createServer(app);
+const io = socketIo(server);
 
 const walletRoutes = require('./routes/walletRoute.js');
-const fileRoutes = require('./routes/fileRoute.js'); 
+const fileRoutes = require('./routes/fileRoute.js');
+
 
 app.use(cors());
 app.use(express.json());
@@ -49,7 +50,7 @@ io.on('connection', (socket) => {
     // socket.emit('fileReadyForDownload', { downloadUrl: '...' });
 });
 
-app.use((req,res,next) => {
+app.use((req, res, next) => {
     req.io = io;
     next();
 })
@@ -58,17 +59,24 @@ app.use('/api/wallet', walletRoutes);
 app.use('/services/prescription', fileRoutes);
 
 // Start Moralis Server
-Moralis.start({
-    apiKey: process.env.MORALIS_API_KEY,
-}).then(() => {
-    console.log("Moralis server started");
+try {
+    Moralis.start({
+        apiKey: process.env.MORALIS_API_KEY,
+    }).then(() => {
+        console.log("Moralis server started");
 
-    // Start the server with HTTP server instead of the Express app
-    const PORT = process.env.PORT || 4000;
-    server.listen(PORT, () => {
-        logger.info(`Server is running on port http://localhost:${PORT}`);
+        // Start the server with HTTP server instead of the Express app
+        const PORT = process.env.PORT || 4000;
+        server.listen(PORT, () => {
+            logger.info(`Server is running on port http://localhost:${PORT}`);
+        });
     });
-});
-
+}
+catch (err) {
+    logger.error(`Error starting Moralis server: ${err}`);
+}
 // Export 'io' to use it in other parts of the application if needed
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);})
 module.exports = io;
+

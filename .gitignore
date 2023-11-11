@@ -1,1 +1,5 @@
 ML/speech_env/
+ML/environment/
+server/node_modules/
+server/.env
+server/source/logs/

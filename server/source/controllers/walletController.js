@@ -98,6 +98,3 @@ const checkWalletExistence = async (walletAddress) => {
         return null;
     }
 }
-
-
-
