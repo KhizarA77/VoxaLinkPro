@@ -33,9 +33,7 @@ const processFile = async (req, res) => {
     let { estimatedTime } = etaResponse.data;
     estimatedTime = Math.round(estimatedTime/60);
 
-    res.status(200).json({
-      'estimatedTime': estimatedTime
-    })
+    socket.emit('estimated time', { estimatedTime: estimatedTime });
 
     const response = await axios.post(`http://localhost:5000/transcribe`, //x.pdf/docx/html
     {
