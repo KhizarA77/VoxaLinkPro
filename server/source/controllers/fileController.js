@@ -1,27 +1,20 @@
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
-const { sendEmail } = require('./emailSender.js');
+const { sendDownloadLinkEmail } = require('../utils/emailSender.js');
 const pool = require('../connection.js');
 
 
 const OUTPUT_FILES_DIR = path.join(__dirname, '../../..', 'Files', 'outputs');
 
 const processFile = async (req, res) => {
-  const socket = req.io;
   const file = req.file;
   const fileName = file.filename;
   const { walletAddress } = req.Wallet;
   console.log(fileName);
 
   try {
-    // Emit the upload status to the client via WebSocket
-    socket.emit('upload status', { status: 'File uploaded, starting virus scan...' });
-
-    // Virus scan middleware has already run if this point is reached
-
-    // Emit the status of the virus scan
-    socket.emit('upload status', { status: 'File is clean, processing...' });
+    
 
     // Call the Python API
     const response = await axios.post(`http://localhost:2000/transcribe`, //x.pdf/docx/html
@@ -37,7 +30,7 @@ const processFile = async (req, res) => {
 
     // Generate download link
     const downloadLink = `http://localhost:4000/download?file=${encodeURIComponent(response.data.fileName)}`;
-    await sendEmail(req.body.email, downloadLink);
+    await sendDownloadLinkEmail(req.body.email, downloadLink);
 
     // Delete the original uploaded file
     fs.unlinkSync(file.path);
