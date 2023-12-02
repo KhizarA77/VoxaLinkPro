@@ -1,41 +1,40 @@
-const winston = require('winston');
-const path = require('path');
-const fs = require('fs');
+import winston from 'winston';
+import { fileURLToPath } from 'url';
+import path from 'path';
+import fs from 'fs';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const logsDir = path.join(__dirname, 'logs');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir);
 }
 
-
 const customLevels = {
-  levels: {
-    error: 0,
-    warn: 1,
-    info: 2,
-    http: 3,
-    verbose: 4,
-    debug: 5,
-    silly: 6
-  },
-  colors: {
-    error: 'red',
-    warn: 'yellow',
-    info: 'green',
-    http: 'magenta',
-    verbose: 'cyan',
-    debug: 'blue',
-    silly: 'grey'
-  }
+  error: 0,
+  warn: 1,
+  info: 2,
+  http: 3,
+  verbose: 4,
+  debug: 5,
+  silly: 6
 };
 
+const colors = {
+  error: 'red',
+  warn: 'yellow',
+  info: 'green',
+  http: 'magenta',
+  verbose: 'cyan',
+  debug: 'blue',
+  silly: 'grey'
+};
 
-winston.addColors(customLevels.colors);
-
+winston.addColors(colors);
 
 const logger = winston.createLogger({
-  levels: customLevels.levels,
+  levels: customLevels,
   format: winston.format.combine(
     winston.format.timestamp({
       format: 'YYYY-MM-DD HH:mm:ss'
@@ -56,18 +55,24 @@ const logger = winston.createLogger({
     new winston.transports.File({
       filename: path.join(logsDir, 'combined.log'),
       handleExceptions: true,
-      maxsize: 5242880, 
+      maxsize: 5242880,
       maxFiles: 5
     })
   ],
-  exitOnError: false 
+  exitOnError: false
 });
-
 
 if (process.env.NODE_ENV !== 'production') {
   logger.add(new winston.transports.Console({
     format: winston.format.simple()
   }));
+
+  // Override console.log
+  const originalConsoleLog = console.log;
+  console.log = (...args) => {
+    logger.info(...args); // Redirect console.log to Winston's logger.info
+    originalConsoleLog(...args); // Output to console as well
+  };
 }
 
-module.exports = logger;
+export default logger;

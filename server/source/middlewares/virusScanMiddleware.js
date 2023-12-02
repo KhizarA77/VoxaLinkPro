@@ -1,7 +1,11 @@
 // Make sure to import the required modules at the top of your file
-const NodeClam = require('clamscan');
-const fs = require('fs');
-const util = require('util');
+import NodeClam from 'clamscan'
+
+import fs from 'fs';
+import util from 'util'
+
+import logger from '../logger.js'
+
 const unlinkAsync = util.promisify(fs.unlink);
 
 // Initialize clamscan asynchronously
@@ -35,10 +39,10 @@ new NodeClam().init({
 }).then((instance) => {
   clamscan = instance;
 }).catch((err) => {
-  console.error('Could not initialize clamscan', err);
+  logger.error('Could not initialize clamscan', err);
 });
 
-exports.virusScan = async (req, res, next) => {
+export const virusScan = async (req, res, next) => {
   // Ensure clamscan is initialized before proceeding
   if (!clamscan) {
     return res.status(500).send('ClamAV scan instance not initialized');
@@ -53,10 +57,10 @@ exports.virusScan = async (req, res, next) => {
         viruses: viruses,
       });
     }
-    console.log(`No virus detected`);
+    logger.info(`No virus detected`);
     next();
   } catch (err) {
-    console.error('An error occurred during the virus scan', err);
+    logger.error('An error occurred during the virus scan', err);
     return res.status(500).send('Error scanning the file for viruses');
   }
 };

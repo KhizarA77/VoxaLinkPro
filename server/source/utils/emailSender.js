@@ -1,7 +1,10 @@
-const nodemailer = require("nodemailer");
-const Imap = require("imap");
+import nodemailer from "nodemailer";
+import Imap from "imap";
 
-// require("dotenv").config();
+import logger from '../logger.js'
+
+// import dotenv from 'dotenv'
+// dotenv.config()
 
 // Email configuration
 const senderEmail = process.env.EMAIL_USER;
@@ -25,7 +28,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.sendDownloadLinkEmail = async (email, link) => {
+export const sendDownloadLinkEmail = async (email, link) => {
   const htmlMessage = `
   <!DOCTYPE html>
   <html lang="en">
@@ -101,7 +104,7 @@ exports.sendDownloadLinkEmail = async (email, link) => {
       text: `Download your transcription here: ${link}` ,
     };
     const result = await transporter.sendMail(mailOptions);
-    console.log(`Email sent to ${email}`);
+    logger.info(`Email sent to ${email}`);
 
     const imap = new Imap({
       user: senderEmail,
@@ -114,7 +117,7 @@ exports.sendDownloadLinkEmail = async (email, link) => {
     imap.once("ready", () => {
       imap.openBox("Sent", true, (err) => {
         if (err) {
-          console.error('Error opening "Sent" folder:', err);
+          logger.error('Error opening "Sent" folder:', err);
           imap.end();
           return;
         }
@@ -125,22 +128,24 @@ exports.sendDownloadLinkEmail = async (email, link) => {
         // Append the sent email to the "Sent" folder
         imap.append(emailMessage, { mailbox: "Sent" }, (appendErr) => {
           if (appendErr) {
-            console.error('Error appending email to "Sent" folder:', appendErr);
+            logger.error('Error appending email to "Sent" folder:', appendErr);
           } else {
-            console.log('Email appended to "Sent" folder.');
+            logger.info('Email appended to "Sent" folder.');
           }
           imap.end();
         });
       });
     });
     imap.once("error", (imapErr) => {
-      console.error("IMAP Error:", imapErr);
+      logger.error("IMAP Error:", imapErr);
     });
 
     imap.connect();
     return true;
-  } catch (error) {
-    console.error(`Error sending email: ${error}`);
+  } 
+  
+  catch (error) {
+    logger.error(`Error sending email: ${error}`);
     return false;
   }
 };

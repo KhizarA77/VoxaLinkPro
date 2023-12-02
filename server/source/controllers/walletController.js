@@ -1,12 +1,17 @@
-const pool = require("../connection.js");
-const Moralis = require("moralis").default;
-require("dotenv").config();
-// const  ethers  = require('ethers');
-// const { utils } = require('ethers');
-const jwt = require("jsonwebtoken");
+import pool from "../connection.cjs";
 
-exports.connectWallet = async (req, res) => {
-  const { walletAddress } = req.body; // original: const { walletAddress, signature, message } = req.body;
+import jwt from "jsonwebtoken";
+
+import dotenv from 'dotenv';
+
+import logger from '../logger.js';
+
+dotenv.config();
+
+
+
+export const connectWallet = async (req, res) => {
+  const { walletAddress } = req.body;
   try {
     // Check if wallet address is already in database
     const walletExists = await checkWalletExistence(walletAddress);
@@ -16,17 +21,17 @@ exports.connectWallet = async (req, res) => {
       await pool.query(`INSERT INTO WALLETS (wallet_address) VALUES ($1)`, [
         WA,
       ]);
-      console.log(`Wallet address ${WA} stored in database`);
+      logger.info(`Wallet address ${WA} stored in database`);
     }
 
     // Create JWT
 
-    accessToken = jwt.sign({ walletAddress: WA }, process.env.JWT_SECRET, {
+    const accessToken = jwt.sign({ walletAddress: WA }, process.env.JWT_SECRET, {
       expiresIn: "5m",
     });
-    console.log(`JWT Access Token Created Successfully ${accessToken}`);
+    logger.info(`JWT Access Token Created Successfully ${accessToken}, wallet address: ${WA}`);
 
-    refreshToken = jwt.sign(
+    const refreshToken = jwt.sign(
       { walletAddress: WA },
       process.env.JWT_REFRESH_SECRET,
       { expiresIn: "5h" }
@@ -35,7 +40,7 @@ exports.connectWallet = async (req, res) => {
       `UPDATE WALLETS SET refresh_token = $1 WHERE wallet_address = $2`,
       [refreshToken, WA]
     );
-    console.log(`JWT Refresh Token Created Successfully ${refreshToken}`);
+    logger.info(`JWT Refresh Token Created Successfully ${refreshToken}, wallet address: ${WA}`);
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
@@ -63,35 +68,6 @@ exports.connectWallet = async (req, res) => {
   }
 };
 
-const tokenAddress = "PLACEHOLDER";
-// const USDTAddress = '0xdac17f958d2ee523a2206206994597c13d831ec7';
-
-// Here i just want to check for the amount of VLKC tokens in the wallet. EXPORT
-exports.getWalletBalance = async (walletAddress) => {
-  try {
-    const returnObj = {};
-
-    const tokenBalances = await Moralis.EvmApi.token.getWalletTokenBalances({
-      address: walletAddress,
-      chain: "0x1",
-    });
-    const tokens = tokenBalances.toJSON();
-    const filteredTokens = tokens.filter(
-      (el) => el.token_address === tokenAddress
-    ); //|| el.token_address === USDTAddress);
-    if (filteredTokens.length === 0) {
-      return null;
-    }
-    filteredTokens.forEach((el) => {
-      const balance = el.balance / 10 ** el.decimals;
-      returnObj[el.symbol] = balance;
-    });
-    return returnObj; // {'VLKC' : 1000}}
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const checkWalletExistence = async (walletAddress) => {
   try {
     const result = await pool.query(
@@ -103,7 +79,7 @@ const checkWalletExistence = async (walletAddress) => {
     }
     return true;
   } catch (error) {
-    console.error(
+    logger.error(
       `Error in checking if wallet exists in database. \nError: \n${error}`
     );
     return null;

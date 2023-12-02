@@ -1,8 +1,12 @@
 // uploadMiddleware.js
 
-const multer = require('multer');
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+import multer from 'multer';
+
+import path from 'path'
+
+import { v4 as uuidv4 } from 'uuid'
+
+import logger from '../logger.js'
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -10,7 +14,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = `${uuidv4()}${path.extname(file.originalname)}`;
-    console.log(`File name: ${uniqueSuffix}`);
+    logger.info(`File name: ${uniqueSuffix}`);
     cb(null, uniqueSuffix);
   }
 });
@@ -23,7 +27,7 @@ const uploadMiddleware = multer({
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
     if (mimetype && extname) {
-      console.log(`FILE UPLOADED`);
+      logger.info(`FILE UPLOADED`);
       return cb(null,true);
     }
     else {
@@ -32,4 +36,4 @@ const uploadMiddleware = multer({
   }
 }).single('file');
 
-module.exports = uploadMiddleware;
+export default uploadMiddleware;

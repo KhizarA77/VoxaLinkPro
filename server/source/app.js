@@ -1,26 +1,29 @@
-const express = require('express');
+import express from 'express';
 
-const Moralis = require('moralis').default;
-const dotenv = require('dotenv');
-const cors = require('cors');
+import dotenv from 'dotenv';
+import cors from 'cors';
 
-const path = require('path'); 
-const cookieParser = require('cookie-parser');
-const logger = require('./logger');
-
+import path from 'path'; 
+import { fileURLToPath } from 'url';
+import cookieParser from 'cookie-parser';
+import logger from './logger.js';
 
 dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
-const walletRoutes = require('./routes/walletRoute.js');
-const fileRoutes = require('./routes/fileRoute.js');
-const contactUsRoute = require('./routes/contactUsRoute.js'); 
+import walletRoutes from './routes/walletRoute.js';
+import fileRoutes from './routes/fileRoute.js';
+import contactUsRoute from './routes/contactUsRoute.js'; 
+
 
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
@@ -39,14 +42,8 @@ app.use('/services/prescription', fileRoutes);
 app.use('/api/contact', contactUsRoute);
 
 
-// Start Moralis Server
-Moralis.start({
-    apiKey: process.env.MORALIS_API_KEY,
-}).then(() => {
-    console.log("Moralis server started");
-
-    const PORT = process.env.PORT || 4000;
-    app.listen(PORT, () => {
-        logger.info(`Server is running on port http://localhost:${PORT}`);
-    });
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+    logger.info(`Server is running on port http://localhost:${PORT}`);
 });
+

@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
 const Router = express.Router();
 
-const {submitSupportForm} = require('../controllers/contactUsController');
+import { submitSupportForm } from '../controllers/contactUsController.js';
 
 
 // localhost:4000/api/contact
 Router.post('/', submitSupportForm);
 
-module.exports = Router;
+export default Router;
