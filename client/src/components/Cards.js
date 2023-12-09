@@ -72,8 +72,8 @@ const CardsContainer = () => {
       image: "/images/transcribe.png",
       title: "AI Transcriber",
       description: "Transcribes your video/audio and outputs subtitles",
-      buttonName: "Try Now",
-      buttonLink: "/aitranscriber",
+      buttonName: "15 December",
+      buttonLink: "#",
     },
     {
       image: "/images/voiceauthentication.png",
@@ -81,21 +81,37 @@ const CardsContainer = () => {
       description:
         "Security feature that verifies if the person speaking is same or not",
       buttonName: "Coming Soon",
-      buttonLink: "/",
+      buttonLink: "#",
     },
     {
       image: "/images/analyzer2.png",
-      title: "AI Analytic Analyzer",
+      title: "AI Analyzer",
       description: "Analyzes your data using our accurate model",
       buttonName: "Coming Soon",
-      buttonLink: "/",
+      buttonLink: "#",
     },
     {
       image: "/images/calender.png",
       title: "AI Meeting Planner",
       description: "Plans trip according to your prompt with ONE click booking",
       buttonName: "Coming Soon",
-      buttonLink: "/",
+      buttonLink: "#",
+    },
+    {
+      image: "/images/VoiceNFT.png",
+      title: "Voice NFTs",
+      description:
+        "Allow users to create, authenticate, and trade unique voice recordings",
+      buttonName: "Coming Soon",
+      buttonLink: "#",
+    },
+    {
+      image: "/images/SmartContracts.png",
+      title: "Voice Activated Smart Contracts",
+      description:
+        "Verbal agreements become binding contracts through voice commands",
+      buttonName: "Coming Soon",
+      buttonLink: "#",
     },
 
     // ...add as many cards as you want

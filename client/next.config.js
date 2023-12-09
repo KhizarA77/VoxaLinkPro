@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config, context) => {
+    // Existing plugin configuration
     if (config.plugins) {
       config.plugins.push(
         new context.webpack.IgnorePlugin({
@@ -8,6 +9,16 @@ const nextConfig = {
         })
       );
     }
+
+    // New fallback configuration
+    config.resolve = config.resolve || {};
+    config.resolve.fallback = {
+      ...(config.resolve.fallback || {}),
+      fs: false,
+      net: false,
+      tls: false,
+    };
+
     return config;
   },
 };

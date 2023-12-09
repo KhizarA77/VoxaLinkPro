@@ -1,50 +1,59 @@
 [
   {
     "id": 1,
-    "imageSrc": "/images/PressReleaseSample.png",
-    "title": "Blockchain Revolution",
-    "description": "Discover the endless possibilities of blockchain technology with our innovative platforms."
+    "imageSrc": "/images/Poster1.png",
+    "title": "VoxaLinkPro: Elevating Customer Experience",
+    "description": "In the nuanced world of customer sentiment analysis, artificial intelligence becomes the compass...",
+    "link": "https://academy.voxalinkpro.io/"
   },
   {
     "id": 2,
-    "imageSrc": "/images/PressReleaseSample.png",
-    "title": "Empowering Web3",
-    "description": "Join us as we forge a new path in gaming innovation within the Web3 realm."
+    "imageSrc": "/images/Poster2.png",
+    "title": "Unveiling the Power of VoxaLink Pro",
+    "description": "In the dynamic landscape of technology, VoxaLink Pro emerges as a game-changer, offering a profound...",
+    "link": "https://academy.voxalinkpro.io/"
   },
   {
     "id": 3,
-    "imageSrc": "/images/PressReleaseSample.png",
-    "title": "Pre-Sale Phase 1",
-    "description": "Be part of our journey from the start. Don't miss out on our pre-sale event."
+    "imageSrc": "/images/Poster3.png",
+    "title": "VoxaLink Pro's Real-Time Translation Unleashed",
+    "description": "In the dynamic realm of multinational corporations, effective communication is the linchpin that...",
+    "link": "https://academy.voxalinkpro.io/"
   },
   {
     "id": 4,
-    "imageSrc": "/images/PressReleaseSample.png",
-    "title": "Token Launch",
-    "description": "Our native token is set to revolutionize how value is exchanged in digital ecosystems."
+    "imageSrc": "/images/Poster4.png",
+    "title": "Pioneering Voice-Authenticated Digital Identity with VoxaLink Pro",
+    "description": "Our native token is set to revolutionize how value is exchanged in digital ecosystems...",
+    "link": "https://academy.voxalinkpro.io/"
   },
   {
     "id": 5,
-    "imageSrc": "/images/PressReleaseSample.png",
-    "title": "Join the Kickstart",
-    "description": "We're proud to be part of the BNB Chain Kickstart program. Learn more about our collaboration."
+    "imageSrc": "/images/Poster6.png",
+    "title": "Voice Biometrics: A New Era of Security with VoxaLink Pro",
+    "description": "In the forefront of identity verification with VoxaLink Pro, revolutionary Voice Biometrics...",
+    "link": "https://academy.voxalinkpro.io/"
+  },
+
+  {
+    "id": 6,
+    "imageSrc": "/images/Poster7.png",
+    "title": "Live Transcription-Translation: VoxaLink's Multilingual Edge",
+    "description": "In the pulsating heart of VoxaLink Pro's innovation lies the ability to transform spoken words...",
+    "link": "https://academy.voxalinkpro.io/"
   },
   {
-    "id": 5,
-    "imageSrc": "/images/PressReleaseSample.png",
-    "title": "Join the Kickstart",
-    "description": "We're proud to be part of the BNB Chain Kickstart program. Learn more about our collaboration."
+    "id": 7,
+    "imageSrc": "/images/Poster5.png",
+    "title": "Redefining Online Identity Verification",
+    "description": "In the rapidly evolving landscape of online transactions, the significance of voice biometrics...",
+    "link": "https://academy.voxalinkpro.io/"
   },
   {
-    "id": 5,
-    "imageSrc": "/images/PressReleaseSample.png",
-    "title": "Join the Kickstart",
-    "description": "We're proud to be part of the BNB Chain Kickstart program. Learn more about our collaboration."
-  },
-  {
-    "id": 5,
-    "imageSrc": "/images/PressReleaseSample.png",
-    "title": "Join the Kickstart",
-    "description": "We're proud to be part of the BNB Chain Kickstart program. Learn more about our collaboration."
+    "id": 8,
+    "imageSrc": "/images/Poster8.png",
+    "title": "Introducing Voice NFTs: VoxaLink Pro's Unique Innovation",
+    "description": "In the unexplored realms of innovation, VoxaLink Pro charts a course into uncharted territoy...",
+    "link": "https://academy.voxalinkpro.io/"
   }
 ]

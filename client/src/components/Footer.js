@@ -1,69 +1,84 @@
-// Footer.js
 import TwitterIcon from "@mui/icons-material/Twitter";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-gray-800 text-gray-400 py-6 px-4">
-      <div className="max-w-7xl mx-auto flex flex-col gap-4 flex-wrap text-center justify-between items-center">
-        <div className="w-full md:w-auto text-center mb-4 md:mb-0">
-          <p>2023© VoxaLinkPro | All Rights Reserved</p>
-          <p>info@voxalink.com</p>
+    <>
+      <footer className="bg-black text-white py-6 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col text-center items-center">
+          {/* Navigation links */}
+          <nav className="mb-4">
+            <ul className="flex flex-wrap justify-center gap-4 font-semibold">
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="https://docsend.com/view/udmsw2jatjwwzxfa">Whitepaper</Link>
+              </li>
+              <li>
+                <Link href="https://docsend.com/view/sqayi93w7egrec6x">Privacy Policy</Link>
+              </li>
+              <li>
+                <Link href="https://docsend.com/view/rpydwt3ih4452igc">ToS</Link>
+              </li>
+              <li>
+                <Link href="/academy">Academy</Link>
+              </li>
+              <li>
+                <Link href="/contact">Contact</Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Disclaimer */}
+          <div className="text-center my-4">
+            <p className="text-xs">
+              Disclaimer: Cryptocurrency may be unregulated in your jurisdiction.
+              The value of cryptocurrencies may fluctuate. Profits may be subject
+              to capital gains or other taxes applicable in your jurisdiction.
+            </p>
+          </div>
+
+          {/* Divider */}
+          <hr className="border-gray-600 w-full my-4" />
+
+          {/* Copyright and contact info */}
+          <div>
+            <p className="mb-4">
+              {currentYear} © VoxaLinkPro | All Rights Reserved
+            </p>
+            <p>info@voxalinkpro.io</p>
+          </div>
+
+          {/* Social icons */}
+          <div className="flex justify-center gap-4 mt-4">
+            <a href="https://twitter.com/VoxaLinkPro" className="hover:text-white transition-colors">
+              <TwitterIcon />
+            </a>
+            <a href="https://t.me/voxalinkpro" className="hover:text-white transition-colors">
+              <TelegramIcon />
+            </a>
+            <a href="https://discord.gg/3zuyweZubh" className="hover:text-white transition-colors">
+              <Image
+                src="/images/discord.png"
+                alt="Discord"
+                width={25}
+                height={25}
+                className="filter grayscale-[50%] hover:grayscale-0 transition-colors"
+              />
+            </a>
+            {/* ... other icons */}
+          </div>
         </div>
-        <nav className="w-full md:w-auto mb-4 md:mb-0">
-          <ul className="flex flex-wrap justify-center md:justify-start gap-4 font-semibold">
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                Whitepaper
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                Win Prizes
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                How to buy
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white transition-colors">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <div className="w-full md:w-auto flex justify-center md:justify-end gap-4">
-          {/* Icons would go here, make sure to have the correct SVGs or font icons */}
-          <a href="#" className="hover:text-white transition-colors">
-            <TwitterIcon />
-          </a>
-          <a href="#" className="hover:text-white transition-colors">
-            <TelegramIcon />
-          </a>
-          <Image
-            src="/images/discord.png"
-            width={25}
-            height={10}
-            className="filter grayscale-[50%] cursor-pointer"
-          />
-          {/* ... other icons */}
-        </div>
-      </div>
-      <div className="text-center mt-4">
-        <p className="text-xs md:pb-[1rem] pb-[1rem]">
-          Disclaimer: Cryptocurrency may be unregulated in your jurisdiction.
-          The value of cryptocurrencies may fluctuate. Profits may be subject to
-          capital gains or other taxes applicable in your jurisdiction
-        </p>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }
+
+
+

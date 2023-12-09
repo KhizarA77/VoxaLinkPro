@@ -2,43 +2,49 @@ import React from "react";
 import styles from "../styles/TableBorder.module.css";
 
 const AllocationTable = () => (
-  <div className={`${styles.gradientBorderWrapper} overflow-hidden rounded-xl`}>
-    <div className={`${styles.innerWrapper} overflow-x-auto`}>
-      <table className="min-w-full">
-        <thead className="bg-gradient-to-r from-purple-400 to-pink-500">
-          <tr className="text-white">
-            <th className="p-3 rounded-tl-xl">Icon</th>
-            <th className="p-3 text-left min-w-[140px]">Offering Type</th>
-            <th className="p-3 text-left min-w-[100px]">Quantity</th>
-            <th className="p-3 text-left min-w-[100px]">Price</th>
-            <th className="p-3 text-left min-w-[100px]">Raise</th>
-            <th className="p-3 text-left rounded-tr-xl">Marketcap</th>
-          </tr>
-        </thead>
-        <tbody className="text-white bg-slate-800">
-          {/* Wrap each row in a div that applies the innerWrapper style */}
-          <tr>
-            <td className="p-3 text-center">🔥</td>
-            <td className="p-3 text-left">Allocation</td>
-            <td className="p-3 text-left">1,000</td>
-            <td className="p-3 text-left">$0.10</td>
-            <td className="p-3 text-left">$100,000</td>
-            <td className="p-3 text-left"> - </td>
-          </tr>
-          {/* Repeat the above tr for each row, changing the content as necessary */}
-          <tr>
-            <td className="p-3 text-center">✨</td>
-            <td className="p-3 text-left">Series A</td>
-            <td className="p-3 text-left">500</td>
-            <td className="p-3 text-left">$1.00</td>
-            <td className="p-3 text-left">$500,000</td>
-            <td className="p-3 text-left"> - </td>
-          </tr>
-          {/* Add as many rows as needed */}
-        </tbody>
-      </table>
+  <div className={styles.tableWrapper}>
+    <div className={styles.gradientBorder}>
+      <div className={`${styles.tableHeader} ${styles.roundedTop}`}>
+        <table className="w-full text-white">
+          <thead>
+            <tr>
+              <th className={`${styles.headerCell} ${styles.offeringTypeHeader}`}>Offering Type</th>
+              <th className={`${styles.headerCell} ${styles.quantityHeader}`}>Quantity</th>
+              <th className={`${styles.headerCell} ${styles.priceHeader}`}>Vesting Period</th>
+              <th className={`${styles.headerCell} ${styles.raisedHeader}`}>Vesting Starts</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div className={`${styles.tableBody} ${styles.roundedBottom}`}>
+        <table className="w-full text-white">
+          <tbody>
+            <tr>
+              <td className={`${styles.bodyCell} ${styles.offeringTypeCell}`}>Pre-Sale Phase 1</td>
+              <td className={`${styles.bodyCell} ${styles.quantityCell}`}>200,000,000</td>
+              <td className={`${styles.bodyCell} ${styles.priceCell}`}>12 Months (Post-Launch)</td>
+              <td className={`${styles.bodyCell} ${styles.raisedCell}`}>TBA</td>
+            </tr>
+            <tr>
+              <td className={`${styles.bodyCell} ${styles.offeringTypeCell}`}>Pre-Sale Phase 2</td>
+              <td className={`${styles.bodyCell} ${styles.quantityCell}`}>120,000,000</td>
+              <td className={`${styles.bodyCell} ${styles.priceCell}`}>6 Months (Post-Launch)</td>
+              <td className={`${styles.bodyCell} ${styles.raisedCell}`}>TBA</td>
+            </tr>
+            <tr>
+              <td className={`${styles.bodyCell} ${styles.offeringTypeCell}`}>Pre-Sale Phase 3</td>
+              <td className={`${styles.bodyCell} ${styles.quantityCell}`}>80,000,000</td>
+              <td className={`${styles.bodyCell} ${styles.priceCell}`}>1 Month (Post-Launch)</td>
+              <td className={`${styles.bodyCell} ${styles.raisedCell}`}>TBA</td>
+            </tr>
+            {/* Add more rows as needed */}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 );
 
 export default AllocationTable;
+
+
