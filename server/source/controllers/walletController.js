@@ -2,11 +2,18 @@ import pool from "../connection.cjs";
 
 import jwt from "jsonwebtoken";
 
-// import dotenv from 'dotenv';
-
 import logger from '../logger.js';
 
-// dotenv.config();
+import { checkWalletExistence } from "../utils/checkWalletExistence.js";
+import { generateNonce } from "../utils/generateNonce.js";
+
+export const getNonce = (req, res) => {
+
+  const { walletAddress } = req.query;
+  const nonce = generateNonce(walletAddress);
+  return res.json({ nonce });
+
+}
 
 
 
@@ -68,20 +75,4 @@ export const connectWallet = async (req, res) => {
   }
 };
 
-const checkWalletExistence = async (walletAddress) => {
-  try {
-    const result = await pool.query(
-      `SELECT * FROM WALLETS WHERE wallet_address = $1`,
-      [walletAddress]
-    );
-    if (result.rows.length === 0) {
-      return false;
-    }
-    return true;
-  } catch (error) {
-    logger.error(
-      `Error in checking if wallet exists in database. \nError: \n${error}`
-    );
-    return null;
-  }
-};
+
