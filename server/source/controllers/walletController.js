@@ -2,11 +2,11 @@ import pool from "../connection.cjs";
 
 import jwt from "jsonwebtoken";
 
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
 import logger from '../logger.js';
 
-dotenv.config();
+// dotenv.config();
 
 
 
