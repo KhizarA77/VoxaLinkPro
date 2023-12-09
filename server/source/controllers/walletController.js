@@ -41,7 +41,7 @@ export const connectWallet = async (req, res) => {
     const accessToken = jwt.sign({ walletAddress: WA }, process.env.JWT_SECRET, {
       expiresIn: "5m",
     });
-    logger.info(`JWT Access Token Created Successfully ${accessToken}, wallet address: ${WA}`);
+    // logger.info(`JWT Access Token Created Successfully ${accessToken}, wallet address: ${WA}`);
 
     const refreshToken = jwt.sign(
       { walletAddress: WA },
@@ -52,7 +52,7 @@ export const connectWallet = async (req, res) => {
       `UPDATE WALLETS SET refresh_token = $1 WHERE wallet_address = $2`,
       [refreshToken, WA]
     );
-    logger.info(`JWT Refresh Token Created Successfully ${refreshToken}, wallet address: ${WA}`);
+    // logger.info(`JWT Refresh Token Created Successfully ${refreshToken}, wallet address: ${WA}`);
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,

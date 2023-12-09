@@ -1,4 +1,5 @@
 import pool from "../connection.cjs";
+import logger from '../logger.js';
 
 export const checkWalletExistence = async (walletAddress) => {
     try {
@@ -11,9 +12,7 @@ export const checkWalletExistence = async (walletAddress) => {
       }
       return true;
     } catch (error) {
-      console.error(
-        `Error in checking if wallet exists in database. \nError: \n${error}`
-      );
+      logger.error(`Error in checking if wallet exists in database: ${error}`);
       return null;
     }
   };
