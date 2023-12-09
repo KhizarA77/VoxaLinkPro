@@ -7,12 +7,14 @@ import { ethers } from "ethers";
 import { parseEther } from "viem";
 import CircularProgress from "@mui/material/CircularProgress";
 import LockIcon from "@mui/icons-material/Lock";
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
 import abi from "../../constants/abi";
 
-const contractAddress = process.env.CONTRACT_ADDRESS; /* Your Contract Address need to change when deployed */
+const contractAddress =
+  process.env
+    .CONTRACT_ADDRESS; /* Your Contract Address need to change when deployed */
 
 import { prepareWriteContract, writeContract, readContract } from "@wagmi/core";
 
@@ -229,7 +231,7 @@ export default function PreSaleCard() {
         $VXLP ICO Sale
       </h1>
       <div className="flex justify-center items-center h-full text-[2rem]">
-        <LockIcon className="text-white text-[5rem]" />
+        <LockIcon className="text-white text-[3rem]" />
       </div>
     </div>
   );

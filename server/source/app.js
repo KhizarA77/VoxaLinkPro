@@ -21,7 +21,7 @@ const app = express();
 
 
 app.use(cors({
-    origin: 'https://voxalink-next-frontend-76e05d544243.herokuapp.com',
+    origin: '*',
 }));
 
 app.use(express.json());

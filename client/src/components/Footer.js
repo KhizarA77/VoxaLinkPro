@@ -2,7 +2,6 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,16 +17,33 @@ export default function Footer() {
                 <Link href="/">Home</Link>
               </li>
               <li>
-                <Link href="https://docsend.com/view/udmsw2jatjwwzxfa">Whitepaper</Link>
+                <Link
+                  href="https://docsend.com/view/udmsw2jatjwwzxfa"
+                  target="_blank"
+                >
+                  Whitepaper
+                </Link>
               </li>
               <li>
-                <Link href="https://docsend.com/view/sqayi93w7egrec6x">Privacy Policy</Link>
+                <Link
+                  href="https://docsend.com/view/sqayi93w7egrec6x"
+                  target="_blank"
+                >
+                  Privacy Policy
+                </Link>
               </li>
               <li>
-                <Link href="https://docsend.com/view/rpydwt3ih4452igc">ToS</Link>
+                <Link
+                  href="https://docsend.com/view/rpydwt3ih4452igc"
+                  target="_blank"
+                >
+                  ToS
+                </Link>
               </li>
               <li>
-                <Link href="/academy">Academy</Link>
+                <Link href="/academy" target="_blank">
+                  Academy
+                </Link>
               </li>
               <li>
                 <Link href="/contact">Contact</Link>
@@ -38,9 +54,10 @@ export default function Footer() {
           {/* Disclaimer */}
           <div className="text-center my-4">
             <p className="text-xs">
-              Disclaimer: Cryptocurrency may be unregulated in your jurisdiction.
-              The value of cryptocurrencies may fluctuate. Profits may be subject
-              to capital gains or other taxes applicable in your jurisdiction.
+              Disclaimer: Cryptocurrency may be unregulated in your
+              jurisdiction. The value of cryptocurrencies may fluctuate. Profits
+              may be subject to capital gains or other taxes applicable in your
+              jurisdiction.
             </p>
           </div>
 
@@ -52,18 +69,32 @@ export default function Footer() {
             <p className="mb-4">
               {currentYear} © VoxaLinkPro | All Rights Reserved
             </p>
-            <p>info@voxalinkpro.io</p>
+            <a href="mailto:info@voxalinkpro.io">
+              <p>info@voxalinkpro.io</p>
+            </a>
           </div>
 
           {/* Social icons */}
           <div className="flex justify-center gap-4 mt-4">
-            <a href="https://twitter.com/VoxaLinkPro" className="hover:text-white transition-colors">
+            <a
+              href="https://twitter.com/VoxaLinkPro"
+              className="hover:text-white transition-colors"
+              target="_blank"
+            >
               <TwitterIcon />
             </a>
-            <a href="https://t.me/voxalinkpro" className="hover:text-white transition-colors">
+            <a
+              href="https://t.me/voxalinkpro"
+              className="hover:text-white transition-colors"
+              target="_blank"
+            >
               <TelegramIcon />
             </a>
-            <a href="https://discord.gg/3zuyweZubh" className="hover:text-white transition-colors">
+            <a
+              href="https://discord.gg/3zuyweZubh"
+              className="hover:text-white transition-colors"
+              target="_blank"
+            >
               <Image
                 src="/images/discord.png"
                 alt="Discord"
@@ -79,6 +110,3 @@ export default function Footer() {
     </>
   );
 }
-
-
-

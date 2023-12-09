@@ -49,3 +49,5 @@ export const getTokenBalance = async (address) => {
         return null;
     }
 }
+
+getTokenBalance('0x5aB673AccA34F4F05E2766a7d9F362AaF1aBcB6a')
