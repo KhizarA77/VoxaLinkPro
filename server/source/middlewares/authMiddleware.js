@@ -1,15 +1,15 @@
-const jwt = require('jsonwebtoken');
-const pool = require('../connection.js');
+import jwt from 'jsonwebtoken'
+import pool from '../connection.cjs';
+import logger from '../logger.js';
 
 
-exports.authorize = async (req, res, next) => {
-    
+export const authorize = async (req, res, next) => {
     const accessToken = req.cookies.accessToken;
     const refreshToken = req.cookies.refreshToken;
 
     if (!accessToken) {
         if (!refreshToken) {
-            console.log(`Authorization middleware: No access token or refresh token found in cookies`);
+            logger.info(`Authorization middleware: No access token or refresh token found in cookies`);
             return res.status(401).json({
                 'message': 'Authorization failed, please log in again.'
             });
@@ -19,14 +19,14 @@ exports.authorize = async (req, res, next) => {
 
     try {
         req.Wallet = jwt.verify(accessToken, process.env.JWT_SECRET);
-        console.log(`Authorization middleware: JWT verified successfully, wallet address: ${req.Wallet.walletAddress}`)
+        logger.info(`Authorization middleware: JWT verified successfully, wallet address: ${req.Wallet.walletAddress}`)
         next();
     }
     catch (error) {
         if (error instanceof jwt.TokenExpiredError && refreshToken) {
             return handleRefreshToken(refreshToken, req, res, next);
         }
-        console.error(`Authorization middleware: Error verifying access token: ${error}`);
+        logger.error(`Authorization middleware: Error verifying access token: ${error}`);
         return res.status(401).json({
             'message': 'Authorization failed, please log in again.'
         });
@@ -40,13 +40,13 @@ const handleRefreshToken = async (refreshToken, req, res, next) => {
         const walletAddress = decoded.walletAddress;
         const result = await pool.query(`SELECT * FROM WALLETS WHERE refresh_token = $1 AND wallet_address = $2`, [refreshToken, walletAddress]);
         if (result.rows.length === 0) {
-            console.error(`Authorization middleware: Refresh token not found in database`);
+            logger.error(`Authorization middleware: Refresh token not found in database`);
             return res.status(401).json({
                 'message': 'Authorization failed, please log in again.'
             });
         }
         const newAccessToken = generateAccessToken(walletAddress);
-        console.log(`Authorization middleware: New access token generated successfully`);
+        logger.info(`Authorization middleware: New access token generated successfully`);
         res.cookie('accessToken', newAccessToken, {
             httpOnly: true,
             expires: new Date(Date.now() + (5 * 60 * 1000)), // 5 minutes
@@ -55,7 +55,7 @@ const handleRefreshToken = async (refreshToken, req, res, next) => {
         return next();
     }
     catch (err) {
-        console.error(`Authorization middleware: Error verifying refresh token / DB error: ${err}`);
+        logger.error(`Authorization middleware: Error verifying refresh token / DB error: ${err}`);
         return res.status(401).json({
             'message': 'Authorization failed, please log in again.'
         });

@@ -1,22 +1,25 @@
-const express = require('express');
-const Router = express.Router();
-const uploadMiddleware = require('../middlewares/uploadMiddleware');
-const {virusScan} = require('../middlewares/virusScanMiddleware');
-const { processFile, downloadFile, transcriptionHistory } = require('../controllers/fileController');
-const { authorize } = require('../middlewares/authMiddleware');
-const {walletBalanceChecker} = require('../middlewares/walletBalanceChecker');
+// import express from 'express';
+// const Router = express.Router();
 
-// POST endpoint for file upload
-Router.post('/upload',
-// authorize,
-// walletBalanceChecker,
-uploadMiddleware,
-virusScan, 
-processFile);
+// import uploadMiddleware from '../middlewares/uploadMiddleware.js';
+// import { virusScan } from '../middlewares/virusScanMiddleware.js';
+// import { processFile, downloadFile, transcriptionHistory } from '../controllers/fileController.js';
+// import { authorize } from '../middlewares/authMiddleware.js';
 
-Router.get('/history', authorize, transcriptionHistory);
+// import { walletBalanceChecker } from '../middlewares/walletBalanceChecker.js';
+
+// // POST endpoint for file upload
+// Router.post('/upload',
+// // authorize,
+// // walletBalanceChecker,
+// uploadMiddleware,
+// virusScan, 
+// processFile);
+
+// Router.get('/transcriptions', authorize, transcriptionHistory);
 
 
-Router.get('/download', downloadFile)
+// Router.get('/download', downloadFile)
 
-module.exports = Router;
+
+// export default Router;
