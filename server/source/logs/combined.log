@@ -1,2 +1,17 @@
 2023-12-09 20:58:02 [32minfo[39m: Server is running on port http://localhost:4000
 2023-12-09 20:59:06 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-10 00:52:42 [31merror[39m: The contract function "getTokenBalance" returned no data ("0x").
+
+This could be due to any of the following:
+  - The contract does not have the function "getTokenBalance",
+  - The parameters passed to the contract function may be invalid, or
+  - The address is not a contract.
+ 
+Contract Call:
+  address:   0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419
+  function:  getTokenBalance(address holder)
+  args:                     (0x5aB673AccA34F4F05E2766a7d9F362AaF1aBcB6a)
+
+Docs: https://viem.sh/docs/contract/readContract.html
+Version: viem@1.19.10
+2023-12-10 00:58:39 [32minfo[39m: Balance of 0x5aB673AccA34F4F05E2766a7d9F362AaF1aBcB6a is 0

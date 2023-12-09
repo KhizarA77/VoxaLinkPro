@@ -1,5 +1,12 @@
 const abi = [
 	{
+		"inputs": [],
+		"name": "buyTokens",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address payable",
@@ -24,6 +31,13 @@ const abi = [
 		"inputs": [],
 		"name": "ExpectedPause",
 		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "moveToNextPhase",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -85,6 +99,33 @@ const abi = [
 		"type": "event"
 	},
 	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "startICO",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -99,15 +140,9 @@ const abi = [
 	},
 	{
 		"inputs": [],
-		"name": "MAX_PURCHASE",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
+		"name": "updateRate",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -127,13 +162,6 @@ const abi = [
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "buyTokens",
-		"outputs": [],
-		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -294,25 +322,6 @@ const abi = [
 				"internalType": "address",
 				"name": "purchaser",
 				"type": "address"
-			}
-		],
-		"name": "getPurchaseInfo",
-		"outputs": [
-			{
-				"internalType": "uint256[3]",
-				"name": "",
-				"type": "uint256[3]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "purchaser",
-				"type": "address"
 			},
 			{
 				"internalType": "uint8",
@@ -326,6 +335,25 @@ const abi = [
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "purchaser",
+				"type": "address"
+			}
+		],
+		"name": "getPurchaseInfo",
+		"outputs": [
+			{
+				"internalType": "uint256[3]",
+				"name": "",
+				"type": "uint256[3]"
 			}
 		],
 		"stateMutability": "view",
@@ -420,9 +448,15 @@ const abi = [
 	},
 	{
 		"inputs": [],
-		"name": "moveToNextPhase",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "MAX_PURCHASE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -566,44 +600,10 @@ const abi = [
 	},
 	{
 		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "startICO",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "updateRate",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "wVXLP",
+		"name": "wallet",
 		"outputs": [
 			{
-				"internalType": "contract WrappedVoxaLinkPro",
+				"internalType": "address payable",
 				"name": "",
 				"type": "address"
 			}
@@ -613,10 +613,10 @@ const abi = [
 	},
 	{
 		"inputs": [],
-		"name": "wallet",
+		"name": "wVXLP",
 		"outputs": [
 			{
-				"internalType": "address payable",
+				"internalType": "contract WrappedVoxaLinkPro",
 				"name": "",
 				"type": "address"
 			}

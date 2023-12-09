@@ -1,61 +1,73 @@
-import { useContext, useEffect, useState } from "react";
+"use client";
+import { useContext, useEffect } from "react";
 import Link from "next/link";
 import Menu from "./menu";
 import { ScrollContext } from "@/context/ScrollContext";
 import { ConnectKitButton } from "connectkit";
-import { useAccount, useSignMessage } from "wagmi";
+import { useAccount } from "wagmi";
+import { signMessage } from "@wagmi/core";
 
 const Navbar = () => {
   const preSaleCardRef = useContext(ScrollContext);
   const { isConnected, address } = useAccount();
-  const { signMessage } = useSignMessage();
-  const [isWalletConnected, setIsWalletConnected] = useState(false);
-
-  // This effect runs when the component mounts and whenever isConnected or address changes
-  useEffect(() => {
-    const previouslyConnected = sessionStorage.getItem("walletConnected") === "true";
-    setIsWalletConnected(previouslyConnected);
-
-    // Only attempt to connect the wallet if it was not previously connected
-    if (!previouslyConnected && isConnected && address) {
-      connectWallet();
-    }
-  }, [isConnected, address, signMessage]);
 
   const connectWallet = async () => {
-    try {
-      const nonceResponse = await fetch(`https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/getNonce?walletAddress=${address}`);
-      const nonceData = await nonceResponse.json();
+    const storedAddress = localStorage.getItem("connectedWalletAddress");
+    console.log("Stored wallet address:", storedAddress);
 
-      const signatureData = await signMessage({ message: nonceData.nonce });
+    if (isConnected && address && storedAddress !== address) {
+      console.log("Attempting to connect wallet...");
 
-      if (signatureData && signatureData.data) {
-        const payload = {
-          walletAddress: address,
-          nonce: nonceData.nonce,
-          signature: signatureData.data
-        };
+      try {
+        const nonceResponse = await fetch(
+          `https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/getNonce?walletAddress=${address}`
+        );
+        const nonceData = await nonceResponse.json();
 
-        const verifyResponse = await fetch('https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/connect', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+        const signatureData = await signMessage({ message: nonceData.nonce });
 
-        if (verifyResponse.ok) {
-          console.log('Wallet connected and verified successfully.');
-          sessionStorage.setItem("walletConnected", "true");
-          setIsWalletConnected(true);
+        if (signatureData) {
+          const payload = {
+            walletAddress: address,
+            nonce: nonceData.nonce,
+            signature: signatureData,
+          };
+          const verifyResponse = await fetch(
+            "https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/connect",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            }
+          );
+          const verifyStatus = verifyResponse.status;
+
+          if (verifyStatus === 200) {
+            console.log("Wallet connected and verified successfully.");
+            localStorage.setItem("connectedWalletAddress", address);
+          } else {
+            console.error("Error: Wallet connection failed.");
+          }
         } else {
-          console.error('Error: Wallet connection failed.');
+          console.error("Signature process was not completed.");
         }
-      } else {
-        console.error('Signature process was not completed.');
+      } catch (error) {
+        console.error("Catch block Error:", error);
       }
-    } catch (error) {
-      console.error('Error in connecting wallet:', error);
+    } else {
+      console.log("Skipping wallet connection process or already connected.");
     }
   };
+
+  useEffect(() => {
+    console.log("useEffect triggered. isConnected:", isConnected, "address:", address);
+    if (!isConnected) {
+      localStorage.removeItem("connectedWalletAddress");
+      console.log("Wallet disconnected, local storage cleared.");
+    } else {
+      connectWallet();
+    }
+  }, [isConnected, address]);
 
   const scrollToPreSaleCard = () => {
     if (preSaleCardRef && preSaleCardRef.current) {
@@ -70,7 +82,6 @@ const Navbar = () => {
     >
       <div className="flex justify-between items-center">
         <div className="flex items-center">
-          {/* MOBILE MENU */}
           <div className="lg:hidden">
             <Menu />
           </div>
@@ -92,7 +103,6 @@ const Navbar = () => {
             >
               Whitepaper
             </Link>
-            {/* Link to Contact Page */}
             <Link href="/contact" className="text-white">
               Contact
             </Link>
