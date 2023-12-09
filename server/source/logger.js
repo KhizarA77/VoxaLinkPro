@@ -62,17 +62,17 @@ const logger = winston.createLogger({
   exitOnError: false
 });
 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
+// if (process.env.NODE_ENV !== 'production') {
+//   logger.add(new winston.transports.Console({
+//     format: winston.format.simple()
+//   }));
 
   // Override console.log
-  const originalConsoleLog = console.log;
-  console.log = (...args) => {
-    logger.info(...args); // Redirect console.log to Winston's logger.info
-    originalConsoleLog(...args); // Output to console as well
-  };
-}
+//   const originalConsoleLog = console.log;
+//   console.log = (...args) => {
+//     logger.info(...args); // Redirect console.log to Winston's logger.info
+//     originalConsoleLog(...args); // Output to console as well
+//   };
+// }
 
 export default logger;
