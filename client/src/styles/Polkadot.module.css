@@ -1,0 +1,76 @@
+.polkaDots {
+  position: absolute;
+  margin: 5rem auto;
+  padding: 5rem 2rem;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Keeps the dots inside the div */
+}
+
+.dot {
+  position: absolute;
+  width: 20px; /* Dot size */
+  height: 20px;
+  background-color: #fff; /* Dot color */
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatUp 5s infinite ease-in-out;
+}
+
+/* You can create multiple keyframes for different dot animations */
+@keyframes floatUp {
+  0% {
+    bottom: -20px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 100%; /* This should be more than the div's height to ensure dots float all the way up */
+    opacity: 0;
+  }
+}
+
+/* Add this for each dot with different delays and durations to make the animation more dynamic */
+.dot:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+  background-color: rgb(237, 52, 163);
+}
+
+.dot:nth-child(2) {
+  left: 40%;
+  animation-delay: 1s;
+  animation-duration: 6s;
+  background-color: rgb(149, 84, 195);
+}
+
+.dot:nth-child(3) {
+  left: 70%;
+  animation-delay: 2s;
+  animation-duration: 4s;
+  background-color: rgb(237, 52, 163);
+}
+
+.dot:nth-child(4) {
+  left: 20%;
+  animation-delay: 3s;
+  animation-duration: 4s;
+  background-color: rgb(149, 84, 195);
+}
+
+.dot:nth-child(5) {
+  left: 60%;
+  animation-delay: 3s;
+  animation-duration: 4s;
+  background-color: rgb(234, 86, 72);
+}
+
+.dot:nth-child(6) {
+  left: 90%;
+  animation-delay: 3s;
+  animation-duration: 2s;
+  background-color: rgb(159, 130, 206);
+}
