@@ -10,6 +10,11 @@ import { generateNonce } from "../utils/generateNonce.js";
 export const getNonce = (req, res) => {
 
   const { walletAddress } = req.query;
+  if (!walletAddress) {
+    return res.status(400).json({
+      message: "Wallet address not provided in request query from front-end",
+    });
+  }
   const nonce = generateNonce(walletAddress);
   return res.json({ nonce });
 

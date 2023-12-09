@@ -10,7 +10,7 @@ import { walletInputCheck } from '../middlewares/walletAddressInput.js';
 import { verifySignatureMiddleware } from '../middlewares/verifySignatureMiddleware.js';
 
 // @route GET /api/wallet/getNonce
-Router.get('/getNonce', walletInputCheck, getNonce);
+Router.get('/getNonce', getNonce);
 
 // @route POST /api/wallet/connect
 Router.post('/connect', walletInputCheck, verifySignatureMiddleware, connectWallet);

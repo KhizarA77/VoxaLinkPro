@@ -1,0 +1,19 @@
+2023-12-09 18:19:22 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-09 18:20:11 [32minfo[39m: Incoming request from IP: ::1 and User Agent: PostmanRuntime/7.35.0
+2023-12-09 18:20:11 [32minfo[39m: Wallet address input middleware: no wallet address in request body
+2023-12-09 18:20:40 [32minfo[39m: Incoming request from IP: ::1 and User Agent: PostmanRuntime/7.35.0
+2023-12-09 18:20:40 [32minfo[39m: Wallet address input middleware: no wallet address in request body
+2023-12-09 18:21:47 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-09 18:21:50 [32minfo[39m: Incoming request from IP: ::1 and User Agent: PostmanRuntime/7.35.0
+2023-12-09 18:21:50 [32minfo[39m: Wallet address input middleware: no wallet address in request body
+2023-12-09 18:21:58 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-09 18:22:01 [32minfo[39m: Incoming request from IP: ::1 and User Agent: PostmanRuntime/7.35.0
+2023-12-09 18:22:26 [32minfo[39m: Incoming request from IP: ::1 and User Agent: PostmanRuntime/7.35.0
+2023-12-09 18:23:17 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-09 18:23:26 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-09 18:23:34 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-09 18:23:39 [32minfo[39m: Incoming request from IP: ::1 and User Agent: PostmanRuntime/7.35.0
+2023-12-09 18:23:39 [32minfo[39m: Wallet address input middleware: no wallet address in request body
+2023-12-09 18:24:01 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-09 18:24:04 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-09 18:24:07 [32minfo[39m: Incoming request from IP: ::1 and User Agent: PostmanRuntime/7.35.0
