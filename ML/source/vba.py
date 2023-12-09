@@ -3,6 +3,7 @@ from resemblyzer import VoiceEncoder, preprocess_wav
 from pathlib import Path
 from pydub import AudioSegment
 
+#comment
 class SimpleSpeakerVerifier:
     def __init__(self):
         self.encoder = VoiceEncoder()

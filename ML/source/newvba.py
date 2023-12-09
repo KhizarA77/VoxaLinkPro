@@ -6,6 +6,7 @@ from scipy.spatial import distance
 import os
 import tensorflow_datasets as tfds
 
+#comment
 class EnhancedSpeakerVerifier:
     def __init__(self):
         self.encoder = VoiceEncoder()

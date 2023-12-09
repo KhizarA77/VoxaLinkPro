@@ -30,7 +30,7 @@ sys.path.append('.')
 start_time = time.time()
 
 # Test the processing function
-output_file = process_audio_file("C:\\Users\\xkens\\Desktop\\VoxaLink\\ML\\voice_datasets\\Shahrukh\\Recording_3.m4a", output_format="txt")
+output_file = process_audio_file("C:\\Users\\xkens\\Desktop\\VoxaLink\\VoxaLinkPro\\ML\\source\\Recording.mp3", output_format="txt")
 
 # End timing
 end_time = time.time()
@@ -40,3 +40,4 @@ duration = end_time - start_time
 
 print(f"Transcription saved to: {output_file}")
 print(f"Time taken for the whole process: {duration:.2f} seconds")
+#comment

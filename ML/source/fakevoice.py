@@ -8,6 +8,7 @@ import json
 import csv
 from concurrent.futures import ProcessPoolExecutor
 
+#comment
 # Initialize the Whisper model and processor
 processor = WhisperProcessor.from_pretrained("openai/whisper-large-v2")
 model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-large-v2")

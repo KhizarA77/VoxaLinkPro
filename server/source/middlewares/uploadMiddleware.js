@@ -1,35 +1,53 @@
-// uploadMiddleware.js
+// // uploadMiddleware.js
 
-const multer = require('multer');
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+// import multer from 'multer';
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '../Files/uploads'); // Adjust the path as needed
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = `${uuidv4()}${path.extname(file.originalname)}`;
-    console.log(`File name: ${uniqueSuffix}`);
-    cb(null, uniqueSuffix);
-  }
-});
+// import { S3Client, ListBucketsCommand } from '@aws-sdk/client-s3';
 
-const uploadMiddleware = multer({
-  storage: storage,
-  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB limit
-  fileFilter: (req, file, cb) => {
-    const filetypes = /wav|ogg|m4a|mp3|mov|mpeg|mp4|avi|opus|aac|flac|m4v/;
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = filetypes.test(file.mimetype);
-    if (mimetype && extname) {
-      console.log(`FILE UPLOADED`);
-      return cb(null,true);
-    }
-    else {
-      cb(new Error('Error: File type not supported'), false)
-    }
-  }
-}).single('file');
+// import multers3 from 'multer-s3';
 
-module.exports = uploadMiddleware;
+// import path from 'path'
+
+// import { v4 as uuidv4 } from 'uuid'
+
+// import logger from '../logger.js'
+
+
+// const s3 = new S3Client();
+
+
+// // const storage = multers3({
+// //   s3: s3,
+// //   bucket: 
+// // })
+
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, '../Files/uploads'); // Adjust the path as needed
+//   },
+//   filename: (req, file, cb) => {
+//     const uniqueSuffix = `${uuidv4()}${path.extname(file.originalname)}`;
+//     logger.info(`File name: ${uniqueSuffix}`);
+//     cb(null, uniqueSuffix);
+//   }
+// });
+
+// const uploadMiddleware = multer({
+//   storage: storage,
+//   limits: { fileSize: 500 * 1024 * 1024 }, // 500MB limit
+//   fileFilter: (req, file, cb) => {
+//     const filetypes = /wav|ogg|m4a|mp3|mov|mpeg|mp4|avi|opus|aac|flac|m4v/;
+//     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+//     const mimetype = filetypes.test(file.mimetype);
+//     if (mimetype && extname) {
+//       logger.info(`FILE UPLOADED`);
+//       return cb(null,true);
+//     }
+//     else {
+//       cb(new Error('Error: File type not supported'), false)
+//     }
+//   }
+// }).single('file');
+
+// export default uploadMiddleware;
