@@ -8,23 +8,30 @@ import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import logger from './logger.js';
 
+import walletRoutes from './routes/walletRoute.js';
+// import fileRoutes from './routes/fileRoute.js';
+
 dotenv.config();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 const app = express();
 
-import walletRoutes from './routes/walletRoute.js';
-import fileRoutes from './routes/fileRoute.js';
-import contactUsRoute from './routes/contactUsRoute.js'; 
 
 
-app.use(cors());
+
+app.use(cors({
+    origin: 'https://voxalink-next-frontend-76e05d544243.herokuapp.com',
+}));
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+
+
+
 
 app.use((req, res, next) => {
     const ip = req.ip;
@@ -38,8 +45,7 @@ app.use((req, res, next) => {
 
 
 app.use('/api/wallet', walletRoutes);
-app.use('/services/prescription', fileRoutes);
-app.use('/api/contact', contactUsRoute);
+// app.use('/services/prescription', fileRoutes);
 
 
 const PORT = process.env.PORT || 4000;

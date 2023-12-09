@@ -45,13 +45,13 @@ export const connectWallet = async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       expires: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes
-      // secure: true,
+      secure: true,
       // sameSite: 'none',
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       expires: new Date(Date.now() + 5 * 60 * 60 * 1000), // 5 hours
-      // secure: true,
+      secure: true,
     });
     // Send response
     return res.status(200).json({

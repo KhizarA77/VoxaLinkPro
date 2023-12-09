@@ -3,8 +3,8 @@ import Imap from "imap";
 
 import logger from '../logger.js'
 
-// import dotenv from 'dotenv'
-// dotenv.config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 // Email configuration
 const senderEmail = process.env.EMAIL_USER;

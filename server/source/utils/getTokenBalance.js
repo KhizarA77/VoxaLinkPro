@@ -1,21 +1,22 @@
 import { readContract } from "@wagmi/core";
 import abi from './abi.js';
 import logger from '../logger.js'
-
+import dotenv from 'dotenv';
 import { mainnet, sepolia } from "wagmi/chains";
 import { createConfig } from "wagmi";
 import { getDefaultConfig } from "connectkit";
 
-const contractAddress = '0xf1b01b47Aff62B1768d053AbcFe9497dc80B0016';
+dotenv.config();
 
+const contractAddress = process.env.CONTRACT_ADDRESS;
 const chains = [sepolia];
 
 
 const config = createConfig(
     getDefaultConfig({
       // Required API Keys
-      infuraId: "cc759978ac1544e084dfbcffd7498400", // or infuraId
-      walletConnectProjectId: "6b49792029eb24adfa1aff3e1868073c",
+      infuraId: process.env.INFURA_ID, // or infuraId
+      walletConnectProjectId: process.env.WALLET_CONNECT,
       chains,
       // Required
       appName: "Voxa Link Pro",
