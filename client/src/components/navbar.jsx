@@ -60,12 +60,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    console.log(
-      "useEffect triggered. isConnected:",
-      isConnected,
-      "address:",
-      address
-    );
+    console.log("useEffect triggered. isConnected:", isConnected, "address:", address);
     if (!isConnected) {
       localStorage.removeItem("connectedWalletAddress");
       console.log("Wallet disconnected, local storage cleared.");
