@@ -20,19 +20,19 @@ const SalesTable = () => (
         <table className="w-full">
           <tbody>
             <tr>
-              <td className={`${styles.bodyCell} ${styles.offeringTypeCell} ${styles.leftAligned}`}>Pre-Sale 1</td>
+              <td className={`${styles.bodyCell} ${styles.offeringTypeCell} ${styles.leftAligned}`}>ICO</td>
               <td className={`${styles.bodyCell} ${styles.quantityCell} ${styles.centerAligned}`}>200,000,000</td>
               <td className={`${styles.bodyCell} ${styles.priceCell} ${styles.rightAligned}`}>$0.05</td>
               <td className={`${styles.bodyCell} ${styles.raisedCell} ${styles.centerAligned}`}>-</td>
             </tr>
             <tr>
-              <td className={`${styles.bodyCell} ${styles.offeringTypeCell} ${styles.leftAligned}`}>Pre-Sale 2</td>
+              <td className={`${styles.bodyCell} ${styles.offeringTypeCell} ${styles.leftAligned}`}>Pre-Sale 1</td>
               <td className={`${styles.bodyCell} ${styles.quantityCell} ${styles.centerAligned}`}>120,000,000</td>
               <td className={`${styles.bodyCell} ${styles.priceCell} ${styles.rightAligned}`}>$0.065</td>
               <td className={`${styles.bodyCell} ${styles.raisedCell} ${styles.centerAligned}`}>-</td>
             </tr>
             <tr>
-              <td className={`${styles.bodyCell} ${styles.offeringTypeCell} ${styles.leftAligned}`}>Pre-Sale 3</td>
+              <td className={`${styles.bodyCell} ${styles.offeringTypeCell} ${styles.leftAligned}`}>Pre-Sale 2</td>
               <td className={`${styles.bodyCell} ${styles.quantityCell} ${styles.centerAligned}`}>80,000,000</td>
               <td className={`${styles.bodyCell} ${styles.priceCell} ${styles.rightAligned}`}>$0.08</td>
               <td className={`${styles.bodyCell} ${styles.raisedCell} ${styles.centerAligned}`}>-</td>

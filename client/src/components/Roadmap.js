@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from "../styles/Roadmap.module.css";
+import Image from 'next/image';
 
 function Roadmap(props) {
   // States for each stage's hover effect and text visibility
@@ -30,18 +31,30 @@ function Roadmap(props) {
       [stage]: { ...prevState[stage], isHovered: false },
     }));
   };
+
+   // Function to determine if the screen width is less than 768px
+   const isMobile = window.innerWidth < 768;
   
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      x="0px"
-      y="0px"
-      viewBox="0 0 750 500"
-      style={{ enableBackground: 'new 0 0 750 500' }}
-      xmlSpace="preserve"
-      {...props}
-    >
+    <>
+      {isMobile ? (
+        // This will render on screens smaller than 768px
+        <Image 
+        src="/images/roadmap.png" 
+        alt="Roadmap" 
+        layout="responsive" 
+        width={100}
+        height={100} 
+      />
+      ) : (
+        // This will render on screens wider than 768px
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 750 500"
+          style={{ enableBackground: 'new 0 0 750 500' }}
+          {...props}
+        >
       <style>
         {
           ".st6{fill:#ff148a}.st7{font-family:&apos;Calibri-Bold&apos;}.st8{font-size:14.5106px}.st9{font-size:25.7195px}.st10{fill:none}.st11{opacity:.5}.st12{font-family:&;Poppins-Bold&apos;}.st13{font-size:7px}.st15{fill:none;stroke:#ff148a;stroke-miterlimit:10}.st17{fill:#fc6085}.st21{fill:#ff138b}.st24{fill:#ff417d}.st28{fill:#9c1f88}.st31{fill:#703e9b}.st32{font-size:8px}.st39{fill:#293e67}.st40{fill:#a1a1a1}"
@@ -688,6 +701,8 @@ function Roadmap(props) {
         </g>
       </g>
     </svg>
+      )}
+    </>
   );
 }
 export default Roadmap

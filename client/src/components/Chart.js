@@ -31,16 +31,38 @@ const Tokenomics = (props) => {
     cursor: 'pointer',
   });
 
-  return (
-    <div className={styles.tokenomicsContainer}> {/* Use a container for responsiveness */}
+// Adjust the viewBox based on screen size
+const [viewBox, setViewBox] = useState("0 0 1800 1800");
+
+useEffect(() => {
+  function updateViewBox() {
+    const width = window.innerWidth;
+    if (width < 768) { // For small screens, adjust the viewBox values
+      setViewBox("0 0 1550 1800"); // Smaller viewBox values to "zoom in"
+    } else {
+      setViewBox("0 0 1800 1800"); // Default viewBox values
+    }
+  }
+
+  window.addEventListener('resize', updateViewBox);
+  updateViewBox(); // Initial call to set viewBox
+
+  return () => {
+    window.removeEventListener('resize', updateViewBox);
+  };
+}, []);
+
+return (
+  <div className={styles.tokenomicsContainer}>
     <svg
       width="100%"
       height="auto"
       preserveAspectRatio="xMidYMid meet"
-      viewBox="0 0 1800 1800"
+      viewBox={viewBox} // Updated dynamically based on screen size
       style={{ display: 'block' }}
       {...props}
     >
+
     <defs>
       <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1={245.048} y1={894.532} x2={522.278} y2={894.532}>
         <stop offset={0} style={{ stopColor: "#e64c9b" }} />

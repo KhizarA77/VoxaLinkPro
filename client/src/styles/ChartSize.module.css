@@ -70,7 +70,15 @@
   transition: opacity 0.5s ease-in-out;
 }
 
+/* Roadmap.module.css */
+.svg-container {
+  width: 100%;
+  min-height: 300px; /* This is an arbitrary minimum height. Adjust as needed. */
+}
 
-
-
-
+/* Add a media query for smaller screens */
+@media (max-width: 768px) {
+  .svg-container {
+    min-height: 500px; /* Increase the minimum height for smaller screens */
+  }
+}

@@ -209,7 +209,7 @@ export default function Home() {
               total supply of $VXLP tokens is 1 billion (1,000,000,000).
             </p>
             <div className="mt-10 w-full relative">
-              <div className="svg-container w-full h-auto min-h-[300px] sm:min-h-[400px] md:min-h-[500px] lg:min-h-[600px] xl:min-h-[700px]">
+            <div className={`svg-container ${window.innerWidth < 768 ? "small-svg-container" : ""}`} style={{ width: '100%', height: 'auto' }}>
                 <Tokenomics />
               </div>
             </div>
@@ -217,8 +217,9 @@ export default function Home() {
         </div>
 
         <div id="roadmap">
-          {/* This is where the Roadmap will be rendered */}
-          <Roadmap />
+          <div id="svgContainer" className="svg-container overflow-hidden">
+            <Roadmap />
+          </div>
         </div>
 
         {/* Buttons and Table */}

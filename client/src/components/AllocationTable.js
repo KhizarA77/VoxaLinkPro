@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "../styles/TableBorder.module.css";
 
+
+
 const AllocationTable = () => (
   <div className={styles.tableWrapper}>
     <div className={styles.gradientBorder}>
@@ -20,7 +22,7 @@ const AllocationTable = () => (
         <table className="w-full text-white">
           <tbody>
             <tr>
-              <td className={`${styles.bodyCell} ${styles.offeringTypeCell}`}>Pre-Sale Phase 1</td>
+              <td className={`${styles.bodyCell} ${styles.offeringTypeCell}`}>ICO Phase 1</td>
               <td className={`${styles.bodyCell} ${styles.quantityCell}`}>200,000,000</td>
               <td className={`${styles.bodyCell} ${styles.priceCell}`}>12 Months (Post-Launch)</td>
               <td className={`${styles.bodyCell} ${styles.raisedCell}`}>TBA</td>
