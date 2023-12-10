@@ -209,9 +209,16 @@ export default function Home() {
               total supply of $VXLP tokens is 1 billion (1,000,000,000).
             </p>
             <div className="mt-10 w-full relative">
-            <div className={`svg-container ${window.innerWidth < 768 ? "small-svg-container" : ""}`} style={{ width: '100%', height: 'auto' }}>
-                <Tokenomics />
-              </div>
+              {isClient && (
+                <div
+                  className={`svg-container ${
+                    windowSize.width < 768 ? "small-svg-container" : ""
+                  }`}
+                  style={{ width: "100%", height: "auto" }}
+                >
+                  <Tokenomics />
+                </div>
+              )}
             </div>
           </div>
         </div>

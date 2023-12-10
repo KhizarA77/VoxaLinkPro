@@ -33,7 +33,10 @@ function Roadmap(props) {
   };
 
    // Function to determine if the screen width is less than 768px
-   const isMobile = window.innerWidth < 768;
+   let isMobile;
+   if (typeof window !== "undefined") {
+     isMobile = window.innerWidth < 768;
+    }
   
   return (
     <>
@@ -147,7 +150,7 @@ function Roadmap(props) {
             fill="url(#SVGID_6_)"
           />
         </g>
-        // Stage 1 JSX
+        
       <g onMouseEnter={() => handleMouseEnter('stage1')} onMouseLeave={() => handleMouseLeave('stage1')} className={`${styles.stage} ${styles.stage1}`}>
         <text transform="translate(66.481 79.038)">
           <tspan x={0} y={0} className={`${styles.st6} ${styles.st8} ${styles.stageText}`}>
@@ -204,7 +207,6 @@ function Roadmap(props) {
             transform="translate(69.545 131.666) scale(.0624)"
             overflow="visible"
           />
-        // Stage 2 JSX
         <g onMouseEnter={() => handleMouseEnter('stage2')} onMouseLeave={() => handleMouseLeave('stage2')} className={`${styles.stage} ${styles.stage2}`}>
           <text transform="translate(191.568 104.134)">
             <tspan x={0} y={0} className={`${styles.st17} ${styles.st8} ${styles.stageText}`}>
@@ -273,7 +275,6 @@ function Roadmap(props) {
               overflow="visible"
             />
           </g>
-          // Stage 3 JSX
         <g onMouseEnter={() => handleMouseEnter('stage3')} onMouseLeave={() => handleMouseLeave('stage3')} className={`${styles.stage} ${styles.stage3}`}>
           <text transform="translate(35.378 324.837)">
             <tspan x={0} y={0} className={`${styles.st21} ${styles.st8} ${styles.stageText}`}>
@@ -337,7 +338,6 @@ function Roadmap(props) {
               overflow="visible"
             />
           </g>
-          // Stage 4 JSX
           <g onMouseEnter={() => handleMouseEnter('stage4')} onMouseLeave={() => handleMouseLeave('stage4')} className={`${styles.stage} ${styles.stage4}`}>
             <text transform="translate(279.0513 400.4015)">
               <tspan x={0} y={0} className={`${styles.st24} ${styles.st8} ${styles.stageText}`}>
@@ -413,7 +413,6 @@ function Roadmap(props) {
               />
             </g>
           </g>
-          // Stage 5 JSX
         <g onMouseEnter={() => handleMouseEnter('stage5')} onMouseLeave={() => handleMouseLeave('stage5')} className={`${styles.stage} ${styles.stage5}`}>
           <text transform="translate(359.635 128.45)">
             <tspan x={0} y={0} className={`${styles.st28} ${styles.st8} ${styles.stageText}`}>
@@ -483,7 +482,6 @@ function Roadmap(props) {
               overflow="visible"
             />
           </g>
-          // Stage 6 JSX
           <g onMouseEnter={() => handleMouseEnter('stage6')} onMouseLeave={() => handleMouseLeave('stage6')} className={`${styles.stage} ${styles.stage6}`}>
             <text transform="translate(509.468 121.283)">
               <tspan x={0} y={0} className={`${styles.st31} ${styles.st8} ${styles.stageText}`}>
@@ -547,7 +545,6 @@ function Roadmap(props) {
               overflow="visible"
             />
           </g>
-          // Stage 7 JSX
           <g onMouseEnter={() => handleMouseEnter('stage7')} onMouseLeave={() => handleMouseLeave('stage7')} className={`${styles.stage} ${styles.stage7}`}>
             <text transform="translate(456.493 422.289)">
               <tspan x={-19} y={0} className={`${styles.st31} ${styles.st8} ${styles.stageText}`}>
@@ -630,8 +627,6 @@ function Roadmap(props) {
                 r={19.89}
                 fill="url(#SVGID_22_)"
               />
-
-              // Stage 8 JSX
               <g onMouseEnter={() => handleMouseEnter('stage8')} onMouseLeave={() => handleMouseLeave('stage8')} className={`${styles.stage} ${styles.stage8}`}>
                 <path className={styles.st10} d="M623.88 292.79H713V343.88H623.88z" />
                 <text transform="translate(633.756 297.973)" className={styles.descriptiveText}>
