@@ -254,13 +254,13 @@ export default function Home() {
           <h1 className="text-white font-bold text-4xl text-center mb-4">
             Press Release
           </h1>
-          <p className="text-gray-500 text-center mb-7">
+          <p className="text-gray-500 text-center mb-7 mx-6">
             Latest articles and updates about VoxaLink Pro.
           </p>
           <PressReleaseCard data={PressData} />
         </div>
         {/* Section where the ICO Token Contract card is located */}
-        <div className="relative mt-[2rem] pb-[15rem] pt-[5rem] md:py-[15rem] flex justify-center items-center w-full">
+        <div className="relative pb-[15rem] pt-[5rem] md:py-[15rem] flex justify-center items-center w-full">
           <div className="bg-black/20 backdrop-blur-sm p-8 md:p-20 rounded-2xl shadow-xl max-w-6xl mx-auto relative">
             {/* Gradient overlay for a glossy effect, if needed */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent opacity-20 rounded-2xl"></div>

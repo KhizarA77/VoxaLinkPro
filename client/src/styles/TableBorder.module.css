@@ -38,30 +38,35 @@
 }
 
 /* Table cell styling */
-.headerCell, .bodyCell {
+.headerCell,
+.bodyCell {
   padding: 10px;
   text-align: center;
   word-break: break-word;
 }
 
 /* Column specific adjustments - Increased left padding for Offering Type */
-.offeringTypeHeader, .offeringTypeCell {
+.offeringTypeHeader,
+.offeringTypeCell {
   width: 25%;
   text-align: left;
   padding-left: 8em; /* Increased left padding */
 }
 
-.quantityHeader, .quantityCell {
+.quantityHeader,
+.quantityCell {
   width: 25%;
   text-align: center;
 }
 
-.priceHeader, .priceCell {
+.priceHeader,
+.priceCell {
   width: 25%;
   text-align: center;
 }
 
-.raisedHeader, .raisedCell {
+.raisedHeader,
+.raisedCell {
   width: 25%;
   text-align: center;
   padding-right: 1em;
@@ -69,24 +74,27 @@
 
 /* Responsive table adjustments */
 @media (max-width: 767px) {
-  .headerCell, .bodyCell {
-    padding: 0.5em; /* Smaller padding on smaller screens */
+  .headerCell,
+  .bodyCell {
+    padding: 1em; /* Smaller padding on smaller screens */
   }
 
-  .offeringTypeHeader, .offeringTypeCell, .raisedHeader, .raisedCell {
-    padding-left: 0.5em; /* Adjusted space for content */
+  .offeringTypeHeader,
+  .offeringTypeCell,
+  .raisedHeader,
+  .raisedCell {
+    padding-left: 1em; /* Adjusted space for content */
     padding-right: 0.5em;
   }
 
   .tableWrapper {
     max-width: 100%; /* Full width on smaller screens */
-    margin: 10px auto;
   }
 }
 
 /* Ensure the bottom border is visible */
 .roundedBottom::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 0;
