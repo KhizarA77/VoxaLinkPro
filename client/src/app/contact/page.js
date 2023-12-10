@@ -51,9 +51,11 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#17181d] text-black justify-center items-center px-4">
+    <div className="flex flex-col min-h-screen bg-[#17181d] text-black justify-center items-center px-4 overflow-x-hidden">
       {/* Purple Circle - top left */}
-      <div className="hidden md:block absolute w-[50rem] h-[50rem] opacity-70 bg-[#b63fc9] rounded-full blur-[20rem] top-[-18rem] left-[-30rem]"></div>
+      <div className="relative">
+        <div className="hidden md:block absolute w-[50rem] h-[50rem] opacity-70 bg-[#b63fc9] rounded-full blur-[20rem] top-[-18rem] left-[-90rem]"></div>
+      </div>
       <div className="bg-white/10 backdrop-blur-md rounded-lg shadow-xl p-6 w-full max-w-md">
         <h3 className="text-lg leading-6 font-bold text-center text-white mb-4">
           Contact Us
@@ -121,7 +123,9 @@ const ContactPage = () => {
           <p className="text-center text-red-700">{responseMessage}</p>
         )}
       </div>
-      <div className="hidden md:block absolute w-[30rem] h-[30rem] opacity-70 bg-[#068bf8] rounded-full blur-[20rem] bottom-[-10rem] right-[-10rem] z-0"></div>
+      <div className="relative">
+        <div className="hidden md:block absolute w-[30rem] h-[30rem] opacity-70 bg-[#068bf8] rounded-full blur-[20rem] bottom-[-10rem] right-[-70rem] z-0"></div>
+      </div>
     </div>
   );
 };
