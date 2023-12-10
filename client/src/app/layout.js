@@ -2,6 +2,7 @@ import "./globals.css";
 import React from "react";
 import ServerLayout from "./ServerLayout"; // Importing ServerLayout
 import ClientLayout from "./ClientLayout"; // Importing ClientLayout
+import icoverimage from "../../public/images/VoxaLinkCover.png";
 
 export const metadata = {
   title: {
@@ -23,7 +24,7 @@ export const metadata = {
     siteName: "VoxaLink Pro",
     images: [
       {
-        url: "/images/VoxaLinkCover.png",
+        url: "https://voxa-link-pro.vercel.app/images/VoxaLinkCover.png",
         width: 1200,
         height: 630,
       },
