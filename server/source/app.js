@@ -4,12 +4,13 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import path from 'path'; 
-import { fileURLToPath } from 'url';
+// import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import logger from './logger.js';
 
 import walletRoutes from './routes/walletRoute.js';
 // import fileRoutes from './routes/fileRoute.js';
+
 
 dotenv.config();
 // const __filename = fileURLToPath(import.meta.url);

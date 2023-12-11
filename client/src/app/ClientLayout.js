@@ -10,7 +10,7 @@ import { mainnet, sepolia } from "wagmi/chains";
 
 dotenv.config();
 
-const chains = [sepolia];
+const chains = [mainnet];
 
 const config = createConfig(
   getDefaultConfig({

@@ -12,3 +12,10 @@ Contract Call:
 
 Docs: https://viem.sh/docs/contract/readContract.html
 Version: viem@1.19.10
+2023-12-11 16:11:51 [31merror[39m: uncaughtException: filename must be a string
+TypeError: filename must be a string
+    at createparams (C:\Users\khiza\OneDrive\Desktop\AI Project\VoxaLink\server\node_modules\content-disposition\index.js:174:11)
+    at contentDisposition (C:\Users\khiza\OneDrive\Desktop\AI Project\VoxaLink\server\node_modules\content-disposition\index.js:151:16)
+    at ServerResponse.download (C:\Users\khiza\OneDrive\Desktop\AI Project\VoxaLink\server\node_modules\express\lib\response.js:574:28)
+    at file:///C:/Users/khiza/OneDrive/Desktop/AI%20Project/VoxaLink/server/source/app.js:38:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

@@ -24,7 +24,7 @@ export const metadata = {
     siteName: "VoxaLink Pro",
     images: [
       {
-        url: "https://voxa-link-pro.vercel.app/images/VoxaLinkCover.png",
+        url: "https://images-ext-2.discordapp.net/external/ef2gA4guKuTWx83V-l-eRq0pYN9D-M7IwBM1VhRl5u8/https/www.voxalinkpro.io/images/VoxaLinkCover.png?format=webp&quality=lossless&width=963&height=506",
         width: 1200,
         height: 630,
       },
