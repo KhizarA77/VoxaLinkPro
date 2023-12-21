@@ -1,12 +1,12 @@
-import React from 'react';
-import styles from '../styles/TokenContract.module.css'; // Ensure this points to the correct CSS file
+import React from "react";
+import styles from "../styles/TokenContract.module.css"; // Ensure this points to the correct CSS file
 
 export default function TokenContract() {
   const contractDetails = {
     address: "TBA",
     decimal: "18",
     network: "ETH-Chain",
-    tokenSymbol: "$wVXLP",
+    tokenSymbol: "$VXLP",
   };
 
   return (
@@ -15,7 +15,8 @@ export default function TokenContract() {
       <div className={`${styles.tokenCard}`}>
         <h2 className="text-2xl font-semibold mb-4">ICO Token Contract</h2>
         <p className="text-sm mb-6">
-          Use the contract information below to add the {contractDetails.tokenSymbol} token to your wallet.
+          Use the contract information below to add the{" "}
+          {contractDetails.tokenSymbol} token to your wallet.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
@@ -43,4 +44,3 @@ export default function TokenContract() {
     </div>
   );
 }
-

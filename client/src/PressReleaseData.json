@@ -1,34 +1,48 @@
 [
   {
     "id": 1,
-    "imageSrc": "/images/Poster1.png",
-    "title": "VoxaLinkPro: Elevating Customer Experience",
-    "description": "In the nuanced world of customer sentiment analysis, artificial intelligence becomes the compass...",
-    "link": "https://academy.voxalinkpro.io/"
+    "imageSrc": "/images/BinancePoster.png",
+    "title": "VoxaLink Pro Forging a Path in Decentralized Finance's Future",
+    "description": "In a world pulsating with innovation, VoxaLink Pro emerges as the conductor orchestrating a revolution....",
+    "link": "https://www.binance.com/en-IN/feed/post/1674736705777?ref=570783884&utm_medium=web_share_copy"
   },
   {
-    "id": 2,
-    "imageSrc": "/images/Poster2.png",
-    "title": "Unveiling the Power of VoxaLink Pro",
-    "description": "In the dynamic landscape of technology, VoxaLink Pro emerges as a game-changer, offering a profound...",
-    "link": "https://academy.voxalinkpro.io/"
-  },
-  {
-    "id": 3,
-    "imageSrc": "/images/Poster3.png",
-    "title": "VoxaLink Pro's Real-Time Translation Unleashed",
-    "description": "In the dynamic realm of multinational corporations, effective communication is the linchpin that...",
-    "link": "https://academy.voxalinkpro.io/"
-  },
-  {
-    "id": 4,
+    "id": 5,
     "imageSrc": "/images/Poster4.png",
     "title": "Pioneering Voice-Authenticated Digital Identity with VoxaLink Pro",
     "description": "Our native token is set to revolutionize how value is exchanged in digital ecosystems...",
     "link": "https://academy.voxalinkpro.io/"
   },
   {
-    "id": 5,
+    "id": 9,
+    "imageSrc": "/images/Poster8.png",
+    "title": "Introducing Voice NFTs: VoxaLink Pro's Unique Innovation",
+    "description": "In the unexplored realms of innovation, VoxaLink Pro charts a course into uncharted territoy...",
+    "link": "https://academy.voxalinkpro.io/"
+  },
+  {
+    "id": 4,
+    "imageSrc": "/images/Poster3.png",
+    "title": "VoxaLink Pro's Real-Time Translation Unleashed",
+    "description": "In the dynamic realm of multinational corporations, effective communication is the linchpin that...",
+    "link": "https://academy.voxalinkpro.io/"
+  },
+  {
+    "id": 2,
+    "imageSrc": "/images/Poster1.png",
+    "title": "VoxaLinkPro: Elevating Customer Experience",
+    "description": "In the nuanced world of customer sentiment analysis, artificial intelligence becomes the compass...",
+    "link": "https://academy.voxalinkpro.io/"
+  },
+  {
+    "id": 3,
+    "imageSrc": "/images/Poster2.png",
+    "title": "Unveiling the Power of VoxaLink Pro",
+    "description": "In the dynamic landscape of technology, VoxaLink Pro emerges as a game-changer, offering a profound...",
+    "link": "https://academy.voxalinkpro.io/"
+  },
+  {
+    "id": 6,
     "imageSrc": "/images/Poster6.png",
     "title": "Voice Biometrics: A New Era of Security with VoxaLink Pro",
     "description": "In the forefront of identity verification with VoxaLink Pro, revolutionary Voice Biometrics...",
@@ -36,24 +50,17 @@
   },
 
   {
-    "id": 6,
+    "id": 7,
     "imageSrc": "/images/Poster7.png",
     "title": "Live Transcription-Translation: VoxaLink's Multilingual Edge",
     "description": "In the pulsating heart of VoxaLink Pro's innovation lies the ability to transform spoken words...",
     "link": "https://academy.voxalinkpro.io/"
   },
   {
-    "id": 7,
+    "id": 8,
     "imageSrc": "/images/Poster5.png",
     "title": "Redefining Online Identity Verification",
     "description": "In the rapidly evolving landscape of online transactions, the significance of voice biometrics...",
-    "link": "https://academy.voxalinkpro.io/"
-  },
-  {
-    "id": 8,
-    "imageSrc": "/images/Poster8.png",
-    "title": "Introducing Voice NFTs: VoxaLink Pro's Unique Innovation",
-    "description": "In the unexplored realms of innovation, VoxaLink Pro charts a course into uncharted territoy...",
     "link": "https://academy.voxalinkpro.io/"
   }
 ]

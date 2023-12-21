@@ -2,7 +2,6 @@ import "./globals.css";
 import React from "react";
 import ServerLayout from "./ServerLayout"; // Importing ServerLayout
 import ClientLayout from "./ClientLayout"; // Importing ClientLayout
-import icoverimage from "../../public/images/VoxaLinkCover.png";
 
 export const metadata = {
   title: {

@@ -12,16 +12,14 @@ import PressReleaseCard from "@/components/PressReleaseCard";
 import PressData from "../PressReleaseData.json";
 import VideoPlayer from "@/components/VideoPlayer";
 import dynamic from "next/dynamic";
-import styles from "../styles/Polkadot.module.css";
 import Faq from "@/components/Faq";
 import TokenContract from "@/components/TokenContract";
 import Roadmap from "@/components/Roadmap";
 import { ScrollContext } from "@/context/ScrollContext";
-import ContactPage from "./contact/page";
 import Giveawaycard from "@/components/Giveawaycard";
 import "./globals.css";
 import Tokenomics from "@/components/Chart";
-import Head from "next/head";
+import ExchangePartner from "@/components/ExchangePartner";
 
 const DynamicGlobe = dynamic(() => import("@/components/Globe"), {
   ssr: false,
@@ -77,7 +75,13 @@ export default function Home() {
           {/* Purple Circle - hidden on screens smaller than md */}
           <div className="hidden md:block absolute w-[50rem] h-[50rem] opacity-70 bg-[#b63fc9] rounded-full blur-[20rem] top-[-18rem] left-[-30rem]"></div>
           <div className="absolute md:top-[-10rem] md:scale-100 scale-125 right-0 top-[5rem] rotate-[135deg]">
-            <Image src="/images/logo2.png" width={800} height={800} />
+            <Image
+              src="/images/logo2.png"
+              alt="Logo - Voxalink Pro"
+              width={800}
+              height={800}
+              priority
+            />
           </div>
         </div>
         {/* Content */}
@@ -154,9 +158,12 @@ export default function Home() {
           <div className="hidden md:block absolute w-[25rem] h-[25rem] opacity-50 bg-[#068bf8] rounded-full blur-[20rem] top-[50rem] right-0"></div>
         </div>
         {/*For the Logos Slider like binance, cointelegraph etc */}
-        {/* <div className="mt-[7rem]">
-        <LogoSlider />
-      </div> */}
+        <div className="mt-[10rem]">
+          <h2 className="text-white text-2xl font-bold text-center mb-[5rem]">
+            Seen On
+          </h2>
+          <LogoSlider />
+        </div>
         <div className="flex flex-col items-center text-center">
           <h1 className="text-white text-3xl font-semibold mt-[10rem] mb-10">
             Our AI services
@@ -197,6 +204,10 @@ export default function Home() {
           <div className="hidden md:block absolute w-[25rem] h-[25rem] opacity-60 bg-[#4752b6] rounded-full blur-[20rem] top-[50rem] leftt-0"></div>
         </div>
 
+        <div className="mb-[10rem]">
+          <ExchangePartner />
+        </div>
+
         <div className="flex flex-col justify-center items-center text-center my-12">
           <div className="p-8 md:p-20 rounded-2xl bg-[#333] bg-opacity-10 backdrop-blur-md flex flex-col justify-center items-center z-10 shadow-lg w-full max-w-6xl mx-auto relative overflow-hidden">
             {/* Gradient overlay for a glossy effect */}
@@ -224,14 +235,17 @@ export default function Home() {
         </div>
 
         <div id="roadmap">
-          <div id="svgContainer" className="svg-container overflow-hidden">
+          <div
+            id="svgContainer"
+            className="svg-container overflow-hidden mt-[8rem]"
+          >
             <Roadmap />
           </div>
         </div>
 
         {/* Buttons and Table */}
         {/* Buttons */}
-        <div className="mt-[13rem] mb-[10rem] mx-4">
+        <div className="mt-[10rem] mb-[10rem] mx-4">
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-wrap justify-center gap-4">
               <button
@@ -262,7 +276,7 @@ export default function Home() {
           <h1 className="text-white font-bold text-4xl text-center mb-4">
             Press Release
           </h1>
-          <p className="text-gray-500 text-center mb-7 mx-6">
+          <p className="text-gray-400 text-center mb-7 mx-6">
             Latest articles and updates about VoxaLink Pro.
           </p>
           <PressReleaseCard data={PressData} />
@@ -278,7 +292,7 @@ export default function Home() {
 
         {/* Globe Section */}
         {shouldRenderGlobeSection() && (
-          <div className="mt-[6rem] p-2 flex-col items-center flex">
+          <div className="mt-[2rem] p-2 flex-col items-center flex">
             {/* Light Purplish Circle - right of the Globe */}
             <div className="hidden lg:block absolute w-[20rem] h-[45rem] opacity-30 bg-[#b63fc9] rounded-full blur-[15rem] right-[-10rem]"></div>
             {/* Light bluish Circle - left of the Globe */}
@@ -293,7 +307,7 @@ export default function Home() {
         <div className="bg-[#17181D] flex flex-col justify-center items-center text-left px-10 pb-[10rem]">
           {/* Content here */}
           {/* <Giveawaycard preSaleCardRef={preSaleCardRef} /> */}
-          <div className="w-full md:w-[60%] mt-[4rem]">
+          <div className="w-full md:w-[60%] mt-[2rem]">
             <Faq />
           </div>
         </div>

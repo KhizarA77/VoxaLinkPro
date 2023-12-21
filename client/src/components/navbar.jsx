@@ -60,7 +60,12 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect triggered. isConnected:", isConnected, "address:", address);
+    console.log(
+      "useEffect triggered. isConnected:",
+      isConnected,
+      "address:",
+      address
+    );
     if (!isConnected) {
       localStorage.removeItem("connectedWalletAddress");
       console.log("Wallet disconnected, local storage cleared.");
@@ -89,7 +94,7 @@ const Navbar = () => {
             <img
               src="/images/navlogo.png"
               className="md:w-[250px] w-[180px] transform -translate-x-2"
-              alt="Logo"
+              alt="VoxaLink Pro"
             />
           </Link>
           <div className="hidden lg:flex space-x-8 ml-10 text-md">
@@ -113,7 +118,7 @@ const Navbar = () => {
             <ConnectKitButton />
           </div>
           <button
-            className="bg-pink-500 hover:bg-pink-800 text-md hidden md:block text-white px-5 py-[0.1rem] md:py-[0.09rem] rounded-xl mr-4 h-10"
+            className="bg-[#7d4daf] hover:bg-[#513074] text-md hidden md:block text-white px-5 py-[0.1rem] md:py-[0.09rem] rounded-xl mr-4 h-10"
             onClick={scrollToPreSaleCard}
           >
             Buy $VXLP

@@ -8,14 +8,13 @@ import { ScrollProvider } from "@/context/ScrollContext";
 import { mainnet, sepolia } from "wagmi/chains";
 // import config from '../../pages/api/config'
 
-
 const chains = [mainnet];
 
 const config = createConfig(
   getDefaultConfig({
     // Required API Keys
-    infuraId: 'c759978ac1544e084dfbcffd7498400', // or infuraId
-    walletConnectProjectId: '6b49792029eb24adfa1aff3e1868073c',
+    infuraId: process.env.NEXT_PUBLIC_INFURA_ID, // or infuraId
+    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_PROJECT,
     chains,
     // Required
     appName: "VoxaLink Pro",
@@ -23,7 +22,8 @@ const config = createConfig(
     // Optional
     appDescription: "Ethereum's First AI Voice  Application",
     appUrl: "http://voxalinkpro.io/", // your app's url
-    appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
+    appIcon:
+      "https://images-ext-2.discordapp.net/external/ef2gA4guKuTWx83V-l-eRq0pYN9D-M7IwBM1VhRl5u8/https/www.voxalinkpro.io/images/VoxaLinkCover.png?format=webp&quality=lossless&width=963&height=506", // your app's icon, no bigger than 1024x1024px (max. 1MB)
   })
 );
 

@@ -47,10 +47,12 @@ const PressReleaseCard = ({ data }) => {
               <div className="p-3 md:p-5 h-1/3">
                 {" "}
                 {/* Adjust the height ratio as per your design */}
-                <h5 className="text-lg font-semibold tracking-tight text-white">
+                <h2 className="text-lg font-semibold tracking-tight text-white">
                   {item.title}
-                </h5>
-                <p className="font-normal text-gray-400">{item.description}</p>
+                </h2>
+                <h3 className="font-normal text-gray-400">
+                  {item.description}
+                </h3>
               </div>
             </div>
           </motion.div>

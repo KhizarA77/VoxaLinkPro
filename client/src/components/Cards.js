@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const Card = ({ image, title, description, button, link, variants }) => {
+const Card = ({ image, alt, title, description, button, link, variants }) => {
   const buttonBgClass =
     button === "Coming Soon"
       ? "bg-gray-400 text-white pointer-none"
@@ -31,7 +31,7 @@ const Card = ({ image, title, description, button, link, variants }) => {
             <div
               className={`${styles.cardImage} flex justify-center items-center`}
             >
-              <Image src={image} height={190} width={190} />
+              <Image src={image} alt={alt} height={190} width={190} />
             </div>
             <div className={styles.cardInfoWrapper}>
               <div className={`${styles.cardInfo}`}>
@@ -70,13 +70,16 @@ const CardsContainer = () => {
   const cardsData = [
     {
       image: "/images/transcribe.png",
+      alt: "Mic bubble - Voxalink_Pro",
       title: "AI Transcriber",
-      description: "Transforms spoken language into text in real-time, breaking down language barriers for global communication.",
+      description:
+        "Transforms spoken language into text in real-time, breaking down language barriers for global communication.",
       buttonName: "23 December",
       buttonLink: "#",
     },
     {
       image: "/images/voiceauthentication.png",
+      alt: "Security box - Voxalink_Pro",
       title: "Voice Authentication",
       description:
         "Utilizes advanced biometrics and anti-spoofing technology to replace traditional authentication methods for enhanced security.",
@@ -85,13 +88,16 @@ const CardsContainer = () => {
     },
     {
       image: "/images/analyzer2.png",
+      alt: "Search graph - Voxalink_Pro",
       title: "AI Analyzer",
-      description: "Goes beyond transcription to provide insightful summaries, enabling users to extract key information quickly and efficiently",
+      description:
+        "Goes beyond transcription to provide insightful summaries, enabling users to extract key information quickly and efficiently",
       buttonName: "Coming Soon",
       buttonLink: "#",
     },
     {
       image: "/images/calender.png",
+      alt: "Calendar - Voxalink_Pro",
       title: "AI Meeting Planner",
       description: "Plans trip according to your prompt with ONE click booking",
       buttonName: "Coming Soon",
@@ -99,6 +105,7 @@ const CardsContainer = () => {
     },
     {
       image: "/images/VoiceNFT.png",
+      alt: "NFT creation - Voxalink_Pro",
       title: "Voice NFTs",
       description:
         "Allows creation, authentication, and trading of unique voice recordings as NFTs, opening a new market for voice content in the NFT space.",
@@ -107,6 +114,7 @@ const CardsContainer = () => {
     },
     {
       image: "/images/SmartContracts.png",
+      alt: "Contract writing - Voxalink_Pro",
       title: "Voice Activated Smart Contracts",
       description:
         "Enables verbal agreements to become binding contracts through voice commands, making blockchain technology more accessible.",
@@ -139,6 +147,7 @@ const CardsContainer = () => {
         <Card
           key={index}
           image={data.image}
+          alt={data.alt}
           title={data.title}
           description={data.description}
           button={data.buttonName}

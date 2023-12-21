@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export default function BasicAccordion() {
   const [expanded, setExpanded] = useState(null);
@@ -17,22 +17,26 @@ export default function BasicAccordion() {
 
     return (
       <div
-        className={`overflow-hidden shadow-lg mb-2 transition-all ${isOpen ? 'rounded-t-lg' : 'rounded-lg'}`}
+        className={`overflow-hidden shadow-lg mb-2 transition-all ${
+          isOpen ? "rounded-t-lg" : "rounded-lg"
+        }`}
         onMouseOver={(e) => applyHoverEffect(e, 0.2)} // Increase transparency on hover
         onMouseOut={(e) => applyHoverEffect(e, 0.1)} // Return to original transparency
       >
         <button
-          className={`w-full text-left px-5 py-3 focus:outline-none transition duration-300 ease-in-out ${isOpen ? 'rounded-t-lg' : 'rounded-lg'}`}
+          className={`w-full text-left px-5 py-3 focus:outline-none transition duration-300 ease-in-out ${
+            isOpen ? "rounded-t-lg" : "rounded-lg"
+          }`}
           style={{
-            background: 'rgba(255, 255, 255, 0.1)', // White with semi-transparency
-            backdropFilter: 'saturate(180%) blur(30px)', // Glossy effect
-            WebkitBackdropFilter: 'saturate(180%) blur(30px)', // For cross-browser support
+            background: "rgba(255, 255, 255, 0.1)", // White with semi-transparency
+            backdropFilter: "saturate(180%) blur(30px)", // Glossy effect
+            WebkitBackdropFilter: "saturate(180%) blur(30px)", // For cross-browser support
           }}
           onClick={() => handleToggle(panelId)}
         >
           <div className="flex justify-between items-center">
             <h2 className="font-normal text-white">{title}</h2>
-            <span className="text-lg text-white">{isOpen ? '−' : '+'}</span>
+            <span className="text-lg text-white">{isOpen ? "−" : "+"}</span>
           </div>
         </button>
         {isOpen && (
@@ -40,25 +44,26 @@ export default function BasicAccordion() {
             className="text-white transition-all duration-300 ease-in-out rounded-b-lg"
             style={{
               background: `linear-gradient(to right, rgba(255, 20, 147, 0.5), rgba(106, 17, 203, 0.2))`, // Gradient background
-              marginLeft: '1rem', // Indent content box to the left
-              marginRight: '-1rem', // Extend content box to the right
-              position: 'relative', // Needed for the pseudo-element to position itself
-              backdropFilter: 'saturate(180%) blur(30px)', // Glossy effect
-              WebkitBackdropFilter: 'saturate(180%) blur(30px)', // For cross-browser support
+              marginLeft: "1rem", // Indent content box to the left
+              marginRight: "-1rem", // Extend content box to the right
+              position: "relative", // Needed for the pseudo-element to position itself
+              backdropFilter: "saturate(180%) blur(30px)", // Glossy effect
+              WebkitBackdropFilter: "saturate(180%) blur(30px)", // For cross-browser support
             }}
           >
             <div
               style={{
-                position: 'absolute', // Overlay is positioned absolutely
+                position: "absolute", // Overlay is positioned absolutely
                 top: 0,
                 right: 0,
                 bottom: 0,
                 left: 0,
-                background: 'rgba(0, 0, 0, 0.2)', // Overlay with slight darkness
-                borderRadius: '0 0 0.5rem 0.5rem', // Match the border radius of the container
+                background: "rgba(0, 0, 0, 0.2)", // Overlay with slight darkness
+                borderRadius: "0 0 0.5rem 0.5rem", // Match the border radius of the container
               }}
             />
-            <p className="px-5 py-3 relative">{content}</p> {/* relative to keep text above overlay */}
+            <p className="px-5 py-3 relative">{content}</p>{" "}
+            {/* relative to keep text above overlay */}
           </div>
         )}
       </div>
