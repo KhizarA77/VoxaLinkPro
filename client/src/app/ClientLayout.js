@@ -2,21 +2,20 @@
 import React from "react";
 import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import dotenv from "dotenv";
 import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
 import { ScrollProvider } from "@/context/ScrollContext";
 import { mainnet, sepolia } from "wagmi/chains";
+// import config from '../../pages/api/config'
 
-dotenv.config();
 
 const chains = [mainnet];
 
 const config = createConfig(
   getDefaultConfig({
     // Required API Keys
-    infuraId: process.env.INFURA_ID, // or infuraId
-    walletConnectProjectId: process.env.WALLET_PROJECT,
+    infuraId: 'c759978ac1544e084dfbcffd7498400', // or infuraId
+    walletConnectProjectId: '6b49792029eb24adfa1aff3e1868073c',
     chains,
     // Required
     appName: "VoxaLink Pro",

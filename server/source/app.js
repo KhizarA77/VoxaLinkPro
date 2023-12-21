@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 import logger from './logger.js';
 
 import walletRoutes from './routes/walletRoute.js';
-// import fileRoutes from './routes/fileRoute.js';
+import fileRoutes from './routes/fileRoute.js';
 
 
 dotenv.config();
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 
 
 app.use('/api/wallet', walletRoutes);
-// app.use('/services/prescription', fileRoutes);
+app.use('/services/transcription', fileRoutes);
 
 
 const PORT = process.env.PORT || 4000;

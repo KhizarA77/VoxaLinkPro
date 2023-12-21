@@ -16,7 +16,7 @@ uploadMiddleware,
 virusScan, 
 processFile);
 
-Router.get('/transcriptions', authorize, transcriptionHistory);
+Router.get('/history', authorize, transcriptionHistory);
 
 
 Router.get('/download', downloadFile)

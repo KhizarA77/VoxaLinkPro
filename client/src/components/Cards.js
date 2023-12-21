@@ -71,22 +71,22 @@ const CardsContainer = () => {
     {
       image: "/images/transcribe.png",
       title: "AI Transcriber",
-      description: "Transcribes your video/audio and outputs subtitles",
-      buttonName: "15 December",
+      description: "Transforms spoken language into text in real-time, breaking down language barriers for global communication.",
+      buttonName: "23 December",
       buttonLink: "#",
     },
     {
       image: "/images/voiceauthentication.png",
       title: "Voice Authentication",
       description:
-        "Security feature that verifies if the person speaking is same or not",
+        "Utilizes advanced biometrics and anti-spoofing technology to replace traditional authentication methods for enhanced security.",
       buttonName: "Coming Soon",
       buttonLink: "#",
     },
     {
       image: "/images/analyzer2.png",
       title: "AI Analyzer",
-      description: "Analyzes your data using our accurate model",
+      description: "Goes beyond transcription to provide insightful summaries, enabling users to extract key information quickly and efficiently",
       buttonName: "Coming Soon",
       buttonLink: "#",
     },
@@ -101,7 +101,7 @@ const CardsContainer = () => {
       image: "/images/VoiceNFT.png",
       title: "Voice NFTs",
       description:
-        "Allow users to create, authenticate, and trade unique voice recordings",
+        "Allows creation, authentication, and trading of unique voice recordings as NFTs, opening a new market for voice content in the NFT space.",
       buttonName: "Coming Soon",
       buttonLink: "#",
     },
@@ -109,7 +109,7 @@ const CardsContainer = () => {
       image: "/images/SmartContracts.png",
       title: "Voice Activated Smart Contracts",
       description:
-        "Verbal agreements become binding contracts through voice commands",
+        "Enables verbal agreements to become binding contracts through voice commands, making blockchain technology more accessible.",
       buttonName: "Coming Soon",
       buttonLink: "#",
     },

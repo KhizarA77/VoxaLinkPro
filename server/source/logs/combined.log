@@ -36,3 +36,10 @@ TypeError: filename must be a string
 2023-12-11 16:21:53 [32minfo[39m: File downloaded successfully:
 2023-12-11 16:22:16 [32minfo[39m: Server is running on port http://localhost:4000
 2023-12-11 16:22:25 [32minfo[39m: File downloaded successfully:
+2023-12-11 16:54:53 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-11 16:54:54 [32minfo[39m: Balance of 0x5aB673AccA34F4F05E2766a7d9F362AaF1aBcB6a is 0
+2023-12-11 16:55:44 [32minfo[39m: Incoming request from IP: ::1 and User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+2023-12-11 16:56:38 [32minfo[39m: Server is running on port http://localhost:4000
+2023-12-11 16:56:39 [32minfo[39m: Balance of 0x5aB673AccA34F4F05E2766a7d9F362AaF1aBcB6a is 0
+2023-12-11 16:56:47 [32minfo[39m: Incoming request from IP: ::1 and User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+2023-12-11 16:56:48 [32minfo[39m: File downloaded successfully:

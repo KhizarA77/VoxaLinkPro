@@ -43,7 +43,7 @@ function Roadmap(props) {
       {isMobile ? (
         // This will render on screens smaller than 768px
         <Image 
-        src="/images/roadmap.png" 
+        src="/images/roadmap.webp" 
         alt="Roadmap" 
         layout="responsive" 
         width={100}
