@@ -1,7 +1,7 @@
 import TwitterIcon from "@mui/icons-material/Twitter";
 import TelegramIcon from "@mui/icons-material/Telegram";
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -98,7 +98,7 @@ export default function Footer() {
               target="_blank"
             >
               <Image
-                src="/icons/discord.png"
+                src="/Icons/discord.png"
                 alt="Discord"
                 width={25}
                 height={25}
