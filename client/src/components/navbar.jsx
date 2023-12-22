@@ -46,7 +46,7 @@ const Navbar = () => {
           };
           const verifyResponse = await fetch(
             // "https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/connect",
-            'http://localhost:4000/api/wallet/connect',
+            "http://localhost:4000/api/wallet/connect",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -105,7 +105,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="bg-[#6664649f] backdrop-blur-md p-3 md:p-4 fixed w-full"
+      className="bg-[#66646411] backdrop-blur-md p-3 md:p-4 fixed w-full"
       style={{ zIndex: 5 }}
     >
       <div className="flex justify-between items-center">
@@ -146,6 +146,13 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+      <div
+        className="absolute bottom-0 left-0 w-full h-[1px]"
+        style={{
+          background:
+            "linear-gradient(to right, transparent, #87879b, transparent)",
+        }}
+      />
     </nav>
   );
 };

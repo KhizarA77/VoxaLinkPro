@@ -39,8 +39,8 @@ export default function Home() {
   const twitterLink = "https://twitter.com/VoxaLinkPro";
   const telegramLink = "https://t.me/voxalinkproofficial";
   const discordLink = "https://discord.gg/3zuyweZubh";
-  const instagramLink = "https://www.instagram.com/voxalinkpro/"
-  const linkedinLink = "https://www.linkedin.com/company/voxalinkpro"
+  const instagramLink = "https://www.instagram.com/voxalinkpro/";
+  const linkedinLink = "https://www.linkedin.com/company/voxalinkpro";
 
   useEffect(() => {
     setIsClient(true);
@@ -188,7 +188,7 @@ export default function Home() {
         {/*For the Logos Slider like binance, cointelegraph etc */}
         <div className="mt-[10rem]">
           <h2 className="text-white text-2xl font-bold text-center mb-[5rem]">
-            Seen On
+            Featured On
           </h2>
           <LogoSlider />
         </div>
