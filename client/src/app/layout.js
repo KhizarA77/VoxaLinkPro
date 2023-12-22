@@ -4,6 +4,7 @@ import ServerLayout from "./ServerLayout"; // Importing ServerLayout
 import ClientLayout from "./ClientLayout"; // Importing ClientLayout
 
 export const metadata = {
+  metadataBase: new URL('http://localhost:3000'),
   title: {
     default:
       "VoxaLink Pro | Igniting Blockchain Infused Innovation Through Speech-AI",

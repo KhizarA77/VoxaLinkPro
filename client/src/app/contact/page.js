@@ -51,7 +51,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#17181d] text-black justify-center items-center px-4 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-[#17181d] text-black justify-center items-center px-4 overflow-x-hidden overflow-y-hidden">
       {/* Purple Circle - top left */}
       <div className="relative">
         <div className="hidden md:block absolute w-[50rem] h-[50rem] opacity-70 bg-[#b63fc9] rounded-full blur-[20rem] top-[-18rem] left-[-90rem]"></div>

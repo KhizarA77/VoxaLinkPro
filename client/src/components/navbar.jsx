@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import Menu from "./menu";
 import { ScrollContext } from "@/context/ScrollContext";
@@ -10,6 +10,17 @@ import { signMessage } from "@wagmi/core";
 const Navbar = () => {
   const preSaleCardRef = useContext(ScrollContext);
   const { isConnected, address } = useAccount();
+  const [wasConnected, setWasConnected] = useState(isConnected);
+
+  const clearCookies = useCallback(() => {
+    const clearCookie = (name) => {
+      document.cookie = `${name}=; Max-Age=-99999999; path=/;`;
+    };
+
+    clearCookie("refreshToken");
+    clearCookie("accessToken");
+    console.log("Cookies cleared");
+  }, []);
 
   const connectWallet = async () => {
     const storedAddress = localStorage.getItem("connectedWalletAddress");
@@ -20,7 +31,8 @@ const Navbar = () => {
 
       try {
         const nonceResponse = await fetch(
-          `https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/getNonce?walletAddress=${address}`
+          // `https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/getNonce?walletAddress=${address}`
+          `http://localhost:4000/api/wallet/getNonce?walletAddress=${address}`
         );
         const nonceData = await nonceResponse.json();
 
@@ -33,11 +45,13 @@ const Navbar = () => {
             signature: signatureData,
           };
           const verifyResponse = await fetch(
-            "https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/connect",
+            // "https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/connect",
+            'http://localhost:4000/api/wallet/connect',
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(payload),
+              credentials: "include",
             }
           );
           const verifyStatus = verifyResponse.status;
@@ -66,13 +80,22 @@ const Navbar = () => {
       "address:",
       address
     );
+
+    // Clear cookies when wallet is disconnected
+    if (wasConnected && !isConnected) {
+      clearCookies();
+      console.log("Wallet disconnected, cookies cleared.");
+    }
+
     if (!isConnected) {
       localStorage.removeItem("connectedWalletAddress");
       console.log("Wallet disconnected, local storage cleared.");
     } else {
       connectWallet();
     }
-  }, [isConnected, address]);
+
+    setWasConnected(isConnected);
+  }, [isConnected, address, clearCookies]);
 
   const scrollToPreSaleCard = () => {
     if (preSaleCardRef && preSaleCardRef.current) {
@@ -114,9 +137,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex gap-6 lg:gap-6">
-          <div>
-            <ConnectKitButton />
-          </div>
+          <ConnectKitButton />
           <button
             className="bg-[#7d4daf] hover:bg-[#513074] text-md hidden md:block text-white px-5 py-[0.1rem] md:py-[0.09rem] rounded-xl mr-4 h-10"
             onClick={scrollToPreSaleCard}

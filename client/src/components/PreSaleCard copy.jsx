@@ -14,7 +14,7 @@ const contractAddress =
 
 import { prepareWriteContract, writeContract, readContract } from "@wagmi/core";
 
-import { useAccount } from "wagmi";
+import { useAccount, useBalance } from "wagmi";
 
 export default function PreSaleCard() {
   //Loading bar constants
@@ -139,6 +139,11 @@ export default function PreSaleCard() {
     // Add a new state variable for ETH amount if needed
   };
 
+  const balance = useBalance({
+    address: '0x00000000219ab540356cBB839Cbe05303d7705Fa',
+    formatUnits: 'ether',
+  })
+
   const handleInputChange = (event) => {
     const value = event.target.value;
     if (selectedOption === "USDT") {
@@ -250,7 +255,7 @@ export default function PreSaleCard() {
         </h2>
       </div>
       <div className="text-white text-md md:text-lg mb-4">
-        USD Raised: $6,607,003 / $7,200,000
+      USD Raised: {balance?.data?.formatted && (parseFloat(balance.data.formatted) * ETHPriceUSD).toLocaleString('en-US', { maximumFractionDigits: 2 })}
       </div>
       <div className="text-white text-sm md:text-md  mb-4">
         Listing price: $0.1

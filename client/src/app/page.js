@@ -39,6 +39,8 @@ export default function Home() {
   const twitterLink = "https://twitter.com/VoxaLinkPro";
   const telegramLink = "https://t.me/voxalinkproofficial";
   const discordLink = "https://discord.gg/3zuyweZubh";
+  const instagramLink = "https://www.instagram.com/voxalinkpro/"
+  const linkedinLink = "https://www.linkedin.com/company/voxalinkpro"
 
   useEffect(() => {
     setIsClient(true);
@@ -142,6 +144,32 @@ export default function Home() {
                   <Image
                     src="/Icons/discord.svg"
                     alt="Discord"
+                    width={30}
+                    height={30}
+                  />
+                </a>
+                <a
+                  href={linkedinLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:scale-110 transition transform duration-300"
+                >
+                  <Image
+                    src="/Icons/linkedin.svg"
+                    alt="Linkedin"
+                    width={30}
+                    height={30}
+                  />
+                </a>
+                <a
+                  href={instagramLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:scale-110 transition transform duration-300"
+                >
+                  <Image
+                    src="/Icons/instagram.svg"
+                    alt="Instagram"
                     width={30}
                     height={30}
                   />
