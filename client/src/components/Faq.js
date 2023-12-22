@@ -44,8 +44,8 @@ export default function BasicAccordion() {
             className="text-white transition-all duration-300 ease-in-out rounded-b-lg"
             style={{
               background: `linear-gradient(to right, rgba(255, 20, 147, 0.5), rgba(106, 17, 203, 0.2))`, // Gradient background
-              marginLeft: "1rem", // Indent content box to the left
-              marginRight: "-1rem", // Extend content box to the right
+              marginLeft: "0rem", // Indent content box to the left
+              marginRight: "0rem", // Extend content box to the right
               position: "relative", // Needed for the pseudo-element to position itself
               backdropFilter: "saturate(180%) blur(30px)", // Glossy effect
               WebkitBackdropFilter: "saturate(180%) blur(30px)", // For cross-browser support
