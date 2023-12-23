@@ -1,9 +1,23 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Hamburger from "hamburger-react";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
+
+  const [servicesOpen, setServicesOpen] = useState(false);
+
+  const handleServicesClick = () => {
+    // Toggle the services submenu
+    setServicesOpen(!servicesOpen);
+  };
+
+  // Determine the rotation and margin for the icon
+  const iconStyle = {
+    transform: servicesOpen ? "rotate(0deg)" : "rotate(-90deg)",
+    marginLeft: "8px", // Adjust the gap size as needed,
+  };
 
   return (
     <>
@@ -28,7 +42,7 @@ const Menu = () => {
                 Home
               </span>
             </Link>
-            <a
+            <Link
               href="https://docsend.com/view/udmsw2jatjwwzxfa"
               className="text-white"
               onClick={() => setOpen(false)}
@@ -36,7 +50,30 @@ const Menu = () => {
               rel="noopener noreferrer"
             >
               Whitepaper
-            </a>
+            </Link>
+            <div>
+              <span
+                className="text-white cursor-pointer flex justify-center items-center ml-6"
+                onClick={handleServicesClick}
+              >
+                Services
+                <ArrowDropDownIcon style={iconStyle} />
+              </span>
+              {/* Submenu for Services */}
+              {servicesOpen && (
+                <div className="flex flex-col mt-2">
+                  <Link href="/aitranscriber">
+                    <span
+                      className="text-white cursor-pointer font-thin text-[20px]"
+                      onClick={() => setOpen(false)}
+                    >
+                      AI Transcriber
+                    </span>
+                  </Link>
+                  {/* ... other service links */}
+                </div>
+              )}
+            </div>
             <Link href="/contact">
               <span
                 className="text-white cursor-pointer"

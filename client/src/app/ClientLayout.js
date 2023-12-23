@@ -21,7 +21,7 @@ const config = createConfig(
 
     // Optional
     appDescription: "Ethereum's First AI Voice  Application",
-    appUrl: "http://voxalinkpro.io/", // your app's url
+    appUrl: "https://www.voxalinkpro.io/", // your app's url
     appIcon:
       "https://images-ext-2.discordapp.net/external/ef2gA4guKuTWx83V-l-eRq0pYN9D-M7IwBM1VhRl5u8/https/www.voxalinkpro.io/images/VoxaLinkCover.png?format=webp&quality=lossless&width=963&height=506", // your app's icon, no bigger than 1024x1024px (max. 1MB)
   })

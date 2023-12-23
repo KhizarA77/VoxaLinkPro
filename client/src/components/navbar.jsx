@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useContext, useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import Menu from "./menu";
 import { ScrollContext } from "@/context/ScrollContext";
@@ -11,6 +11,18 @@ const Navbar = () => {
   const preSaleCardRef = useContext(ScrollContext);
   const { isConnected, address } = useAccount();
   const [wasConnected, setWasConnected] = useState(isConnected);
+  const [showServices, setShowServices] = useState(false);
+  const servicesMenuRef = useRef(null);
+
+  // Function to open the dropdown
+  const openServicesMenu = () => {
+    setShowServices(true);
+  };
+
+  // Function to close the dropdown
+  const closeServicesMenu = () => {
+    setShowServices(false);
+  };
 
   const clearCookies = useCallback(() => {
     const clearCookie = (name) => {
@@ -121,19 +133,44 @@ const Navbar = () => {
             />
           </Link>
           <div className="hidden lg:flex space-x-8 ml-10 text-md">
-            <Link href="/" className="text-white">
+            <Link href="/" className="text-white hover:text-gray-300">
               Home
             </Link>
             <Link
               href="https://docsend.com/view/udmsw2jatjwwzxfa"
-              className="text-white"
+              className="text-white hover:text-gray-300"
               target="_blank"
             >
               Whitepaper
             </Link>
-            <Link href="/contact" className="text-white">
+            <Link href="/contact" className="text-white hover:text-gray-300">
               Contact
             </Link>
+            <div
+              className="relative text-white"
+              onMouseEnter={openServicesMenu}
+              onMouseLeave={closeServicesMenu}
+            >
+              <button className="text-white focus:outline-none hover:text-gray-300">
+                Services
+              </button>
+              {showServices && (
+                <div
+                  className="absolute left-0 w-48 bg-[#81818185] rounded-md shadow-lg z-50 backdrop-blur-md"
+                  onMouseEnter={openServicesMenu}
+                  onMouseLeave={closeServicesMenu}
+                  ref={servicesMenuRef}
+                >
+                  <Link
+                    href="/aitranscriber"
+                    className="block px-4 py-2 text-sm text-white hover:bg-[#42424285] rounded-md"
+                  >
+                    AI Transcriber
+                  </Link>
+                  {/* ... other service links */}
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex gap-6 lg:gap-6">
