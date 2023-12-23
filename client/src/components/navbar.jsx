@@ -43,8 +43,8 @@ const Navbar = () => {
 
       try {
         const nonceResponse = await fetch(
-          // `https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/getNonce?walletAddress=${address}`
-          `http://localhost:4000/api/wallet/getNonce?walletAddress=${address}`
+          `https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/getNonce?walletAddress=${address}`
+          // `http://localhost:4000/api/wallet/getNonce?walletAddress=${address}`
         );
         const nonceData = await nonceResponse.json();
 
@@ -57,8 +57,8 @@ const Navbar = () => {
             signature: signatureData,
           };
           const verifyResponse = await fetch(
-            // "https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/connect",
-            "http://localhost:4000/api/wallet/connect",
+            "https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/connect",
+            // "http://localhost:4000/api/wallet/connect",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -162,7 +162,7 @@ const Navbar = () => {
                   ref={servicesMenuRef}
                 >
                   <Link
-                    href="/aitranscriber"
+                    href="#"
                     className="block px-4 py-2 text-sm text-white hover:bg-[#42424285] rounded-md"
                   >
                     AI Transcriber

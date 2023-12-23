@@ -74,7 +74,7 @@ const CardsContainer = () => {
       title: "AI Transcriber",
       description:
         "Transforms spoken language into text in real-time, breaking down language barriers for global communication.",
-      buttonName: "23 December",
+      buttonName: "24 December",
       buttonLink: "#",
     },
     {

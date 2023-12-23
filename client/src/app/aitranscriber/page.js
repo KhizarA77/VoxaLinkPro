@@ -12,7 +12,7 @@ import { purple, grey } from '@mui/material/colors';
 import CustomPopUp from "@/components/CustomPopUp";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SettingsOutlined } from "@mui/icons-material";
-import Typed from 'react-typed';
+// import Typed from 'react-typed';
 import styles from '@/styles/downloadBtn.module.css'
 // Create an AbortController instance
 const abortController = new AbortController();
@@ -188,22 +188,22 @@ function Page() {
                                 <div style={{ color: 'white', fontSize: '4rem' }}>
                                     {/* <TypeAnimation sequence={['Transcription Completed', 'Download should start any second now..']} wrapper="h1" speed={50} />
                              */}
-                                    <Typed strings={['Transcription Completed', 'Download Should Start Any Second Now..']}
-                                        typeSpeed={55}
+                                    {/* <Typed strings={['Transcription Completed', 'Download Should Start Any Second Now..']} */}
+                                        {/* typeSpeed={55}
                                         backSpeed={25}
                                         backDelay={1000}
-                                    />
+                                    /> */}
                                 </div>
                                 <a ref={invisibleLinkRef} href={downloadLink} onClick={() => console.log('Download Button Was Clicked')}></a>
                                 <div style={{ color: 'white', fontSize: '1rem' }}>
-                                    <Typed strings={['Having trouble downloading? ... CLICK ME']}
+                                    {/* <Typed strings={['Having trouble downloading? ... CLICK ME']}
                                         typeSpeed={55}
                                         backSpeed={25}
                                         startDelay={7000}
                                         showCursor={false}
                                     >
                                         <a className={styles.downBtn} href={downloadLink} onClick={() => console.log('Download Button Was Clicked')}></a>
-                                    </Typed>
+                                    </Typed> */}
                                 </div>
                             </>
                         }

@@ -62,7 +62,7 @@ const Menu = () => {
               {/* Submenu for Services */}
               {servicesOpen && (
                 <div className="flex flex-col mt-2">
-                  <Link href="/aitranscriber">
+                  <Link href="#">
                     <span
                       className="text-white cursor-pointer font-thin text-[20px]"
                       onClick={() => setOpen(false)}
