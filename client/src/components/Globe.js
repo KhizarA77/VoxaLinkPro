@@ -25,12 +25,9 @@ function GlobeComponent() {
     fetch("ne_110m_admin_0_countries.geojson")
       .then((res) => res.json())
       .then((data) => {
-        console.log("GeoJSON data:", data);
         setCountries(data);
       })
-      .catch((error) => {
-        console.error("Error fetching the GeoJSON:", error);
-      });
+      .catch((error) => {});
   }, []);
 
   return (
