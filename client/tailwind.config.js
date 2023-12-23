@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        'custom': '2rem',
+      },
       fontFamily: {
         monument: ["var(--font-monument)", "sans"],
       },
