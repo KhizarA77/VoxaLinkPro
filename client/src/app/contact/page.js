@@ -120,7 +120,7 @@ const ContactPage = () => {
           </button>
         </form>
         {responseMessage && (
-          <p className="text-center text-red-700">{responseMessage}</p>
+          <p className="text-center text-slate-400 mt-2">{responseMessage}</p>
         )}
       </div>
       <div className="relative">
