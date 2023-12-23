@@ -117,6 +117,9 @@ function Page() {
                 if (data) {
                     setStatus('success')
                     setDownloadLink(data.downloadLink)
+                    setTimeout(() => {
+                        setStatus('completed')
+                    }, 5000)
                 }
                 if (!data || !res.ok) {
                     console.log("Error transcribing the file.")
@@ -124,10 +127,7 @@ function Page() {
                 }
             } catch (err) {
                 console.log(err)
-                // setStatus('idle')
-                setTimeout(() => {
-                    setStatus('completed')
-                }, 5000)
+                setStatus('idle')
             }
         }
     }
