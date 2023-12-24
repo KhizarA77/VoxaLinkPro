@@ -11,7 +11,7 @@ function PdfDownload({ selected, setSelected }) {
 
     return (
         <>
-            <Tooltip title='Selec PDF format' placement="bottom" arrow>
+            <Tooltip title='Select PDF format' placement="bottom" arrow>
                 <Badge invisible={selected === 'pdf' ? false : true} badgeContent={<DoneIcon sx={{ color: lightGreen['A400'] }} />} >
                     <div style={{ cursor: "pointer" }} onClick={() => setSelected('pdf')}>
                         <svg onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className={styles.Layer1} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }} viewBox="0 0 354.72 466.09">

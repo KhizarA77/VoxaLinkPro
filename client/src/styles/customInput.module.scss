@@ -2,6 +2,7 @@
     width: 450px;
     display: flex;
     flex-direction: column;
+    row-gap: 10px;
     z-index: 2;
     @supports (mix-blend-mode: darken) {
       position: relative;

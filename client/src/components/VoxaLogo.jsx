@@ -6,7 +6,6 @@ function VoxaLogo({ visible, setVisible, errMsg }) {
     const lineRef = useRef(null);
     const vRef = useRef(null);
     const [isPaused, setPaused] = useState(false);
-    const [vPaused, setVpaused] = useState(false);
 
     useEffect(() => {
         const handleAnimationIteration = () => {
@@ -51,7 +50,7 @@ function VoxaLogo({ visible, setVisible, errMsg }) {
                 </Grid>
                 <Grid container xs={10} sx={{ padding: '10px', width: '100%' }}>
                     <Grid item xs={11}>
-                        <p className={styles.errText}>ERROR! {errMsg}</p>
+                        <p className={styles.errText}>Error! {errMsg}</p>
                     </Grid>
                     <Grid item xs={1} sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: "-20px" }}>
                         <IconButton onClick={() => setVisible(false)}><CloseIcon sx={{ color: 'white' }} /></IconButton>

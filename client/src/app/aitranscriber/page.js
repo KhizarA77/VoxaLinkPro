@@ -77,6 +77,7 @@ function Page() {
     const [selected, setSelected] = useState('pdf')
     const [errMsg, setErrMsg] = useState('');
     const [email, setEmail] = useState('');
+    const [isEmail, setIsEmail] = useState(true);
     const [visible, setVisible] = useState(false);
     const [isDone, setDone] = useState(false);
     const invisibleLinkRef = useRef(null);
@@ -119,18 +120,21 @@ function Page() {
 
     async function startTranscribe() {
         if (!validateEmail(email)) {
+            setIsEmail(false);
             console.log('Error: Invalid Email')
             return
         } else {
+            setIsEmail(true);
             setDone(false);
             setStatus('processing')
             const formData = { file: file, outputFormat: selected, email: email };
+            console.log('form data: ', formData)
             try {
 
-                const res = await fetch('http://localhost:4000/services/transcription/upload', {
+                const res = await fetch('https://api.voxalinkpro.io/services/transcription/upload', {
                     method: 'POST',
                     credentials: 'include',
-                    body: formData,
+                    body: JSON.stringify(formData),
                     signal: abortController.signal,
                 })
                 const data = await res.json();
@@ -197,7 +201,7 @@ function Page() {
                         {Status === "processing" && <CustomerLoader2 />}
                         {Status === "uploaded" && <div width='800px' style={{ display: "flex", flexDirection: "column", rowGap: "30px", alignItems: "center" }}>
                             <CustomTextField filename={file.name} setStatus={setStatus} abortController={abortController} />
-                            <CustomInput email={email} setEmail={setEmail} />
+                            <CustomInput email={email} setEmail={setEmail} isEmail={isEmail} />
                             <DownloadBox selected={selected} setSelected={setSelected} />
                             {/* <Button onClick={() => {
                                 startTranscribe(email, file, selected)
