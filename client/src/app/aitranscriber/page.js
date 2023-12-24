@@ -13,6 +13,7 @@ import CustomPopUp from "@/components/CustomPopUp";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SettingsOutlined } from "@mui/icons-material";
 import styles from '@/styles/downloadBtn.module.css'
+import CustomGoBtn from "@/components/CustomGoBtn";
 // Create an AbortController instance
 const abortController = new AbortController();
 
@@ -26,9 +27,12 @@ function FileUpload({ onFileSelected, handleFileInputChange }) {
     });
 
     return (
-        <div {...getRootProps()} className="border-2 border-dashed p-5 flex items-center justify-center text-center text-custom text-white maxWidth-[1100px] minHeight-[100px]" style={{ borderColor: 'darkmagenta' }}>
-            <input {...getInputProps()} onChange={handleFileInputChange} />
-            {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some audio/video files here, or click to select files</p>}
+        <div>
+            <div {...getRootProps()} className="border-2 border-dashed p-5 flex items-center justify-center text-center text-custom text-white maxWidth-[1100px] minHeight-[100px]" style={{ borderColor: 'darkmagenta' }}>
+                <input {...getInputProps()} onChange={handleFileInputChange} />
+                {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some audio/video files here, or click to select files</p>}
+            </div>
+            <p style={{ color: 'white', marginTop: "10px", textAlign: 'center', fontSize: '0.8em' }}>Please note that the AI Transcriber feature is currently in its alpha version and subject to ongoing enhancements. Your use of the AI Transcriber indicates acceptance of these terms and our data use policies as outlined in our Privacy Policy.</p>
         </div>
     );
 }
@@ -52,7 +56,7 @@ const btnStyle = {
     color: 'common.white',
     marginTop: '20px',
     zIndex: 0,
-    bgcolor: purple[500],
+    bgcolor: 'transparent',
     '&:hover': {
         bgcolor: grey[600],
     },
@@ -61,7 +65,7 @@ const btnStyle = {
 
 function Page() {
     const [transcribedText, setTranscribedText] = useState("");
-    const acceptedFormat = ["audio/wav", "audio/ogg", "audio/m4a", "audio/mp3", "video/mov", "video/mpeg", "video/mp4", "video/avi", "audio/opus", "audio/aac", "audio/flac", "video/m4v"]
+    const acceptedFormat = ["audio/wav", "audio/ogg", "audio/m4a", "audio/mpeg", "video/mov", "video/mpeg", "video/mp4", "video/avi", "audio/opus", "audio/aac", "audio/flac", "video/m4v"]
     const [Status, setStatus] = useState('idle');
     const [downloadLink, setDownloadLink] = useState('#');
     const [selected, setSelected] = useState('pdf')
@@ -73,10 +77,17 @@ function Page() {
     const onFileSelected = (files) => {
         if (acceptedFormat.includes(files[0].type)) {
             console.log('Accepted Format')
-            setStatus('uploaded')
-            setFile(files[0].name)
-            setTranscribedText('File uploaded');
+            console.log(files[0])
+            if (files[0].size / (1024 * 1024) > 100) {
+                console.log('file exceeds the limit of 100MB.')
+                setStatus('idle')
+            } else {
+                console.log('Accepted Size')
+                setStatus('uploaded')
+                setFile(files[0])
+            }
         } else {
+            console.log(files[0])
             console.log('Rejected Format')
         }
     };
@@ -96,14 +107,14 @@ function Page() {
     }, [Status]);
 
 
-    async function startTranscribe(email, file, format) {
+    async function startTranscribe() {
         if (!validateEmail(email)) {
             console.log('Error: Invalid Email')
             return
         } else {
             setDone(false);
             setStatus('processing')
-            const formData = { file: file, outputFormat: format, email: email };
+            const formData = { file: file, outputFormat: selected, email: email };
             try {
 
                 const res = await fetch('http://localhost:4000/services/transcription/upload', {
@@ -172,13 +183,14 @@ function Page() {
 
                         {Status === "idle" && <FileUpload onFileSelected={onFileSelected} handleFileInputChange={handleFileInputChange} />}
                         {Status === "processing" && <CustomerLoader2 />}
-                        {Status === "uploaded" && <div width='800px' style={{ display: "flex", flexDirection: "column", rowGap: "30px" }}>
-                            <CustomTextField filename={file} setStatus={setStatus} abortController={abortController} />
+                        {Status === "uploaded" && <div width='800px' style={{ display: "flex", flexDirection: "column", rowGap: "30px", alignItems: "center" }}>
+                            <CustomTextField filename={file.name} setStatus={setStatus} abortController={abortController} />
                             <CustomInput email={email} setEmail={setEmail} />
                             <DownloadBox selected={selected} setSelected={setSelected} />
-                            <Button onClick={() => {
+                            {/* <Button onClick={() => {
                                 startTranscribe(email, file, selected)
-                            }}>Go</Button>
+                            }}>Go</Button> */}
+                            <CustomGoBtn startTranscribe={startTranscribe} />
                         </div>
                         }
                         {Status === 'completed' &&

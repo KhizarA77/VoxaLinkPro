@@ -44,10 +44,6 @@
     "react-globe.gl": "^2.27.0",
     "react-indiana-drag-scroll": "^2.2.0",
     "react-infinite-logo-slider": "^1.0.13",
-<<<<<<< HEAD
-    "react-type-animation": "^3.2.0",
-=======
->>>>>>> f15a35578bd4cb494e7849a7e796f45315334efa
     "sass": "^1.69.5",
     "sharp": "^0.33.0",
     "styled-components": "^6.1.1",
