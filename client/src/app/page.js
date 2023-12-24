@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useContext } from "react";
 import Image from "next/image";
-import PreSaleCard from "../components/PreSaleCard copy";
+import PreSaleCard from "../components/PreSaleCard";
 import LogoSlider from "@/components/Slider";
 import Cards from "@/components/Cards";
 import Typewriter from "typewriter-effect";
