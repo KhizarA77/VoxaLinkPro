@@ -6,6 +6,7 @@ import { ConnectKitButton } from "connectkit";
 import { ethers } from "ethers";
 import { parseEther } from "viem";
 import CircularProgress from "@mui/material/CircularProgress";
+import TokenModal from "@/components/TokenModal";
 
 import abi from "../../constants/abi";
 
@@ -90,6 +91,22 @@ export default function PreSaleCard() {
 
   const [transactionStatus, setTransactionStatus] = useState("idle"); // idle, loading, success
 
+  const [isModalShown, setIsModalShown] = useState(false);
+
+  useEffect(() => {
+    // Check if the wallet is connected and the modal has not been shown before
+    if (isConnected && !localStorage.getItem("modalShown")) {
+      setIsModalShown(true);
+      // Set a flag in localStorage
+      localStorage.setItem("modalShown", "true");
+    }
+  }, [isConnected]);
+
+  // Call this function when you want to close the modal
+  const handleCloseModal = () => {
+    setIsModalShown(false);
+  };
+
   useEffect(() => {
     // Fetch ETH price when the component mounts
     const fetchETHPrice = async () => {
@@ -140,9 +157,9 @@ export default function PreSaleCard() {
   };
 
   const balance = useBalance({
-    address: '0x00000000219ab540356cBB839Cbe05303d7705Fa',
-    formatUnits: 'ether',
-  })
+    address: "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+    formatUnits: "ether",
+  });
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -255,11 +272,17 @@ export default function PreSaleCard() {
         </h2>
       </div>
       <div className="text-white text-md md:text-lg mb-4">
-      USD Raised: {balance?.data?.formatted && (parseFloat(balance.data.formatted) * ETHPriceUSD).toLocaleString('en-US', { maximumFractionDigits: 2 })}
+        USD Raised:{" "}
+        {balance?.data?.formatted &&
+          (parseFloat(balance.data.formatted) * ETHPriceUSD).toLocaleString(
+            "en-US",
+            { maximumFractionDigits: 2 }
+          )}
       </div>
       <div className="text-white text-sm md:text-md  mb-4">
         Listing price: $0.1
       </div>
+      <TokenModal isOpen={isModalShown} onClose={handleCloseModal} />
       <div className="text-white text-lg md:text-xl mb-4">
         1 $VXLP = ${currentTokenPriceUSD}
       </div>

@@ -1,7 +1,6 @@
 "use client"
 import { Box, Button, Fab, Grid, Tooltip } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
 import CustomTextField from '@/components/CustomTextField'
 import { useDropzone } from 'react-dropzone';
@@ -13,7 +12,6 @@ import Typewriter from "typewriter-effect";
 import CustomPopUp from "@/components/CustomPopUp";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SettingsOutlined } from "@mui/icons-material";
-import Typed from 'react-typed';
 import styles from '@/styles/downloadBtn.module.css'
 // Create an AbortController instance
 const abortController = new AbortController();
