@@ -9,6 +9,7 @@ import DownloadBox from "@/components/DownloadBox";
 import CustomInput from "@/components/CustomInput";
 import CustomerLoader2 from "@/components/CustomerLoader2";
 import { purple, grey } from '@mui/material/colors';
+import Typewriter from "typewriter-effect";
 import CustomPopUp from "@/components/CustomPopUp";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SettingsOutlined } from "@mui/icons-material";
@@ -117,9 +118,6 @@ function Page() {
                 if (data) {
                     setStatus('success')
                     setDownloadLink(data.downloadLink)
-                    setTimeout(() => {
-                        setStatus('completed')
-                    }, 5000)
                 }
                 if (!data || !res.ok) {
                     console.log("Error transcribing the file.")
@@ -161,12 +159,15 @@ function Page() {
     return (
         <>
             <div className="h-[100dvh] flex items-center justify-center  bg-[#000] z-0 relative overflow-hidden">
-                <Tooltip title="AI Transcriber Home" placement="right" arrow>
+                {Status !== 'idle' && <Tooltip title="AI Transcriber Home" placement="right" arrow>
                     <div style={{ position: 'absolute', left: '25px', top: '100px' }}>
-                        <Fab sx={btnStyle} onClick={() => setStatus('idle')}>
+                        <Fab sx={btnStyle} onClick={() => {
+                            abortController.abort({ reason: 'Back button clicked.' })
+                            setStatus('idle')
+                        }}>
                             <ArrowBackIcon fontSize="large" sx={{ color: 'white' }} /></Fab>
                     </div>
-                </Tooltip>
+                </Tooltip>}
                 {/* <div className="hidden md:block absolute w-[50rem] h-[50rem] opacity-70 bg-[#b63fc9] rounded-full blur-[20rem] top-[-18rem] left-[-30rem]"></div> */}
                 <div div className="w-[95%] flex justify-center" >
                     <Grid xs={12} padding='10px' minHeight={'350px'} width={'1000px'} borderRadius={'20px'} rowGap={4} className={`bg-opacity-25 flex flex-col justify-center items-center backdrop-filter backdrop-blur-lg`} >
@@ -188,23 +189,18 @@ function Page() {
                                 <div style={{ color: 'white', fontSize: '4rem' }}>
                                     {/* <TypeAnimation sequence={['Transcription Completed', 'Download should start any second now..']} wrapper="h1" speed={50} />
                              */}
-                                    <Typed strings={['Transcription Completed', 'Download Should Start Any Second Now..']}
-                                        typeSpeed={55}
-                                        backSpeed={25}
-                                        backDelay={1000}
-                                    />
+                                    <Typewriter onInit={(typewriter) => typewriter.typeString('Transcription Completed').callFunction(() => {
+                                        console.log('String typed')
+                                    }).pauseFor(1000).deleteAll().typeString('Download should start any second now..').start()
+                                    } options={{ delay: 50 }} />
                                 </div>
                                 <a ref={invisibleLinkRef} href={downloadLink} onClick={() => console.log('Download Button Was Clicked')}></a>
-                                <div style={{ color: 'white', fontSize: '1rem' }}>
-                                    <Typed strings={['Having trouble downloading? ... CLICK ME']}
-                                        typeSpeed={55}
-                                        backSpeed={25}
-                                        startDelay={7000}
-                                        showCursor={false}
-                                    >
-                                        <a className={styles.downBtn} href={downloadLink} onClick={() => console.log('Download Button Was Clicked')}></a>
-                                    </Typed>
-                                </div>
+                                <a href={downloadLink} onClick={() => console.log('Download Button Was Clicked')} style={{ color: 'darkmagenta', fontSize: '1rem' }}>
+                                    <Typewriter onInit={(typewriter) => typewriter.pauseFor(8800).typeString('Having trouble downloading? ... CLICK ME').callFunction(() => {
+                                        console.log('String typed')
+                                    }).start()
+                                    } options={{ delay: 50 }} />
+                                </a>
                             </>
                         }
                     </Grid>
