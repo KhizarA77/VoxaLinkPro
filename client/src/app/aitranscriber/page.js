@@ -175,7 +175,7 @@ function Page() {
                         {Status === "idle" && <FileUpload onFileSelected={onFileSelected} handleFileInputChange={handleFileInputChange} />}
                         {Status === "processing" && <CustomerLoader2 />}
                         {Status === "uploaded" && <div width='800px' style={{ display: "flex", flexDirection: "column", rowGap: "30px" }}>
-                            <CustomTextField filename={file} />
+                            <CustomTextField filename={file} setStatus={setStatus} abortController={abortController} />
                             <CustomInput email={email} setEmail={setEmail} />
                             <DownloadBox selected={selected} setSelected={setSelected} />
                             <Button onClick={() => {
