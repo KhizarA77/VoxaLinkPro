@@ -1,5 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap");
 /* First Linear Gradient */
+
+@font-face {
+  font-family: "Kanit";
+  src: url("/VoxaLinkPro/client/public/fonts/Kanit-Regular.ttf") format("ttf");
+  font-weight: normal;
+}
 
 .cls1 {
   fill: #e93492;
