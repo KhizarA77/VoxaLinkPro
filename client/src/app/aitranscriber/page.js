@@ -14,25 +14,31 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { SettingsOutlined } from "@mui/icons-material";
 import styles from '@/styles/downloadBtn.module.css'
 import CustomGoBtn from "@/components/CustomGoBtn";
+import VoxaLogo from "@/components/VoxaLogo";
 // Create an AbortController instance
 const abortController = new AbortController();
 
 // Get the AbortSignal from the controller
 const abortSignal = abortController.signal;
 
-function FileUpload({ onFileSelected, handleFileInputChange }) {
+function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible, errMsg }) {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: 'audio/wav, audio/ogg, audio/m4a, audio/mp3, video/mov, video/mpeg, video/mp4, video/avi, audio/opus, audio/aac, audio/flac, video/m4v',
         onDrop: onFileSelected
     });
 
     return (
-        <div>
-            <div {...getRootProps()} className="border-2 border-dashed p-5 flex items-center justify-center text-center text-custom text-white maxWidth-[1100px] minHeight-[100px]" style={{ borderColor: 'darkmagenta' }}>
-                <input {...getInputProps()} onChange={handleFileInputChange} />
-                {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some audio/video files here, or click to select files</p>}
+        <div className="flex flex-col items-center" style={{ rowGap: '80px', marginTop: '-100px' }}>
+            <div className="Alert">
+                <VoxaLogo visible={visible} setVisible={setVisible} errMsg={errMsg} />
             </div>
-            <p style={{ color: 'white', marginTop: "10px", textAlign: 'center', fontSize: '0.8em' }}>Please note that the AI Transcriber feature is currently in its alpha version and subject to ongoing enhancements. Your use of the AI Transcriber indicates acceptance of these terms and our data use policies as outlined in our Privacy Policy.</p>
+            <div>
+                <div {...getRootProps()} className="border-2 border-dashed p-5 flex items-center justify-center text-center text-custom text-white maxWidth-[1100px] minHeight-[100px]" style={{ borderColor: 'darkmagenta' }}>
+                    <input {...getInputProps()} onChange={handleFileInputChange} />
+                    {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some audio/video files here, or click to select files</p>}
+                </div>
+                <p style={{ color: 'white', marginTop: "10px", textAlign: 'center', fontSize: '0.8em' }}>Please note that the AI Transcriber feature is currently in its alpha version and subject to ongoing enhancements. Your use of the AI Transcriber indicates acceptance of these terms and our data use policies as outlined in our Privacy Policy.</p>
+            </div>
         </div>
     );
 }
@@ -69,17 +75,21 @@ function Page() {
     const [Status, setStatus] = useState('idle');
     const [downloadLink, setDownloadLink] = useState('#');
     const [selected, setSelected] = useState('pdf')
+    const [errMsg, setErrMsg] = useState('');
     const [email, setEmail] = useState('');
+    const [visible, setVisible] = useState(false);
     const [isDone, setDone] = useState(false);
     const invisibleLinkRef = useRef(null);
     const [file, setFile] = useState('')
     const MotionGrid = motion(Grid);
     const onFileSelected = (files) => {
+        setVisible(false);
         if (acceptedFormat.includes(files[0].type)) {
             console.log('Accepted Format')
             console.log(files[0])
             if (files[0].size / (1024 * 1024) > 100) {
-                console.log('file exceeds the limit of 100MB.')
+                setErrMsg('file exceeds the limit of 100MB.');
+                setVisible(true);
                 setStatus('idle')
             } else {
                 console.log('Accepted Size')
@@ -87,8 +97,8 @@ function Page() {
                 setFile(files[0])
             }
         } else {
-            console.log(files[0])
-            console.log('Rejected Format')
+            setErrMsg('Invalid format.')
+            setVisible(true)
         }
     };
 
@@ -134,6 +144,8 @@ function Page() {
                 }
             } catch (err) {
                 console.log(err)
+                setErrMsg('Server side error occurred. Please try again later')
+                setVisible(true);
                 setStatus('idle')
             }
         }
@@ -181,7 +193,7 @@ function Page() {
                 <div div className="w-[95%] flex justify-center" >
                     <Grid xs={12} padding='10px' minHeight={'350px'} width={'1000px'} borderRadius={'20px'} rowGap={4} className={`bg-opacity-25 flex flex-col justify-center items-center backdrop-filter backdrop-blur-lg`} >
 
-                        {Status === "idle" && <FileUpload onFileSelected={onFileSelected} handleFileInputChange={handleFileInputChange} />}
+                        {Status === "idle" && <FileUpload visible={visible} setVisible={setVisible} errMsg={errMsg} onFileSelected={onFileSelected} handleFileInputChange={handleFileInputChange} />}
                         {Status === "processing" && <CustomerLoader2 />}
                         {Status === "uploaded" && <div width='800px' style={{ display: "flex", flexDirection: "column", rowGap: "30px", alignItems: "center" }}>
                             <CustomTextField filename={file.name} setStatus={setStatus} abortController={abortController} />
