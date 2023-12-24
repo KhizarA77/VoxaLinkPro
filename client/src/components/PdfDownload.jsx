@@ -28,7 +28,7 @@ function PdfDownload({ selected, setSelected }) {
                         </svg>
                     </div>
                 </Badge>
-            </Tooltip >
+            </Tooltip>
         </>
     )
 }
