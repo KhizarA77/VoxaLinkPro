@@ -148,25 +148,18 @@ function Page() {
             formData.append('outputFormat', selected)
             formData.append('email', email)
             console.log("Form data: ", formData);
-            try {
-                const res = await fetch('https://api.voxalinkpro.io/services/transcription/upload', {
-                    method: 'POST',
-                    credentials: 'include',
-                    body: formData,
-                    signal: abortController.signal,
-                })
-                const data = await res.json();
-                if (res.status === 200) {
-                    setStatus('success')
-                    setDownloadLink(data.downloadLink)
-                } else {
-                    console.log("Error transcribing the file.")
-                    setStatus('idle')
-                }
-            } catch (err) {
-                console.log(err)
-                setErrMsg('Server side error occurred. Please try again later')
-                setVisible(true);
+            const res = await fetch('https://api.voxalinkpro.io/services/transcription/upload', {
+                method: 'POST',
+                credentials: 'include',
+                body: formData,
+                signal: abortController.signal,
+            })
+            const data = await res.json();
+            if (res.status === 200) {
+                setStatus('success')
+                setDownloadLink(data.downloadLink)
+            } else {
+                console.log("Error transcribing the file.")
                 setStatus('idle')
             }
         }
