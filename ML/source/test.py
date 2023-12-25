@@ -1,43 +1,30 @@
-from transcription import process_audio_file
-import sys
-import time
+import os
+from transcription import (
+    convert_audio_to_wav,
+    transcribe_audio,
+    save_as_txt,
+    save_as_pdf,
+    save_as_json,
+    save_as_csv,
+    process_audio_file,
+    processor,
+    model
+)
 
-sys.path.append('.')
+# Sample audio file path - replace with the path to your test audio file
+sample_audio_file = "C:\\Users\\zuhai\\Desktop\\VoxaLinkPro\\VoxaLinkPro\\Files\\uploads\\demo_360p.mp4"
 
-# # Test 1
+# Output format for testing
+output_format = "pdf"  # Change to "pdf", "json", "csv" as needed
 
-# # Start timing
-# start_time = time.time()
+def main():
+    try:
+        print("Starting test transcription process...")
+        # Process the audio file and get the output file path
+        output_file = process_audio_file(sample_audio_file, output_format)
+        print(f"Transcription process completed. Output file: {output_file}")
+    except Exception as e:
+        print(f"An error occurred during the test: {e}")
 
-# # Test the processing function
-# output_file = process_audio_file("C:\\Users\\zuhai\\Desktop\\VoxaLink\\ML\\voice_datasets\\Sidd\\Sidd (3).m4a", output_format="txt")
-
-
-# # End timing
-# end_time = time.time()
-
-# # Calculate the duration
-# duration = end_time - start_time
-
-# print(f"Transcription saved to: {output_file}")
-# print(f"Time taken for the whole process: {duration:.2f} seconds")
-
-
-
-# Test 2
-
-# Start timing
-start_time = time.time()
-
-# Test the processing function
-output_file = process_audio_file("C:\\Users\\xkens\\Desktop\\VoxaLink\\VoxaLinkPro\\ML\\source\\Recording.mp3", output_format="txt")
-
-# End timing
-end_time = time.time()
-
-# Calculate the duration
-duration = end_time - start_time
-
-print(f"Transcription saved to: {output_file}")
-print(f"Time taken for the whole process: {duration:.2f} seconds")
-#comment
+if __name__ == "__main__":
+    main()

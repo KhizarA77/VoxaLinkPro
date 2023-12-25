@@ -3,12 +3,15 @@ transformers
 pydub
 librosa
 fpdf
-# python-docx # Uncomment this if you need 'docx' 
-flask
-Werkzeug
+python-docx # Uncomment this if you need 'docx' 
+#flask
+#Werkzeug
 numpy
-resemblyzer
-pandas
+#resemblyzer
+#pandas
 requests
+fastapi
+pydantic
+uvicorn
 dotenv #pip install python-dotenv
 #comment
