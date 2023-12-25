@@ -127,14 +127,15 @@ function Page() {
             setIsEmail(true);
             setDone(false);
             setStatus('processing')
-            const formData = { file: file, outputFormat: selected, email: email };
-            console.log('form data: ', formData)
+            const formData = new formData()
+            formData.append('file', file)
+            formData.append('outputFormat', selected)
+            formData.append('email', email)
             try {
-
                 const res = await fetch('https://api.voxalinkpro.io/services/transcription/upload', {
                     method: 'POST',
                     credentials: 'include',
-                    body: JSON.stringify(formData),
+                    body: formData,
                     signal: abortController.signal,
                 })
                 const data = await res.json();
