@@ -43,7 +43,7 @@ const Navbar = () => {
 
       try {
         const nonceResponse = await fetch(
-          `https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/getNonce?walletAddress=${address}`
+          `https://api.voxalinkpro.io/api/wallet/getNonce?walletAddress=${address}`
           // `http://localhost:4000/api/wallet/getNonce?walletAddress=${address}`
         );
         const nonceData = await nonceResponse.json();
@@ -57,7 +57,7 @@ const Navbar = () => {
             signature: signatureData,
           };
           const verifyResponse = await fetch(
-            "https://voxalink-express-backend-664eb2bf22f3.herokuapp.com/api/wallet/connect",
+            "https://api.voxalinkpro.io/api/wallet/connect",
             // "http://localhost:4000/api/wallet/connect",
             {
               method: "POST",
