@@ -1,7 +1,6 @@
 "use client"
 import { Box, Button, Fab, Grid, Tooltip } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from 'framer-motion';
 import CustomTextField from '@/components/CustomTextField'
 import { useDropzone } from 'react-dropzone';
 import DownloadBox from "@/components/DownloadBox";
@@ -9,10 +8,10 @@ import CustomInput from "@/components/CustomInput";
 import CustomerLoader2 from "@/components/CustomerLoader2";
 import { purple, grey } from '@mui/material/colors';
 import Typewriter from "typewriter-effect";
-import CustomPopUp from "@/components/CustomPopUp";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAccount } from "wagmi";
 import CustomGoBtn from "@/components/CustomGoBtn";
+import CustomAlert from "@/components/CustomAlert";
 import VoxaLogo from "@/components/VoxaLogo";
 // Create an AbortController instance
 const abortController = new AbortController();
@@ -30,8 +29,14 @@ function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible
 
     return (
         <div className="flex flex-col items-center" style={{ rowGap: '80px', marginTop: '-100px' }}>
+            <div className="flex">
+                <div style={{ width: '100px' }}>
+                    <VoxaLogo />
+                </div>
+                <h1 style={{ color: 'white', fontSize: '3.5rem' }}>AI Transcriber  </h1>
+            </div>
             <div className="Alert">
-                <VoxaLogo visible={visible} setVisible={setVisible} errMsg={errMsg} />
+                <CustomAlert visible={visible} setVisible={setVisible} errMsg={errMsg} />
             </div>
             <div>
                 {isConnected && <div {...getRootProps()} className="border-2 border-dashed p-5 flex items-center justify-center text-center text-custom text-white maxWidth-[1100px] minHeight-[100px]" style={{ borderColor: 'darkmagenta' }}>
