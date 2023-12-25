@@ -1,13 +1,13 @@
 import os
 import torch
+import subprocess
+import time
 from transformers import WhisperProcessor, WhisperForConditionalGeneration
-from pydub import AudioSegment
 import librosa
 from fpdf import FPDF
 from docx import Document
 import json
 import csv
-import time
 # from dotenv import load_dotenv
 
 # #hello world
@@ -24,43 +24,69 @@ OUTPUT_FOLDER_PATH = "..\\..\\Files\\outputs"
 processor = WhisperProcessor.from_pretrained("openai/whisper-medium")
 model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-medium")
 print(torch.cuda.is_available())
+
+
 # Check if CUDA (GPU support) is available and move the model to GPU if it is
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
 
 def convert_audio_to_wav(audio_file, output_file):
-    print(f"Starting conversion of {audio_file} to WAV format, please wait.")
+    print(f"Starting conversion of {audio_file} to WAV format with loudness normalization, please wait.")
     start_time = time.time()
-    """Converts audio files of different formats to WAV format."""
-    audio = AudioSegment.from_file(audio_file)
-    audio.export(output_file, format="wav")
-    end_time = time.time()
-    print(f"Conversion completed in {end_time - start_time} seconds.")
 
+    command = [
+        'ffmpeg',
+        '-i', audio_file,  # Input file
+        '-filter_complex', 'loudnorm',  # Apply loudness normalization
+        '-ar', '16000',  # Set sample rate to 16000 Hz
+        '-ac', '1',  # Set audio channels to 1 (mono)
+        output_file  # Output file
+    ]
+
+    try:
+        subprocess.run(command, check=True)
+        end_time = time.time()
+        print(f"Conversion and normalization completed in {end_time - start_time} seconds.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error during conversion and normalization: {e}")
+        raise
 
 def transcribe_audio(audio_file, model, processor):
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print("Using device:", device)  # This will print whether CUDA is being used
+    print("Using device:", device)
     model.to(device)
     try:
         print(f"Starting transcription of {audio_file}.")
         start_time = time.time()
 
         audio_data, sr = librosa.load(audio_file, sr=16000, mono=True)
-        audio_length_seconds = librosa.get_duration(y=audio_data, sr=sr)
-        chunk_length_minutes = max(1, audio_length_seconds / 1800)
-        max_seconds = int(chunk_length_minutes * 60)
+        audio_data = librosa.util.normalize(audio_data)
+        total_duration_seconds = librosa.get_duration(y=audio_data, sr=sr)
+        print(f"Total audio duration: {total_duration_seconds} seconds")
+
+        chunk_length_seconds = 60
+        overlap_seconds = 15
+        chunk_length_samples = chunk_length_seconds * sr
+        overlap_samples = overlap_seconds * sr
         transcription_segments = []
 
-        for start in range(0, len(audio_data), max_seconds * sr):
-            end = start + (max_seconds * sr)
+        start = 0
+        while start < len(audio_data):
+            end = min(len(audio_data), start + chunk_length_samples)
             audio_chunk = audio_data[start:end]
+            print(f"Transcribing segment: Start = {start/sr} sec, End = {end/sr} sec")
+
             input_features = processor(audio_chunk, return_tensors="pt", sampling_rate=sr).input_features
             input_features = input_features.to(device)
             with torch.no_grad():
                 predicted_ids = model.generate(input_features)
             chunk_transcription = processor.batch_decode(predicted_ids)
             transcription_segments.append(chunk_transcription[0])
+            start += (chunk_length_samples - overlap_samples)
+
+            # Check if we are on the last segment
+            if end == len(audio_data):
+                break
 
         full_transcription = " ".join(transcription_segments)
 
@@ -71,6 +97,7 @@ def transcribe_audio(audio_file, model, processor):
     except Exception as e:
         print(f"Error during transcription: {e}")
         raise
+
 
 
 def save_as_txt(transcription, output_file):
@@ -131,38 +158,29 @@ def estimate_transcription_time(audio_file):
 def process_audio_file(input_file, output_format="txt"):
     print(f"Processing audio file: {input_file}")
 
-    # Convert the audio file to WAV format
-    temp_wav_file = os.path.join(BASE_DIR, "temp_converted.wav")  # Adjust this path if needed
+    temp_wav_file = os.path.join(BASE_DIR, "temp_converted.wav")
     convert_audio_to_wav(input_file, temp_wav_file)
 
-    # Estimate the transcription time
     estimate_transcription_time(temp_wav_file)
-    
-    # Transcribe the WAV file
     transcription = transcribe_audio(temp_wav_file, model, processor)
-    
-    # Mapping of output formats to their respective saving functions
+
     format_to_function = {
         "txt": save_as_txt,
         "pdf": save_as_pdf,
         "json": save_as_json,
         "csv": save_as_csv
     }
-    
-    # Check if the desired output format is supported
+
     if output_format not in format_to_function:
         raise ValueError(f"Unsupported output format: {output_format}")
 
-    # Ensure OUTPUT_FOLDER_PATH exists
     if not os.path.exists(OUTPUT_FOLDER_PATH):
         os.makedirs(OUTPUT_FOLDER_PATH)
 
-    # Save the transcription in the desired format
     output_file_name = os.path.basename(os.path.splitext(input_file)[0]) + "." + output_format
     output_file = os.path.join(OUTPUT_FOLDER_PATH, output_file_name)
     format_to_function[output_format](transcription, output_file)
-    
-    # Clean up temporary files
+
     os.remove(temp_wav_file)
     
     print(f"Output file saved at {output_file}")
