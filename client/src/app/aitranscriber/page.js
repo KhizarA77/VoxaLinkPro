@@ -23,7 +23,7 @@ const abortSignal = abortController.signal;
 
 function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible, errMsg }) {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        accept: 'audio/wav, audio/ogg, audio/m4a, audio/mp3, video/mov, video/mpeg, video/mp4, video/avi, audio/opus, audio/aac, audio/flac, video/m4v',
+        accept: 'audio/wav, audio/ogg, audio/x-m4a, audio/mpeg, video/mov, video/mpeg, video/mp4, video/avi, audio/opus, audio/aac, audio/flac, video/m4v',
         onDrop: onFileSelected
     });
 
@@ -71,7 +71,7 @@ const btnStyle = {
 
 function Page() {
     const [transcribedText, setTranscribedText] = useState("");
-    const acceptedFormat = ["audio/wav", "audio/ogg", "audio/m4a", "audio/mpeg", "video/mov", "video/mpeg", "video/mp4", "video/avi", "audio/opus", "audio/aac", "audio/flac", "video/m4v"]
+    const acceptedFormat = ["audio/wav", "audio/ogg", "audio/x-m4a", "audio/mpeg", "video/mov", "video/mpeg", "video/mp4", "video/avi", "audio/opus", "audio/aac", "audio/flac", "video/m4v"]
     const [Status, setStatus] = useState('idle');
     const [downloadLink, setDownloadLink] = useState('#');
     const [selected, setSelected] = useState('pdf')
@@ -99,6 +99,7 @@ function Page() {
             }
         } else {
             setErrMsg('Invalid format.')
+            console.log(files[0].type)
             setVisible(true)
         }
     };
