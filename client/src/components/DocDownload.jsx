@@ -11,7 +11,7 @@ function DocDownload({ selected, setSelected }) {
     return (
         <>
             <Tooltip title='Select DOC format' placement="bottom" arrow>
-                <Badge invisible={selected === 'doc' ? false : true} badgeContent={<DoneIcon sx={{ color: lightGreen['A400'] }} />}>
+                <Badge invisible={selected === 'docx' ? false : true} badgeContent={<DoneIcon sx={{ color: lightGreen['A400'] }} />}>
                     <div style={{ cursor: "pointer" }} onClick={() => setSelected('docx')}>
                         <svg onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className={styles.Layer1} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }} viewBox="0 0 354.72 466.09">
                             <defs>

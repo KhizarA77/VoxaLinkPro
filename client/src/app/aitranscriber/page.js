@@ -38,7 +38,7 @@ function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible
                     <input {...getInputProps()} onChange={handleFileInputChange} />
                     {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some audio/video files here, or click to select files</p>}
                 </div>}
-                <p style={{ color: 'white', marginTop: "10px", textAlign: 'center', fontSize: '0.8em' }}>Please note that the AI Transcriber feature is currently in its alpha version and subject to ongoing enhancements. Your use of the AI Transcriber indicates acceptance of these terms and our data use policies as outlined in our Privacy Policy.</p>
+                <p style={{ color: 'white', marginTop: "10px", textAlign: 'center', fontSize: '0.8em' }}>Please note that the AI Transcriber feature is currently in its alpha version and subject to ongoing enhancements. Your use of the AI Transcriber indicates acceptance of these terms and our data use policies as outlined in our Privacy Policy. <br></br><span style={{ color: 'red' }}><strong>NOTE:</strong> Only 1 use allowed per wallet</span> </p>
             </div>
         </div>
     );
