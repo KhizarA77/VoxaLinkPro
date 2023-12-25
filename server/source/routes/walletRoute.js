@@ -1,20 +1,20 @@
-const express = require('express');
+import express from 'express'
 const Router = express.Router();
 
 //Controllers
-const { connectWallet, returnWalletBalance } = require('../controllers/walletController');
+import { getNonce, connectWallet } from '../controllers/walletController.js';
+
 
 //Middlewares
-const { walletInputCheck } = require('../middlewares/walletAddressInput');
-const { authorize } = require('../middlewares/authMiddleware');
+import { walletInputCheck } from '../middlewares/walletAddressInput.js';
+import { verifySignatureMiddleware } from '../middlewares/verifySignatureMiddleware.js';
 
-//Routes
+// @route GET /api/wallet/getNonce
+Router.get('/getNonce', getNonce);
 
 // @route POST /api/wallet/connect
-Router.post('/connect', walletInputCheck, connectWallet);
-
-// @route GET /api/wallet/getBalance
-// Router.get('/getBalance', authorize, returnWalletBalance);
+Router.post('/connect', walletInputCheck, verifySignatureMiddleware, connectWallet);
 
 
-module.exports = Router;
+
+export default Router;
