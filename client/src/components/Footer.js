@@ -79,7 +79,7 @@ export default function Footer() {
           {/* Social icons */}
           <div className="flex justify-center gap-4 mt-4">
             <a
-              href="https://twitter.com/VoxaLinkPro"
+              href="https://twitter.com/VXLPOfficial"
               className="hover:text-white transition-colors"
               target="_blank"
             >

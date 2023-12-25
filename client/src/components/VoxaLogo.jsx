@@ -49,12 +49,12 @@ function VoxaLogo({ visible, setVisible, errMsg }) {
                     </div>
                 </Grid>
                 <Grid container xs={10} sx={{ padding: '10px', width: '100%' }}>
-                    <Grid item xs={11}>
+                    <Grid item xs={12}>
                         <p className={styles.errText}>Error! {errMsg}</p>
                     </Grid>
-                    <Grid item xs={1} sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: "-20px" }}>
+                    {/* <Grid item xs={1} sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: "-20px" }}>
                         <IconButton onClick={() => setVisible(false)}><CloseIcon sx={{ color: 'white' }} /></IconButton>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Grid>
         </div>

@@ -11,8 +11,7 @@ import { purple, grey } from '@mui/material/colors';
 import Typewriter from "typewriter-effect";
 import CustomPopUp from "@/components/CustomPopUp";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { SettingsOutlined } from "@mui/icons-material";
-import styles from '@/styles/downloadBtn.module.css'
+import { useAccount } from "wagmi";
 import CustomGoBtn from "@/components/CustomGoBtn";
 import VoxaLogo from "@/components/VoxaLogo";
 // Create an AbortController instance
@@ -21,11 +20,13 @@ const abortController = new AbortController();
 // Get the AbortSignal from the controller
 const abortSignal = abortController.signal;
 
-function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible, errMsg }) {
+function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible, errMsg, isConnected }) {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: 'audio/wav, audio/ogg, audio/x-m4a, audio/mpeg, video/mov, video/mpeg, video/mp4, video/avi, audio/opus, audio/aac, audio/flac, video/m4v',
         onDrop: onFileSelected
     });
+
+
 
     return (
         <div className="flex flex-col items-center" style={{ rowGap: '80px', marginTop: '-100px' }}>
@@ -33,10 +34,10 @@ function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible
                 <VoxaLogo visible={visible} setVisible={setVisible} errMsg={errMsg} />
             </div>
             <div>
-                <div {...getRootProps()} className="border-2 border-dashed p-5 flex items-center justify-center text-center text-custom text-white maxWidth-[1100px] minHeight-[100px]" style={{ borderColor: 'darkmagenta' }}>
+                {isConnected && <div {...getRootProps()} className="border-2 border-dashed p-5 flex items-center justify-center text-center text-custom text-white maxWidth-[1100px] minHeight-[100px]" style={{ borderColor: 'darkmagenta' }}>
                     <input {...getInputProps()} onChange={handleFileInputChange} />
                     {isDragActive ? <p>Drop the files here ...</p> : <p>Drag 'n' drop some audio/video files here, or click to select files</p>}
-                </div>
+                </div>}
                 <p style={{ color: 'white', marginTop: "10px", textAlign: 'center', fontSize: '0.8em' }}>Please note that the AI Transcriber feature is currently in its alpha version and subject to ongoing enhancements. Your use of the AI Transcriber indicates acceptance of these terms and our data use policies as outlined in our Privacy Policy.</p>
             </div>
         </div>
@@ -70,7 +71,6 @@ const btnStyle = {
 
 
 function Page() {
-    const [transcribedText, setTranscribedText] = useState("");
     const acceptedFormat = ["audio/wav", "audio/ogg", "audio/x-m4a", "audio/mpeg", "video/mov", "video/mpeg", "video/mp4", "video/avi", "audio/opus", "audio/aac", "audio/flac", "video/m4v"]
     const [Status, setStatus] = useState('idle');
     const [downloadLink, setDownloadLink] = useState('#');
@@ -79,10 +79,20 @@ function Page() {
     const [email, setEmail] = useState('');
     const [isEmail, setIsEmail] = useState(true);
     const [visible, setVisible] = useState(false);
+    const { isConnected, address } = useAccount();
     const [isDone, setDone] = useState(false);
     const invisibleLinkRef = useRef(null);
     const [file, setFile] = useState('')
-    const MotionGrid = motion(Grid);
+
+    useEffect(() => {
+        if (!isConnected) {
+            setErrMsg('Please connect a wallet to proceed.')
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
+    }, [isConnected])
+
     const onFileSelected = (files) => {
         setVisible(false);
         if (acceptedFormat.includes(files[0].type)) {
@@ -141,11 +151,10 @@ function Page() {
                     signal: abortController.signal,
                 })
                 const data = await res.json();
-                if (data) {
+                if (res.status === 200) {
                     setStatus('success')
                     setDownloadLink(data.downloadLink)
-                }
-                if (!data || !res.ok) {
+                } else {
                     console.log("Error transcribing the file.")
                     setStatus('idle')
                 }
@@ -170,19 +179,6 @@ function Page() {
         }
     };
 
-    {/* <Box width={'100%'} height={'100px'} sx={{ display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center' }}>
-                                <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    style={{ display: 'none' }}
-                                    onChange={handleFileChange}
-                                    multiple={false}
-                                />
-                                <a title="Upload audio file to be transcribed - Voxalink Pro" href="#" onClick={handleUploadClick} style={{ color: 'white', fontSize: '1.5rem', display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center' }}>
-                                    <CloudUploadIcon sx={{ scale: '5', marginBottom: "40px" }} />
-
-                                    Upload File</a>
-                            </Box> */}
 
     return (
         <>
@@ -196,19 +192,15 @@ function Page() {
                             <ArrowBackIcon fontSize="large" sx={{ color: 'white' }} /></Fab>
                     </div>
                 </Tooltip>}
-                {/* <div className="hidden md:block absolute w-[50rem] h-[50rem] opacity-70 bg-[#b63fc9] rounded-full blur-[20rem] top-[-18rem] left-[-30rem]"></div> */}
                 <div div className="w-[95%] flex justify-center" >
                     <Grid xs={12} padding='10px' minHeight={'350px'} width={'1000px'} borderRadius={'20px'} rowGap={4} className={`bg-opacity-25 flex flex-col justify-center items-center backdrop-filter backdrop-blur-lg`} >
 
-                        {Status === "idle" && <FileUpload visible={visible} setVisible={setVisible} errMsg={errMsg} onFileSelected={onFileSelected} handleFileInputChange={handleFileInputChange} />}
+                        {Status === "idle" && <FileUpload isConnected={isConnected} visible={visible} setVisible={setVisible} errMsg={errMsg} onFileSelected={onFileSelected} handleFileInputChange={handleFileInputChange} />}
                         {Status === "processing" && <CustomerLoader2 />}
                         {Status === "uploaded" && <div width='800px' style={{ display: "flex", flexDirection: "column", rowGap: "30px", alignItems: "center" }}>
                             <CustomTextField filename={file.name} setStatus={setStatus} abortController={abortController} />
                             <CustomInput email={email} setEmail={setEmail} isEmail={isEmail} />
                             <DownloadBox selected={selected} setSelected={setSelected} />
-                            {/* <Button onClick={() => {
-                                startTranscribe(email, file, selected)
-                            }}>Go</Button> */}
                             <CustomGoBtn startTranscribe={startTranscribe} />
                         </div>
                         }
@@ -216,8 +208,6 @@ function Page() {
                             <>
 
                                 <div style={{ color: 'white', fontSize: '4rem' }}>
-                                    {/* <TypeAnimation sequence={['Transcription Completed', 'Download should start any second now..']} wrapper="h1" speed={50} />
-                             */}
                                     <Typewriter onInit={(typewriter) => typewriter.typeString('Transcription Completed').callFunction(() => {
                                         console.log('String typed')
                                     }).pauseFor(1000).deleteAll().typeString('Download should start any second now..').start()
@@ -233,16 +223,6 @@ function Page() {
                             </>
                         }
                     </Grid>
-                    {/* <UploadBox status={Status} transcribedText={transcribedText} fileInputRef={fileInputRef} handleFileChange={handleFileChange} handleUploadClick={handleUploadClick} /> */}
-
-                    {/* <Grid item xs={12} padding='10px' sx={{ borderWidth: '2px', borderColor: "darkmagenta" }} borderRadius={'20px'} height={'550px'} className={`bg-gray-600 bg-opacity-25 text-white backdrop-filter backdrop-blur-lg`}>
-
-                            {Status === 'idle' &&
-                                <h1 title="transcribed text - Voxalink Pro">Upload a file to be transcribed</h1>
-                            }
-                            {Status === 'processing' && <TypeAnimation sequence={[transcribedText]} wrapper="h1" speed={50} />}
-                            {Status === 'completed' && <TypeAnimation sequence={[transcribedText]} wrapper="h1" speed={50} />}
-                        </Grid> */}
                 </div>
             </div>
         </>

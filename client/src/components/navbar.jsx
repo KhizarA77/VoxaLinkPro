@@ -162,7 +162,7 @@ const Navbar = () => {
                   ref={servicesMenuRef}
                 >
                   <Link
-                    href="#"
+                    href="/aitranscriber"
                     className="block px-4 py-2 text-sm text-white hover:bg-[#42424285] rounded-md"
                   >
                     AI Transcriber

@@ -36,7 +36,7 @@ export default function Home() {
   const preSaleCardRef = useContext(ScrollContext);
 
   // Social media links
-  const twitterLink = "https://twitter.com/VoxaLinkPro";
+  const twitterLink = "https://twitter.com/VXLPOfficial";
   const telegramLink = "https://t.me/voxalinkproofficial";
   const discordLink = "https://discord.gg/3zuyweZubh";
   const instagramLink = "https://www.instagram.com/voxalinkpro/";
@@ -250,9 +250,8 @@ export default function Home() {
             <div className="mt-10 w-full relative">
               {isClient && (
                 <div
-                  className={`svg-container ${
-                    windowSize.width < 768 ? "small-svg-container" : ""
-                  }`}
+                  className={`svg-container ${windowSize.width < 768 ? "small-svg-container" : ""
+                    }`}
                   style={{ width: "100%", height: "auto" }}
                 >
                   <Tokenomics />
@@ -277,20 +276,18 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-wrap justify-center gap-4">
               <button
-                className={`bttn flex-shrink-0 px-6 py-2 text-white border border-purple-600 ${
-                  selectedTable === "sales" ? "bg-purple-600" : "bg-transparent"
-                } rounded-full mx-2 transition-all duration-500 ease-in-out relative overflow-hidden shadow-lg`}
+                className={`bttn flex-shrink-0 px-6 py-2 text-white border border-purple-600 ${selectedTable === "sales" ? "bg-purple-600" : "bg-transparent"
+                  } rounded-full mx-2 transition-all duration-500 ease-in-out relative overflow-hidden shadow-lg`}
                 onClick={() => setSelectedTable("sales")}
                 style={{ minWidth: "140px" }}
               >
                 Sales Details
               </button>
               <button
-                className={`bttn flex-shrink-0 px-6 py-2 text-white border border-purple-600 ${
-                  selectedTable === "allocation"
+                className={`bttn flex-shrink-0 px-6 py-2 text-white border border-purple-600 ${selectedTable === "allocation"
                     ? "bg-purple-600"
                     : "bg-transparent"
-                } rounded-full mx-2 transition-all duration-500 ease-in-out relative overflow-hidden shadow-lg`}
+                  } rounded-full mx-2 transition-all duration-500 ease-in-out relative overflow-hidden shadow-lg`}
                 onClick={() => setSelectedTable("allocation")}
                 style={{ minWidth: "140px" }}
               >

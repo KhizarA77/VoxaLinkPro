@@ -12,7 +12,7 @@ function DocDownload({ selected, setSelected }) {
         <>
             <Tooltip title='Select DOC format' placement="bottom" arrow>
                 <Badge invisible={selected === 'doc' ? false : true} badgeContent={<DoneIcon sx={{ color: lightGreen['A400'] }} />}>
-                    <div style={{ cursor: "pointer" }} onClick={() => setSelected('doc')}>
+                    <div style={{ cursor: "pointer" }} onClick={() => setSelected('docx')}>
                         <svg onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className={styles.Layer1} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }} viewBox="0 0 354.72 466.09">
                             <defs>
                                 <linearGradient id="New_Gradient_Swatch1" data-name="New Gradient Swatch" x1="0" y1="233.05" x2="354.72" y2="233.05" gradientUnits="userSpaceOnUse">
