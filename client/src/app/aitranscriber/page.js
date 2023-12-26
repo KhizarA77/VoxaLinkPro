@@ -159,7 +159,7 @@ function Page() {
             console.log('response: ', res);
             console.log('data: ', data);
             if (res.status === 200) {
-                setStatus('success')
+                setStatus('completed')
                 setDownloadLink(data.downloadLink)
             }
             if (res.status === 400) {
