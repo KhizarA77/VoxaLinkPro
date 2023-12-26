@@ -158,8 +158,20 @@ function Page() {
             if (res.status === 200) {
                 setStatus('success')
                 setDownloadLink(data.downloadLink)
-            } else {
-                console.log("Error transcribing the file.")
+            }
+            if (res.status === 400) {
+                setErrMsg(data.message)
+                setVisible(true);
+                setStatus('idle')
+            }
+            if (res.status === 401) {
+                setErrMsg('Please reconnect your wallet')
+                setVisible(true);
+                setStatus('idle')
+            }
+            if (res.status === 500) {
+                setErrMsg('Server side error. Please try again.')
+                setVisible(true);
                 setStatus('idle')
             }
         }
