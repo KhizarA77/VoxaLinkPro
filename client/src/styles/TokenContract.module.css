@@ -1,23 +1,12 @@
 @keyframes neonGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 7px #9D50BB,
-      0 0 6px #9D50BB,
-      0 0 10px #9D50BB,
-      0 0 2px #FF6FA9,
-      0 0 2px #FF6FA9,
-      0 0 5px #FF6FA9,
-      0 0 7px #9D50BB;
+  0%,
+  100% {
+    box-shadow: 0 0 7px #9d50bb, 0 0 6px #9d50bb, 0 0 10px #9d50bb,
+      0 0 2px #ff6fa9, 0 0 2px #ff6fa9, 0 0 5px #ff6fa9, 0 0 7px #9d50bb;
   }
   50% {
-    box-shadow:
-      0 0 12px #ff6ff3,
-      0 0 2px #FF6FA9,
-      0 0 2px #FF6FA9,
-      0 0 8px #9D50BB,
-      0 0 10px #3a08c4,
-      0 0 2px #9D50BB,
-      0 0 2px #FF6FA9;
+    box-shadow: 0 0 12px #ff6ff3, 0 0 2px #ff6fa9, 0 0 2px #ff6fa9,
+      0 0 8px #9d50bb, 0 0 10px #3a08c4, 0 0 2px #9d50bb, 0 0 2px #ff6fa9;
   }
 }
 
@@ -28,15 +17,14 @@
 }
 
 .neonGlow::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  box-shadow: 
-    0 0 1px rgba(131, 8, 86, 0.9), /* Deep pink glow */
-    0 0 1px rgba(129, 17, 233, 0.7); /* Purple glow */
+  box-shadow: 0 0 1px rgba(131, 8, 86, 0.9),
+    /* Deep pink glow */ 0 0 1px rgba(129, 17, 233, 0.7); /* Purple glow */
   pointer-events: none;
   z-index: -1;
   border-radius: 20px; /* Match the border-radius of the parent */
@@ -52,4 +40,3 @@
   max-width: 1200px; /* Maximum width of the card */
   overflow: hidden; /* Ensures that children respect the border-radius */
 }
-

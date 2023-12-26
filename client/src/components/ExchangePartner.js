@@ -14,7 +14,7 @@ const ExchangePartner = () => {
           &nbsp;Exchange Partners
         </h1>
         <div className="mt-16 flex relative lg:flex-row flex-wrap flex-col items-center lg:justify-between mx-10 lg:space-y-0 space-y-16">
-          <Link href="https://p2pb2b.com/" target="_blank">
+          <Link href="https://p2pb2b.com/token-sale/VXLP-624/" target="_blank">
             <div className="bg-[#00000054] transition backdrop-blur-lg w-[15rem] h-[20rem] rounded-xl hover:scale-105">
               <div className="flex items-center justify-center w-full h-2/3">
                 <Image
@@ -39,7 +39,7 @@ const ExchangePartner = () => {
               <div className="flex items-center justify-center w-full h-2/3">
                 <Image
                   src="/logos/kucoin.png"
-                  className="opacity-10 blur-md"
+                  className="opacity-10 blur-md select-none"
                   layout="fixed"
                   width={150}
                   height={100}

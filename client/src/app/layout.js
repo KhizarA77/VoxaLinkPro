@@ -4,10 +4,10 @@ import ServerLayout from "./ServerLayout"; // Importing ServerLayout
 import ClientLayout from "./ClientLayout"; // Importing ClientLayout
 
 export const metadata = {
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL("http://localhost:3000"),
   title: {
     default:
-      "VoxaLink Pro | Igniting Blockchain Infused Innovation Through Speech-AI",
+      "VoxaLink Pro - Igniting Blockchain Infused Innovation Through Speech-AI",
     template: "%s",
   },
   description: {
@@ -17,7 +17,7 @@ export const metadata = {
   },
   openGraph: {
     title:
-      "VoxaLink Pro | Igniting Blockchain Infused Innovation Through Speech-AI",
+      "VoxaLink Pro - Igniting Blockchain Infused Innovation Through Speech-AI",
     description:
       "Navigating Real-World Constraints by Interweaving Blockchain Technology With Speech AI",
     url: "https://voxalinkpro.io",

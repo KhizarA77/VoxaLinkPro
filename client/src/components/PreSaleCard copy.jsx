@@ -11,7 +11,7 @@ import TokenModal from "@/components/TokenModal";
 import abi from "../../constants/abi";
 
 const contractAddress =
-  "0x11f593aD2461Dd9FF3725be8632298EDF9375EF1"; /* Your Contract Address */
+  "0x30f5226edDdd3487EF824F2a814E1573E0C643E4"; /* Your Contract Address */
 
 import { prepareWriteContract, writeContract, readContract } from "@wagmi/core";
 
@@ -20,8 +20,8 @@ import { useAccount, useBalance } from "wagmi";
 export default function PreSaleCard() {
   //Loading bar constants
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0);
-  const phaseStartDates = ["2023-11-18", "2023-12-29", "2024-01-28"]; // Array of phase start dates
-  const phaseEndDates = ["2023-12-28", "2024-01-27", "2024-02-16"]; // Array of phase end dates
+  const phaseStartDates = ["2023-12-20", "2024-02-06", "2024-03-08"]; // Array of phase start dates
+  const phaseEndDates = ["2024-02-05", "2024-03-07", "2024-03-28"]; // Array of phase end dates
   const [progress, setProgress] = useState(0);
 
   const { address, isConnected } = useAccount();
@@ -50,7 +50,7 @@ export default function PreSaleCard() {
           clearInterval(interval);
         }
       }
-    }, 100000);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, [currentPhaseIndex, phaseStartDates, phaseEndDates]);
@@ -157,9 +157,11 @@ export default function PreSaleCard() {
   };
 
   const balance = useBalance({
-    address: "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+    address: "0x1579CbB942a94f439a8b81924d13069799572ac0",
     formatUnits: "ether",
   });
+
+  console.log(balance);
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -268,9 +270,12 @@ export default function PreSaleCard() {
           bgColor="#E03D59"
         />
         <h2 className="absolute inset-0 flex items-center justify-center text-white text-sm lg:text-lg font-bold">
-          Until Next Price $0.06
+          Until Next Price $0.065
         </h2>
       </div>
+      {/* <div className="text-white text-md md:text-lg mb-4">
+        USD Raised: 9520.25
+      </div> */}
       <div className="text-white text-md md:text-lg mb-4">
         USD Raised:{" "}
         {balance?.data?.formatted &&
@@ -280,7 +285,7 @@ export default function PreSaleCard() {
           )}
       </div>
       <div className="text-white text-sm md:text-md  mb-4">
-        Listing price: $0.1
+        Listing price: $0.09
       </div>
       <TokenModal isOpen={isModalShown} onClose={handleCloseModal} />
       <div className="text-white text-lg md:text-xl mb-4">

@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 
 export const metadata = {
   title: "Voxalink Pro Ai voice transcriber",

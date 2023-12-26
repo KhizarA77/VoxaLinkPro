@@ -43,7 +43,10 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/academy" target="_blank">
+                <Link
+                  href="https://www.academy.voxalinkpro.io/"
+                  target="_blank"
+                >
                   Academy
                 </Link>
               </li>

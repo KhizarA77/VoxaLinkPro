@@ -3,6 +3,13 @@ import styles from "../styles/TokenContract.module.css"; // Ensure this points t
 
 export default function TokenContract() {
   const contractDetails = {
+    address: "0xA7b9D58896Fccb5B56C680547D4Db74f3Aa3C6d5",
+    decimal: "18",
+    network: "ETH-Chain",
+    tokenSymbol: "$wVXLP",
+  };
+
+  const contractDetails2 = {
     address: "TBA",
     decimal: "18",
     network: "ETH-Chain",
@@ -34,6 +41,28 @@ export default function TokenContract() {
           <div>
             <h3 className="font-semibold">Token Symbol</h3>
             <p>{contractDetails.tokenSymbol}</p>
+          </div>
+        </div>
+      </div>
+      {/* Divider */}
+      <hr className="border-gray-600 w-full my-4" />
+      <div className={`${styles.tokenCard}`}>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <h3 className="font-semibold">Address</h3>
+            <p className="break-all">{contractDetails2.address}</p>
+          </div>
+          <div>
+            <h3 className="font-semibold">Decimal</h3>
+            <p>{contractDetails2.decimal}</p>
+          </div>
+          <div>
+            <h3 className="font-semibold">Network</h3>
+            <p>{contractDetails2.network}</p>
+          </div>
+          <div>
+            <h3 className="font-semibold">Token Symbol</h3>
+            <p>{contractDetails2.tokenSymbol}</p>
           </div>
         </div>
         <p className="text-xs text-red-500 mt-4">
