@@ -30,11 +30,11 @@ function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible
 
     return (
         <div className="flex flex-col items-center" style={{ rowGap: '80px', marginTop: '-100px' }}>
-            <div className="flex">
-                <div className={styles.voxaLogo} style={{ width: '100px' }}>
+            <div className={`flex ${styles.heading}`}>
+                <div className={styles.voxaLogo}>
                     <VoxaLogo />
                 </div>
-                <h1 style={{ color: 'white', fontSize: '3.5rem' }}>AI Transcriber  </h1>
+                <h1 style={{}}>AI Transcriber  </h1>
             </div>
             <div className="Alert">
                 <CustomAlert visible={visible} setVisible={setVisible} errMsg={errMsg} />
@@ -59,7 +59,6 @@ function validateEmail(email) {
         return true;
         // You can submit the form or perform other actions here
     } else {
-        console.log('Invalid email address. Please enter a valid email.');
         return false;
         // You may also highlight the input field or provide additional feedback
     }
@@ -102,20 +101,16 @@ function Page() {
     const onFileSelected = (files) => {
         setVisible(false);
         if (acceptedFormat.includes(files[0].type)) {
-            console.log('Accepted Format')
-            console.log(files[0])
             if (files[0].size / (1024 * 1024) > 100) {
                 setErrMsg('file exceeds the limit of 100MB.');
                 setVisible(true);
                 setStatus('idle')
             } else {
-                console.log('Accepted Size')
                 setStatus('uploaded')
                 setFile(files[0])
             }
         } else {
             setErrMsg('Invalid format.')
-            console.log(files[0].type)
             setVisible(true)
         }
     };
@@ -128,9 +123,6 @@ function Page() {
             setTimeout(() => {
                 invisibleLinkRef.current.click();
             }, 7500)
-            console.log('btn found')
-        } else {
-            console.log('No btn')
         }
     }, [Status]);
 
@@ -138,7 +130,6 @@ function Page() {
     async function startTranscribe() {
         if (!validateEmail(email)) {
             setIsEmail(false);
-            console.log('Error: Invalid Email')
             return
         } else {
             setIsEmail(true);
@@ -148,7 +139,6 @@ function Page() {
             formData.append('file', file)
             formData.append('outputFormat', selected)
             formData.append('email', email)
-            console.log("Form data: ", formData);
             const res = await fetch('https://api.voxalinkpro.io/services/transcription/upload', {
                 method: 'POST',
                 credentials: 'include',
@@ -156,8 +146,6 @@ function Page() {
                 signal: abortController.signal,
             })
             const data = await res.json();
-            console.log('response: ', res);
-            console.log('data: ', data);
             if (res.status === 200) {
                 setStatus('completed')
                 setDownloadLink(data.downloadLink)
@@ -185,7 +173,6 @@ function Page() {
         if (selectedF.length > 0) {
             try {
                 onFileSelected(selectedF);
-                console.log("selected file using selection: ", selectedF)
             } catch (error) {
                 console.error('File selection error:', error);
             }
@@ -209,7 +196,12 @@ function Page() {
                     <Grid xs={12} padding='10px' minHeight={'350px'} width={'1000px'} borderRadius={'20px'} rowGap={4} className={`bg-opacity-25 flex flex-col justify-center items-center backdrop-filter backdrop-blur-lg`} >
 
                         {Status === "idle" && <FileUpload isConnected={isConnected} visible={visible} setVisible={setVisible} errMsg={errMsg} onFileSelected={onFileSelected} handleFileInputChange={handleFileInputChange} />}
-                        {Status === "processing" && <CustomerLoader2 />}
+                        {Status === "processing" &&
+                            <div className="flex flex-col items-center">
+                                <CustomerLoader2 />
+                                <p style={{ color: 'white', width: "280px", textAlign: 'center', fontSize: "0.75em", marginTop: "30px" }}>This may take a while. File will be emailed to you when done. Feel free to close the page.</p>
+                            </div>
+                        }
                         {Status === "uploaded" && <div width='800px' style={{ display: "flex", flexDirection: "column", rowGap: "30px", alignItems: "center" }}>
                             <CustomTextField filename={file.name} setStatus={setStatus} abortController={abortController} />
                             <CustomInput email={email} setEmail={setEmail} isEmail={isEmail} />
@@ -219,20 +211,17 @@ function Page() {
                         }
                         {Status === 'completed' &&
                             <>
-
-                                <div style={{ color: 'white', fontSize: '4rem' }}>
-                                    <Typewriter onInit={(typewriter) => typewriter.typeString('Transcription Completed').callFunction(() => {
-                                        console.log('String typed')
-                                    }).pauseFor(1000).deleteAll().typeString('Download should start any second now..').start()
-                                    } options={{ delay: 50 }} />
+                                <div className="flex flex-col">
+                                    <div style={{ color: 'white', fontSize: '4rem' }}>
+                                        <Typewriter onInit={(typewriter) => typewriter.typeString('Transcription Completed').pauseFor(1000).deleteAll().typeString('Download should start any second now..').start()
+                                        } options={{ delay: 40 }} />
+                                    </div>
+                                    <a ref={invisibleLinkRef} href={downloadLink}></a>
+                                    <a className={styles.downloadlink} href={downloadLink}>
+                                        <Typewriter onInit={(typewriter) => typewriter.pauseFor(7800).typeString("Didn't start? ... Click Here").start()
+                                        } options={{ delay: 40 }} />
+                                    </a>
                                 </div>
-                                <a ref={invisibleLinkRef} href={downloadLink} onClick={() => console.log('Download Button Was Clicked')}></a>
-                                <a href={downloadLink} onClick={() => console.log('Download Button Was Clicked')} style={{ color: 'darkmagenta', fontSize: '1rem' }}>
-                                    <Typewriter onInit={(typewriter) => typewriter.pauseFor(8800).typeString('Having trouble downloading? ... CLICK ME').callFunction(() => {
-                                        console.log('String typed')
-                                    }).start()
-                                    } options={{ delay: 50 }} />
-                                </a>
                             </>
                         }
                     </Grid>
