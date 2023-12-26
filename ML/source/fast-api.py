@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
-import transcription
+import transcriptionbackup as transcription
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 

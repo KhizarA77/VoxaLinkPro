@@ -8,6 +8,7 @@ from fpdf import FPDF
 from docx import Document
 import json
 import csv
+import re
 # from dotenv import load_dotenv
 
 # #hello world
@@ -30,14 +31,27 @@ print(torch.cuda.is_available())
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
 
+
+def remove_transcription_tags(transcription):
+    # Tags to be removed
+    tags_to_remove = ['<|startoftranscript|>', '<|en|>', '<|transcribe|>', '<|notimestamps|>', '<|endoftext|>']
+    # Remove each tag by replacing it with an empty string
+    for tag in tags_to_remove:
+        transcription = transcription.replace(tag, '')
+    # Remove any additional whitespace that may have been left as a result of tag removal
+    transcription = re.sub(' +', ' ', transcription)  # Replace multiple spaces with a single space
+    transcription = transcription.strip()  # Remove leading and trailing whitespaces
+    return transcription
+
+
 def convert_audio_to_wav(audio_file, output_file):
-    print(f"Starting conversion of {audio_file} to WAV format with loudness normalization, please wait.")
+    print(f"Starting conversion of {audio_file} to WAV format with loudness normalization and dynamic range compression, please wait.")
     start_time = time.time()
 
     command = [
         'ffmpeg',
         '-i', audio_file,  # Input file
-        '-filter_complex', 'loudnorm',  # Apply loudness normalization
+        '-filter_complex', '[0:a]loudnorm,compand',  # Apply loudness normalization and dynamic range compression
         '-ar', '16000',  # Set sample rate to 16000 Hz
         '-ac', '1',  # Set audio channels to 1 (mono)
         output_file  # Output file
@@ -46,15 +60,17 @@ def convert_audio_to_wav(audio_file, output_file):
     try:
         subprocess.run(command, check=True)
         end_time = time.time()
-        print(f"Conversion and normalization completed in {end_time - start_time} seconds.")
+        print(f"Conversion, normalization, and compression completed in {end_time - start_time} seconds.")
     except subprocess.CalledProcessError as e:
-        print(f"Error during conversion and normalization: {e}")
+        print(f"Error during conversion, normalization, and compression: {e}")
         raise
+
 
 def transcribe_audio(audio_file, model, processor):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Using device:", device)
     model.to(device)
+    
     try:
         print(f"Starting transcription of {audio_file}.")
         start_time = time.time()
@@ -74,6 +90,7 @@ def transcribe_audio(audio_file, model, processor):
             audio_chunk = audio_data[start:end]
             input_features = processor(audio_chunk, return_tensors="pt", sampling_rate=sr).input_features
             input_features = input_features.to(device)
+            
             with torch.no_grad():
                 predicted_ids = model.generate(input_features)
             chunk_transcription = processor.batch_decode(predicted_ids)
@@ -81,6 +98,7 @@ def transcribe_audio(audio_file, model, processor):
             start += (chunk_length_samples - overlap_samples)  # Move start forward, minus overlap
 
         full_transcription = " ".join(transcription_segments)
+        full_transcription = remove_transcription_tags(full_transcription)  # Clean the transcription
 
         end_time = time.time()
         print(f"Transcription completed in {end_time - start_time} seconds.")
