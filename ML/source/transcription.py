@@ -9,6 +9,9 @@ from docx import Document
 import json
 import csv
 import re
+import concurrent.futures
+from unidecode import unidecode
+
 # from dotenv import load_dotenv
 
 # #hello world
@@ -20,6 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Combine base directory with relative paths from .env file
 OUTPUT_FOLDER_PATH = "..\\..\\Files\\outputs"
+UPLOAD_FOLDER_PATH = "..\\..\\Files\\uploads"
 
 # Initialize the Whisper model and processor
 processor = WhisperProcessor.from_pretrained("openai/whisper-medium")
@@ -27,8 +31,15 @@ model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-medium")
 print(torch.cuda.is_available())
 
 
-# Check if CUDA (GPU support) is available and move the model to GPU if it is
-device = "cuda" if torch.cuda.is_available() else "cpu"
+# Check if CUDA (GPU support) is available
+if torch.cuda.is_available():
+    device = "cuda"
+else:
+    device = "cpu"
+    # Set the number of threads to the number of available CPU cores
+    torch.set_num_threads(os.cpu_count())
+
+print(f"Using device: {device}")
 model.to(device)
 
 
@@ -58,7 +69,10 @@ def convert_audio_to_wav(audio_file, output_file):
     ]
 
     try:
-        subprocess.run(command, check=True)
+        # Run the command in a thread pool
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(subprocess.run, command, check=True)
+            return_value = future.result()  # This will wait for the command to complete
         end_time = time.time()
         print(f"Conversion, normalization, and compression completed in {end_time - start_time} seconds.")
     except subprocess.CalledProcessError as e:
@@ -67,8 +81,15 @@ def convert_audio_to_wav(audio_file, output_file):
 
 
 def transcribe_audio(audio_file, model, processor):
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    print("Using device:", device)
+    # Check if CUDA (GPU support) is available
+    if torch.cuda.is_available():
+        device = "cuda"
+    else:
+        device = "cpu"
+        # Set the number of threads to the number of available CPU cores
+        torch.set_num_threads(os.cpu_count())
+    
+    print(f"Using device: {device}")
     model.to(device)
     
     try:
@@ -84,18 +105,27 @@ def transcribe_audio(audio_file, model, processor):
         overlap_samples = overlap_seconds * sr
         transcription_segments = []
 
-        start = 0
-        while start < len(audio_data):
-            end = start + chunk_length_samples
-            audio_chunk = audio_data[start:end]
-            input_features = processor(audio_chunk, return_tensors="pt", sampling_rate=sr).input_features
+        if audio_length_seconds <= chunk_length_seconds:
+            # If the audio is shorter than the chunk length, transcribe it in one go
+            input_features = processor(audio_data, return_tensors="pt", sampling_rate=sr).input_features
             input_features = input_features.to(device)
-            
             with torch.no_grad():
                 predicted_ids = model.generate(input_features)
-            chunk_transcription = processor.batch_decode(predicted_ids)
-            transcription_segments.append(chunk_transcription[0])
-            start += (chunk_length_samples - overlap_samples)  # Move start forward, minus overlap
+            transcription_segments.append(processor.batch_decode(predicted_ids)[0])
+        else:
+            # If the audio is longer, process it in chunks
+            start = 0
+            while start < len(audio_data):
+                end = start + chunk_length_samples
+                audio_chunk = audio_data[start:end]
+                input_features = processor(audio_chunk, return_tensors="pt", sampling_rate=sr).input_features
+                input_features = input_features.to(device)
+                
+                with torch.no_grad():
+                    predicted_ids = model.generate(input_features)
+                chunk_transcription = processor.batch_decode(predicted_ids)
+                transcription_segments.append(chunk_transcription[0])
+                start += (chunk_length_samples - overlap_samples)  # Move start forward, minus overlap
 
         full_transcription = " ".join(transcription_segments)
         full_transcription = remove_transcription_tags(full_transcription)  # Clean the transcription
@@ -118,15 +148,15 @@ def save_as_txt(transcription, output_file):
         print(f"Error saving TXT file: {e}")
         raise
 
+
 def save_as_pdf(transcription, output_file):
-    """Saves the transcription to a PDF file."""
     try:
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
 
         # Replace non-Latin-1 characters
-        transcription = transcription.replace('\u2026', '...')
+        transcription = unidecode(transcription)
 
         lines = transcription.split('\n')
         for line in lines:
@@ -137,6 +167,7 @@ def save_as_pdf(transcription, output_file):
     except Exception as e:
         print(f"Error saving PDF file: {e}")
         raise
+
 
 def save_as_word(transcription, output_file):
     """Saves the transcription to a Word (DOCX) file."""
