@@ -13,6 +13,7 @@ import { useAccount } from "wagmi";
 import CustomGoBtn from "@/components/CustomGoBtn";
 import CustomAlert from "@/components/CustomAlert";
 import VoxaLogo from "@/components/VoxaLogo";
+import styles from "./page.module.css";
 // Create an AbortController instance
 const abortController = new AbortController();
 
@@ -30,7 +31,7 @@ function FileUpload({ onFileSelected, handleFileInputChange, visible, setVisible
     return (
         <div className="flex flex-col items-center" style={{ rowGap: '80px', marginTop: '-100px' }}>
             <div className="flex">
-                <div style={{ width: '100px' }}>
+                <div className={styles.voxaLogo} style={{ width: '100px' }}>
                     <VoxaLogo />
                 </div>
                 <h1 style={{ color: 'white', fontSize: '3.5rem' }}>AI Transcriber  </h1>
@@ -155,6 +156,8 @@ function Page() {
                 signal: abortController.signal,
             })
             const data = await res.json();
+            console.log('response: ', res);
+            console.log('data: ', data);
             if (res.status === 200) {
                 setStatus('success')
                 setDownloadLink(data.downloadLink)
