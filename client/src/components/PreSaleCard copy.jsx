@@ -89,6 +89,8 @@ export default function PreSaleCard() {
   const [tokensToReceive, setTokensToReceive] = useState("");
   const [ethToPay, setEthToPay] = useState("");
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [transactionStatus, setTransactionStatus] = useState("idle"); // idle, loading, success
 
   const [isModalShown, setIsModalShown] = useState(false);
@@ -206,6 +208,12 @@ export default function PreSaleCard() {
 
   const handleBuyClick = async () => {
     try {
+      // Check if the USD amount to pay is less than $10
+      if (parseFloat(usdToPay) < 10) {
+        setErrorMessage("Minimum buy is $10");
+        return; // Exit the function early
+      }
+
       setTransactionStatus("loading"); // Set status to loading when the transaction starts
       // Prepare the contract write operation
       const config = await prepareWriteContract({
@@ -238,8 +246,23 @@ export default function PreSaleCard() {
       // Handle any errors that occur during the transaction
       setTransactionStatus("idle");
       console.error("Error during the contract transaction:", error);
+      if (error.message.includes("insufficient funds")) {
+        setErrorMessage("Insufficient funds for the transaction.");
+      } else {
+        console.error("Error during the contract transaction:", error);
+      }
     }
   };
+
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage("");
+      }, 5000); // 5000 milliseconds = 5 seconds
+
+      return () => clearTimeout(timer); // Clear the timeout if the component unmounts
+    }
+  }, [errorMessage]); // Dependency array with errorMessage
 
   console.log("Token Balance:", tokenBalance);
 
@@ -368,6 +391,7 @@ export default function PreSaleCard() {
             </span>{" "}
             $wVXLP
           </p>
+          <p className="mt-2 text-red-500">{errorMessage}</p>
         </>
       ) : (
         <ConnectKitButton /> // Component to connect the wallet
