@@ -340,7 +340,7 @@ export default function PreSaleCard() {
         </button>
       </div>
       <div className="mb-4 text-white">
-        Amount in {selectedOption} You Pay:
+        Amount in {selectedOption} You Pay in ETH:
         <input
           className={`${styles.numberToText} bg-white text-slate-800 pl-2 py-1 md:p-2 rounded w-full mt-2`}
           type="number"
