@@ -308,7 +308,7 @@ export default function PreSaleCard() {
           )}
       </div>
       <div className="text-white text-sm md:text-md  mb-4">
-        Listing price: $0.09
+        Listing price: $0.095
       </div>
       <TokenModal isOpen={isModalShown} onClose={handleCloseModal} />
       <div className="text-white text-lg md:text-xl mb-4">
