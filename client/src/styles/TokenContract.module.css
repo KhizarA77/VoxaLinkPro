@@ -32,7 +32,6 @@
 
 .tokenCard {
   background-color: rgba(41, 43, 47, 0.35); /* Semi-transparent background */
-  backdrop-filter: blur(20px); /* Frosted glass effect */
   border-radius: 20px; /* Rounded edges for the card */
   padding: 20px; /* Padding inside the card */
   color: white; /* Text color */
