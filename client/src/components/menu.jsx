@@ -43,7 +43,7 @@ const Menu = () => {
               </span>
             </Link>
             <Link
-              href="https://docsend.com/view/udmsw2jatjwwzxfa"
+              href="https://docsend.com/view/yq4t74w553fhkqg6"
               className="text-white"
               onClick={() => setOpen(false)}
               target="_blank"

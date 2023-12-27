@@ -20,7 +20,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://docsend.com/view/udmsw2jatjwwzxfa"
+                  href="https://docsend.com/view/yq4t74w553fhkqg6"
                   target="_blank"
                 >
                   Whitepaper

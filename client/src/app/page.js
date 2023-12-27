@@ -100,7 +100,7 @@ export default function Home() {
             <div className="mt-4 flex flex-col items-center lg:items-start">
               {/* Whitepaper button with hover effect */}
               <a
-                href="https://docsend.com/view/udmsw2jatjwwzxfa"
+                href="https://docsend.com/view/yq4t74w553fhkqg6"
                 className="mb-4 inline-block bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300"
                 target="_blank"
                 rel="noopener noreferrer"
