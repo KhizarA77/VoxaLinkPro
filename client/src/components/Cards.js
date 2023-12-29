@@ -69,7 +69,7 @@ const CardsContainer = () => {
   // Sample data for cards
   const cardsData = [
     {
-      image: "/images/transcribe3.png",
+      image: "/images/transcribe.png",
       alt: "Mic bubble - Voxalink_Pro",
       title: "AI Transcriber",
       description:
@@ -78,7 +78,7 @@ const CardsContainer = () => {
       buttonLink: "/aitranscriber",
     },
     {
-      image: "/images/voiceauthentication8.png",
+      image: "/images/voiceauthentication.png",
       alt: "Security box - Voxalink_Pro",
       title: "Voice Authentication",
       description:
@@ -87,7 +87,7 @@ const CardsContainer = () => {
       buttonLink: "#",
     },
     {
-      image: "/images/analyzer4.png",
+      image: "/images/analyzer.png",
       alt: "Search graph - Voxalink_Pro",
       title: "AI Analyzer",
       description:
@@ -104,7 +104,7 @@ const CardsContainer = () => {
       buttonLink: "#",
     },
     {
-      image: "/images/VoiceNFT3.png",
+      image: "/images/VoiceNFT5.png",
       alt: "NFT creation - Voxalink_Pro",
       title: "Voice NFTs",
       description:
@@ -113,7 +113,7 @@ const CardsContainer = () => {
       buttonLink: "#",
     },
     {
-      image: "/images/SmartContracts4.png",
+      image: "/images/SmartContracts.png",
       alt: "Contract writing - Voxalink_Pro",
       title: "Voice Activated Smart Contracts",
       description:
