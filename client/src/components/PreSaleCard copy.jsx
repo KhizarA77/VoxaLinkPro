@@ -211,6 +211,7 @@ export default function PreSaleCard() {
       // Check if the USD amount to pay is less than $10
       if (parseFloat(usdToPay) < 10) {
         setErrorMessage("Minimum buy is $10");
+        gtag_report_conversion();
         return; // Exit the function early
       }
 
@@ -223,7 +224,6 @@ export default function PreSaleCard() {
         value: parseEther(stringEthToPay),
         onSuccess(data) {
           setTransactionStatus("success");
-          gtag_report_conversion();
           console.log("Transaction successful:", data);
           refetchTokenBalance(); // Refetch token balance after successful purchase
         },
