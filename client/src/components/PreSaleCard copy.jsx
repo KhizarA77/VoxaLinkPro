@@ -223,6 +223,7 @@ export default function PreSaleCard() {
         value: parseEther(stringEthToPay),
         onSuccess(data) {
           setTransactionStatus("success");
+          gtag_report_conversion();
           console.log("Transaction successful:", data);
           refetchTokenBalance(); // Refetch token balance after successful purchase
         },
