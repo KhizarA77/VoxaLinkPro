@@ -1,6 +1,6 @@
 "use client";
 import { Box, Button, Fab, Grid, Tooltip } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import CustomTextField from "@/components/CustomTextField";
 import { useDropzone } from "react-dropzone";
 import DownloadBox from "@/components/DownloadBox";
@@ -14,6 +14,8 @@ import CustomGoBtn from "@/components/CustomGoBtn";
 import CustomAlert from "@/components/CustomAlert";
 import VoxaLogo from "@/components/VoxaLogo";
 import styles from "./page.module.css";
+import { signMessage } from "@wagmi/core";
+import { toast } from "sonner";
 // Create an AbortController instance
 const abortController = new AbortController();
 
@@ -140,6 +142,100 @@ function Page() {
   const [isDone, setDone] = useState(false);
   const invisibleLinkRef = useRef(null);
   const [file, setFile] = useState("");
+  const [signed, setSigned] = useState(false);
+  const [wasConnected, setWasConnected] = useState(isConnected);
+
+  const clearCookies = useCallback(() => {
+    const clearCookie = (name) => {
+      document.cookie = `${name}=; Max-Age=-99999999; path=/;`;
+    };
+
+    clearCookie("refreshToken");
+    clearCookie("accessToken");
+    console.log("Cookies cleared");
+  }, []);
+
+  const connectWallet = async () => {
+    const storedAddress = localStorage.getItem("connectedWalletAddress");
+    console.log("Stored wallet address:", storedAddress);
+
+    if (isConnected && address && storedAddress !== address) {
+      console.log("Attempting to connect wallet...");
+
+      try {
+        const nonceResponse = await fetch(
+          `https://api.voxalinkpro.io/api/wallet/getNonce?walletAddress=${address}`
+          // `http://localhost:4000/api/wallet/getNonce?walletAddress=${address}`
+        );
+        const nonceData = await nonceResponse.json();
+        const signatureData = await signMessage({ message: nonceData.nonce });
+        toast.success("Signed. Click again to start transcribing.");
+
+        if (signatureData) {
+          const payload = {
+            walletAddress: address,
+            nonce: nonceData.nonce,
+            signature: signatureData,
+          };
+          const verifyResponse = await fetch(
+            "https://api.voxalinkpro.io/api/wallet/connect",
+            // "http://localhost:4000/api/wallet/connect",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+              credentials: "include",
+            }
+          );
+          const verifyStatus = verifyResponse.status;
+
+          if (verifyStatus === 200) {
+            console.log("Wallet connected and verified successfully.");
+            localStorage.setItem("connectedWalletAddress", address);
+            setSigned(true);
+          } else {
+            console.error("Error: Wallet connection failed.");
+            setSigned(false);
+          }
+        } else {
+          console.error("Signature process was not completed.");
+          setSigned(false);
+        }
+      } catch (error) {
+        console.error("Catch block Error:", error);
+      }
+    } else {
+      console.log("Skipping wallet connection process or already connected.");
+    }
+  };
+
+  useEffect(() => {
+    console.log(
+      "useEffect triggered. isConnected:",
+      isConnected,
+      "address:",
+      address
+    );
+
+    // Clear cookies when wallet is disconnected
+    if (wasConnected && !isConnected) {
+      clearCookies();
+      console.log("Wallet disconnected, cookies cleared.");
+    }
+
+    if (!isConnected) {
+      localStorage.removeItem("connectedWalletAddress");
+      console.log("Wallet disconnected, local storage cleared.");
+    }
+
+    setWasConnected(isConnected);
+  }, [isConnected, address, clearCookies]);
+
+  const handleSign = async () => {
+    try {
+      await connectWallet(); // Connect wallet as part of the sign process
+    } catch (error) {}
+  };
 
   useEffect(() => {
     if (!isConnected) {
@@ -179,46 +275,50 @@ function Page() {
   }, [Status]);
 
   async function startTranscribe() {
-    if (!validateEmail(email)) {
-      setIsEmail(false);
-      return;
-    } else {
-      setIsEmail(true);
-      setDone(false);
-      setStatus("processing");
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("outputFormat", selected);
-      formData.append("email", email);
-      const res = await fetch(
-        "https://api.voxalinkpro.io/services/transcription/upload",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-          signal: abortController.signal,
+    if (signed) {
+      if (!validateEmail(email)) {
+        setIsEmail(false);
+        return;
+      } else {
+        setIsEmail(true);
+        setDone(false);
+        setStatus("processing");
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("outputFormat", selected);
+        formData.append("email", email);
+        const res = await fetch(
+          "https://api.voxalinkpro.io/services/transcription/upload",
+          {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+            signal: abortController.signal,
+          }
+        );
+        const data = await res.json();
+        if (res.status === 200) {
+          setStatus("completed");
+          setDownloadLink(data.downloadLink);
         }
-      );
-      const data = await res.json();
-      if (res.status === 200) {
-        setStatus("completed");
-        setDownloadLink(data.downloadLink);
+        if (res.status === 400) {
+          setErrMsg(data.message);
+          setVisible(true);
+          setStatus("idle");
+        }
+        if (res.status === 401) {
+          setErrMsg("Please reconnect your wallet");
+          setVisible(true);
+          setStatus("idle");
+        }
+        if (res.status === 500) {
+          setErrMsg("Server side error. Please try again.");
+          setVisible(true);
+          setStatus("idle");
+        }
       }
-      if (res.status === 400) {
-        setErrMsg(data.message);
-        setVisible(true);
-        setStatus("idle");
-      }
-      if (res.status === 401) {
-        setErrMsg("Please reconnect your wallet");
-        setVisible(true);
-        setStatus("idle");
-      }
-      if (res.status === 500) {
-        setErrMsg("Server side error. Please try again.");
-        setVisible(true);
-        setStatus("idle");
-      }
+    } else {
+      handleSign();
     }
   }
 
@@ -309,6 +409,21 @@ function Page() {
                   isEmail={isEmail}
                 />
                 <DownloadBox selected={selected} setSelected={setSelected} />
+
+                {/* Sign Button */}
+                {/* <p className="text-white text-center">
+                  In order to use our services, you need to sign using your
+                  wallet first.
+                </p>
+                <button
+                  onClick={handleSign}
+                  className="text-white rounded-lg border p-2 hover:bg-gray-800"
+                  disabled={signed}
+                >
+                  {message}
+                </button> */}
+
+                {/* CustomGoBtn now depends on the 'signed' state */}
                 <CustomGoBtn startTranscribe={startTranscribe} />
               </div>
             )}

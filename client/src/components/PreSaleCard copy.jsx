@@ -7,6 +7,7 @@ import { ethers } from "ethers";
 import { parseEther } from "viem";
 import CircularProgress from "@mui/material/CircularProgress";
 import TokenModal from "@/components/TokenModal";
+import { toast } from "sonner";
 
 import abi from "../../constants/abi";
 
@@ -210,7 +211,8 @@ export default function PreSaleCard() {
     try {
       // Check if the USD amount to pay is less than $10
       if (parseFloat(usdToPay) < 10) {
-        setErrorMessage("Minimum buy is $10");
+        // setErrorMessage("Minimum buy is $10");
+        toast.error("Minimum buy is $10");
         return; // Exit the function early
       }
 
@@ -248,22 +250,23 @@ export default function PreSaleCard() {
       setTransactionStatus("idle");
       console.error("Error during the contract transaction:", error);
       if (error.message.includes("insufficient funds")) {
-        setErrorMessage("Insufficient funds for the transaction.");
+        // setErrorMessage("Insufficient funds for the transaction.");
+        toast.error("Insufficient funds for the transaction.");
       } else {
         console.error("Error during the contract transaction:", error);
       }
     }
   };
 
-  useEffect(() => {
-    if (errorMessage) {
-      const timer = setTimeout(() => {
-        setErrorMessage("");
-      }, 5000); // 5000 milliseconds = 5 seconds
+  // useEffect(() => {
+  //   if (errorMessage) {
+  //     const timer = setTimeout(() => {
+  //       setErrorMessage("");
+  //     }, 5000); // 5000 milliseconds = 5 seconds
 
-      return () => clearTimeout(timer); // Clear the timeout if the component unmounts
-    }
-  }, [errorMessage]); // Dependency array with errorMessage
+  //     return () => clearTimeout(timer); // Clear the timeout if the component unmounts
+  //   }
+  // }, [errorMessage]); // Dependency array with errorMessage
 
   console.log("Token Balance:", tokenBalance);
 
