@@ -206,6 +206,7 @@ function Page() {
       }
     } else {
       console.log("Skipping wallet connection process or already connected.");
+      setSigned(true);
     }
   };
 
