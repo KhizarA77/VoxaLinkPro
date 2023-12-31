@@ -424,6 +424,10 @@ function Page() {
                 </button> */}
 
                 {/* CustomGoBtn now depends on the 'signed' state */}
+                <p className="text-white text-center">
+                  In order to use our services, you need to sign using your
+                  wallet first.
+                </p>
                 <CustomGoBtn startTranscribe={startTranscribe} />
               </div>
             )}
