@@ -31,66 +31,74 @@ const transporter = nodemailer.createTransport({
 export const sendDownloadLinkEmail = async (email, link) => {
   const htmlMessage = `
   <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f8f8;
-        margin: 0;
-        padding: 0;
-      }
-      .container {
-        max-width: 600px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      }
-      .logo {
-        display: block;
-        margin: 0 auto 20px;
-        max-width: 150px; /* Adjust the max-width to control the logo size */
-        height: auto;
-      }
-      h1 {
-        color: #333333;
-        font-size: 24px;
-        margin-bottom: 20px;
-      }
-      p {
-        color: #555555;
-        font-size: 16px;
-        margin-bottom: 30px;
-      }
-      .button {
-        display: inline-block;
-        padding: 12px 24px;
-        font-size: 18px;
-        text-align: center;
-        text-decoration: none;
-        background-color: #4caf50;
-        color: #ffffff;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-      }
-      .button:hover {
-        background-color: #45a049;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <img class="logo" src="https://media.discordapp.net/attachments/1166726577539788890/1179426440442281994/Transparent_PNG_File_-_Copy.png?ex=6579bd78&is=65674878&hm=b71b01d615f4caf058d19f566f4f7ad911de535d697050de01a47a509e86d815&=&format=webp&quality=lossless&width=931&height=573" alt="Logo">
-      <h1>Transcription Download Link</h1>
-      <p>Click the button below to download/view your transcription:</p>
-      <a class="button" href="${link}" target="_blank">Download Transcription</a>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+      color: #555555;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .logo {
+      max-width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #333333;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+    .button {
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    background-image: linear-gradient(to right, purple, pink); /* Gradient color */
+    color: #ffffff;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    border: none; /* Optional: removes border */
+  }
+  .button:hover {
+    background-image: linear-gradient(to right, darkpurple, darkpink); /* Darker gradient on hover */
+  }
+    .footer {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 30px;
+      color: #777777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="logo" src="https://media.discordapp.net/attachments/715915920601776199/1188917583328575568/logoonly.png?ex=659c44c8&is=6589cfc8&hm=591b4b63c4b78878e3d291cabe5e2f9d2f6a94567772024d97e0b9332f16dce1&=&format=webp&quality=lossless&width=845&height=562" alt="VoxaLinkPro Logo">
+    <h1>Transcription Download Link</h1>
+    <p>Click the button below to download/view your transcription:</p>
+    <a class="button" href="${link}" target="_blank">Download Transcription</a>
+    <div class="footer">
+      <p>All rights reserved © 2023 VoxaLinkPro</p>
     </div>
-  </body>
-  </html>`;
+  </div>
+</body>
+</html>`;
 
   try {
     const mailOptions = {

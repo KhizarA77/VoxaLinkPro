@@ -126,6 +126,24 @@ const abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "P2BWallet",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transferToP2BIEO",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -236,25 +254,6 @@ const abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "purchaser",
-				"type": "address"
-			}
-		],
-		"name": "getBasePurchasedAmount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "getCurrentPhase",
 		"outputs": [
@@ -317,49 +316,6 @@ const abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "purchaser",
-				"type": "address"
-			},
-			{
-				"internalType": "uint8",
-				"name": "phase",
-				"type": "uint8"
-			}
-		],
-		"name": "getPurchasedAmountInPhase",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "purchaser",
-				"type": "address"
-			}
-		],
-		"name": "getPurchaseInfo",
-		"outputs": [
-			{
-				"internalType": "uint256[3]",
-				"name": "",
-				"type": "uint256[3]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "getRemainingTokensForPhase",
 		"outputs": [
@@ -396,25 +352,6 @@ const abi = [
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "purchaser",
-				"type": "address"
-			}
-		],
-		"name": "getTotalBalanceEachPhase",
-		"outputs": [
-			{
-				"internalType": "uint256[3]",
-				"name": "",
-				"type": "uint256[3]"
 			}
 		],
 		"stateMutability": "view",
@@ -580,11 +517,6 @@ const abi = [
 				"internalType": "address",
 				"name": "",
 				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"name": "purchases",

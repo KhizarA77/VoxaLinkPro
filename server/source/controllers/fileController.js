@@ -23,35 +23,44 @@ const processFile = async (req, res) => {
 
   try {
     
-
     // Call the Python API
-    const response = await axios.post(`http://localhost:2000/transcribe`, //x.pdf/docx/html
+    const response = await axios.post(`http://localhost:5000/transcribe`, //x.pdf/docx/html
     {
       'fileName': fileName,
       'outputFormat': req.body.outputFormat, //{'pdf', 'docx', 'txt'}
 
     });
-
-    // Insert into database
-    await pool.query(`INSERT INTO TRANSCRIPTIONS (wallet_address, transcribed_file_name, transcription_time) 
-    VALUES ($1, $2, $3)`, [walletAddress, response.data.fileName, new Date()]);
-
+    const resultfileName = fileName.split('.')[0];
+    
     // Generate download link
-    await uploadFile(`${response.data.fileName}.${req.body.outputFormat}`);
-    // const downloadLink = `http://localhost:4000/download?file=${encodeURIComponent(response.data.fileName)}`;
-    const downloadLink = `http://localhost:4000/download?file=${response.data.fileName}&format=${req.body.outputFormat}`;
+    // await uploadFile(`${resultfileName}.${req.body.outputFormat}`);
+
+    const downloadLink = `https://api.voxalinkpro.io/services/transcription/download?file=${resultfileName}&format=${req.body.outputFormat}`;
+    await pool.query('BEGIN');
+    if (req.transactionData) {
+      const { lastUsageTime, usageCount } = req.transactionData;
+      await pool.query(`UPDATE WALLETS SET last_usage_time = $1, usage_count = $2 WHERE wallet_address = $3`, [lastUsageTime, usageCount, walletAddress]);
+    }
+
+    await pool.query(`INSERT INTO TRANSCRIPTIONS (wallet_address, transcribed_file_name, transcription_time) VALUES ($1, $2, $3)`, [walletAddress, resultfileName, new Date()]);
+    await pool.query('COMMIT');
+    logger.info(`Download link: ${downloadLink}`)
     await sendDownloadLinkEmail(req.body.email, downloadLink);
 
-    // Delete the original uploaded file
-    fs.unlinkSync(file.path);
+   
 
     // Send a response with the download link
     res.status(200).json({ 'downloadLink': downloadLink });
 
   } catch (error) {
     logger.error('Error processing file:', error);
+    await pool.query('ROLLBACK');
 
     res.status(500).send('An error occurred during file processing');
+  }
+  finally {
+    // Delete the original uploaded file
+    fs.unlinkSync(file.path);
   }
 };
 
@@ -62,25 +71,8 @@ const downloadFile = async (req, res) => {
   }
 
   try {
-    await downloadFileS3(`${file}.${format}`, res);
-    // Decode and sanitize the input to prevent directory traversal
-    // const safeFileName = path.basename(decodeURIComponent(file));
-
-    // // Construct the full file path
-    // const filePath = path.join(OUTPUT_FILES_DIR, safeFileName);
-
-    // // Check if the file exists and is a file, not a directory
-    // if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) {
-    //   return res.status(404).send('File not found');
-    // }
-
-    // // Send the file
-    // return res.download(filePath, safeFileName, (err) => {
-    //   if (err) {
-    //     logger.error('Error downloading file:', err);
-    //     return res.status(500).send('An error occurred during file processing');
-    //   }
-    // });
+    // await downloadFileS3(`${file}.${format}`, res);
+    return res.status(200).send('Download successful')
   } catch (error) {
     logger.error('Error:', error);
     return res.status(400).send('Invalid request');

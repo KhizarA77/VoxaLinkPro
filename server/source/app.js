@@ -1,38 +1,24 @@
 import express from 'express';
-
 import dotenv from 'dotenv';
 import cors from 'cors';
-
-import path from 'path'; 
-// import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import logger from './logger.js';
-
 import walletRoutes from './routes/walletRoute.js';
 import fileRoutes from './routes/fileRoute.js';
 
 
-dotenv.config();
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
+dotenv.config();
 const app = express();
 
 
-
-
-app.use(cors({
-    origin: '*',
-}));
-
-app.use(express.json());
 app.use(cookieParser());
-// app.use(express.urlencoded({ extended: false }));
-
-// app.use(express.static(path.join(__dirname, 'public')));
-
-
-
+app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    // origin: 'https://www.voxalinkpro.io',
+    credentials: true
+}));
 
 app.use((req, res, next) => {
     const ip = req.ip;
@@ -40,10 +26,6 @@ app.use((req, res, next) => {
     logger.info(`Incoming request from IP: ${ip} and User Agent: ${userAgent}`);
     next();
 });
-
-// Static route for serving downloads
-// app.use('/downloads', express.static(path.join(__dirname, 'path_to_your_download_directory')));
-
 
 app.use('/api/wallet', walletRoutes);
 app.use('/services/transcription', fileRoutes);

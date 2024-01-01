@@ -9,7 +9,7 @@ import { getDefaultConfig } from "connectkit";
 dotenv.config();
 
 const contractAddress = process.env.CONTRACT_ADDRESS;
-const chains = [sepolia];
+const chains = [mainnet];
 
 
 const config = createConfig(
@@ -49,5 +49,3 @@ export const getTokenBalance = async (address) => {
         return null;
     }
 }
-
-getTokenBalance('0x5aB673AccA34F4F05E2766a7d9F362AaF1aBcB6a')

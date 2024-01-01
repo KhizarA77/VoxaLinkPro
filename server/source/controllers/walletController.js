@@ -55,15 +55,13 @@ export const connectWallet = async (req, res) => {
     // logger.info(`JWT Refresh Token Created Successfully ${refreshToken}, wallet address: ${WA}`);
 
     res.cookie("accessToken", accessToken, {
-      httpOnly: true,
       expires: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes
       secure: true,
-      // sameSite: 'none',
     });
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
       expires: new Date(Date.now() + 5 * 60 * 60 * 1000), // 5 hours
       secure: true,
+
     });
     // Send response
     return res.status(200).json({
