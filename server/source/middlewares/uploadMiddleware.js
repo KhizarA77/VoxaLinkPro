@@ -25,7 +25,7 @@ const uploadMiddleware = multer({
   storage: storage,
   limits: { fileSize: 100 * 1024 * 1024 }, // 100MB limit
   fileFilter: (req, file, cb) => {
-    const filetypes = /wav|ogg|m4a|mp3|mov|mpeg|mp4|avi|opus|aac|flac|m4v/;
+    const filetypes = /wav|ogg|m4a|mp3|mov|mpeg|mp4|avi|opus|aac|flac|m4v|mkv|hevc/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
     if (mimetype && extname) {

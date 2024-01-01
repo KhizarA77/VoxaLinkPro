@@ -31,14 +31,19 @@ const processFile = async (req, res) => {
 
     });
     const resultfileName = fileName.split('.')[0];
-    // Insert into database
-    await pool.query(`INSERT INTO TRANSCRIPTIONS (wallet_address, transcribed_file_name, transcription_time) 
-    VALUES ($1, $2, $3)`, [walletAddress, resultfileName, new Date()]);
-
+    
     // Generate download link
     await uploadFile(`${resultfileName}.${req.body.outputFormat}`);
-    // const downloadLink = `http://localhost:4000/services/transcription/download?file=${resultfileName}&format=${req.body.outputFormat}`;
+
     const downloadLink = `https://api.voxalinkpro.io/services/transcription/download?file=${resultfileName}&format=${req.body.outputFormat}`;
+    await pool.query('BEGIN');
+    if (req.transactionData) {
+      const { lastUsageTime, usageCount } = req.transactionData;
+      await pool.query(`UPDATE WALLETS SET last_usage_time = $1, usage_count = $2 WHERE wallet_address = $3`, [lastUsageTime, usageCount, walletAddress]);
+    }
+
+    await pool.query(`INSERT INTO TRANSCRIPTIONS (wallet_address, transcribed_file_name, transcription_time) VALUES ($1, $2, $3)`, [walletAddress, resultfileName, new Date()]);
+    await pool.query('COMMIT');
     logger.info(`Download link: ${downloadLink}`)
     await sendDownloadLinkEmail(req.body.email, downloadLink);
 
@@ -49,6 +54,7 @@ const processFile = async (req, res) => {
 
   } catch (error) {
     logger.error('Error processing file:', error);
+    await pool.query('ROLLBACK');
 
     res.status(500).send('An error occurred during file processing');
   }

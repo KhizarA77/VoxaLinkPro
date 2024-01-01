@@ -13,6 +13,6 @@ export const checkWalletExistence = async (walletAddress) => {
       return true;
     } catch (error) {
       logger.error(`Error in checking if wallet exists in database: ${error}`);
-      return null;
+      throw error;
     }
   };

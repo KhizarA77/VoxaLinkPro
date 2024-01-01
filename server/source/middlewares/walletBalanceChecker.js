@@ -58,11 +58,11 @@ export const walletBalanceChecker = async (req, res, next) => {
     const { walletAddress } = req.Wallet;
     try {
         const result = await pool.query(`SELECT last_usage_time, usage_count FROM WALLETS WHERE wallet_address = $1`, [walletAddress]);
+        
         let lastUsageTime = result.rows[0].last_usage_time.getTime();
         let usageCount = result.rows[0].usage_count;
-        console.log(lastUsageTime);
-        console.log(new Date().getTime());
-        if (new Date().getTime - lastUsageTime > 86400000) {
+        const currTime = new Date().getTime();
+        if (currTime - lastUsageTime > 86400000) {
             lastUsageTime = new Date();
             usageCount = 0;
         }
@@ -75,9 +75,10 @@ export const walletBalanceChecker = async (req, res, next) => {
         }
         usageCount++;
         lastUsageTime = new Date();
-        await pool.query(`UPDATE WALLETS SET last_usage_time = $1, usage_count = $2 WHERE wallet_address = $3`, [lastUsageTime, usageCount, walletAddress]);
+        req.transactionData = { lastUsageTime, usageCount }
+        // await pool.query(`UPDATE WALLETS SET last_usage_time = $1, usage_count = $2 WHERE wallet_address = $3`, [lastUsageTime, usageCount, walletAddress]);
         console.log(`Passed through walletbalance middleware. Wallet ${walletAddress} has free uses left`);
-        next()
+        next();
     }
     catch (err) {
         logger.error(`Error in walletBalanceChecker middleware: ${err}`);

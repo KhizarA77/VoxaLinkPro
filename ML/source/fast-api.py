@@ -25,8 +25,8 @@ app.add_middleware(
 )
 
 # Use raw strings for file paths
-UPLOAD_FOLDER_PATH = "..\\..\\Files\\uploads"
-OUTPUT_FOLDER_PATH = "..\\..\\Files\\outputs"
+UPLOAD_FOLDER_PATH = "../../Files/uploads"
+OUTPUT_FOLDER_PATH = "../../Files/outputs"
 
 @app.post('/estimate-time')
 def estimate_time(request: EstimateTimeRequest):
