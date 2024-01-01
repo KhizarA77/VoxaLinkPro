@@ -1,0 +1,5 @@
+2024-01-02 00:14:31,099 - INFO - Using device: cuda
+2024-01-02 00:14:42,227 - INFO - Transcribe request received: fileName='test.mp3' outputFormat='pdf'
+2024-01-02 00:14:59,853 - INFO - Starting transcription of C:\Users\zuhai\Desktop\VoxaLinkPro\VoxaLinkPro\ML\test_temp_converted.wav
+2024-01-02 00:15:47,203 - INFO - Transcription of C:\Users\zuhai\Desktop\VoxaLinkPro\VoxaLinkPro\ML\test_temp_converted.wav completed in 47.348387241363525 seconds.
+2024-01-02 00:15:47,208 - INFO - Transcription completed successfully for test.mp3

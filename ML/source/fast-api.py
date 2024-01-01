@@ -1,9 +1,14 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
-import transcription
+import transcriptionbackup as transcription
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import logging
+
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, filename='fastapi.log', format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Define data models for request payloads
 class EstimateTimeRequest(BaseModel):
@@ -43,20 +48,27 @@ def estimate_time(request: EstimateTimeRequest):
 
 @app.post('/transcribe')
 def transcribe_audio(request: TranscribeAudioRequest):
+    logging.info(f"Transcribe request received: {request}")
     input_file_path = os.path.join(UPLOAD_FOLDER_PATH, request.fileName)
 
     if os.path.getsize(input_file_path) > 500 * 1024 * 1024:
+        logging.error(f"File too large: {request.fileName}")
         raise HTTPException(status_code=413, detail="File too large")
 
     try:
         output_file_path = transcription.process_audio_file(input_file_path, request.outputFormat)
         if not os.path.exists(output_file_path):
+            logging.error(f"Output file not created: {output_file_path}")
             raise FileNotFoundError(f"Output file not created: {output_file_path}")
+        logging.info(f"Transcription completed successfully for {request.fileName}")
         return {"fileName": output_file_path}
     except FileNotFoundError as fnf_error:
+        logging.error(f"File not found error: {fnf_error}")
         raise HTTPException(status_code=404, detail=str(fnf_error))
     except Exception as e:
+        logging.error(f"General error in transcribe_audio: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get('/test-output')
 def test_output():

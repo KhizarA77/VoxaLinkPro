@@ -11,8 +11,11 @@ import csv
 import re
 import concurrent.futures
 from unidecode import unidecode
+import logging
 
 # from dotenv import load_dotenv
+# Configure logging at the start of your script
+logging.basicConfig(level=logging.INFO, filename='transcription.log', format='%(asctime)s - %(levelname)s - %(message)s')
 
 # #hello world
 # # Load environment variables from .env file
@@ -81,62 +84,64 @@ def convert_audio_to_wav(audio_file, output_file):
 
 
 def transcribe_audio(audio_file, model, processor):
-    # Check if CUDA (GPU support) is available
     if torch.cuda.is_available():
         device = "cuda"
     else:
         device = "cpu"
-        # Set the number of threads to the number of available CPU cores
         torch.set_num_threads(os.cpu_count())
-    
+
     print(f"Using device: {device}")
     model.to(device)
     
     try:
-        print(f"Starting transcription of {audio_file}.")
+        logging.info(f"Starting transcription of {audio_file}")
+        # print(f"Starting transcription of {audio_file}.")
         start_time = time.time()
 
         audio_data, sr = librosa.load(audio_file, sr=16000, mono=True)
         audio_data = librosa.util.normalize(audio_data)
-        audio_length_seconds = librosa.get_duration(y=audio_data, sr=sr)
-        chunk_length_seconds = 30  # Length of each audio chunk in seconds
-        overlap_seconds = 10  # Overlap between chunks in seconds
+        chunk_length_seconds = 30
+        overlap_seconds = 10
         chunk_length_samples = chunk_length_seconds * sr
         overlap_samples = overlap_seconds * sr
+        total_chunks = (len(audio_data) + overlap_samples - 1) // (chunk_length_samples - overlap_samples)
         transcription_segments = []
+        current_chunk = 0
 
-        if audio_length_seconds <= chunk_length_seconds:
-            # If the audio is shorter than the chunk length, transcribe it in one go
-            input_features = processor(audio_data, return_tensors="pt", sampling_rate=sr).input_features
+        start = 0
+        while start < len(audio_data):
+            current_chunk += 1
+            chunk_start_time_seconds = start / sr
+            chunk_start_time_formatted = f"{int(chunk_start_time_seconds // 60):02d}:{int(chunk_start_time_seconds % 60):02d}"
+            percentage_complete = (current_chunk / total_chunks) * 100
+            print(f"Transcribing chunk {current_chunk}/{total_chunks+1} ({percentage_complete:.2f}% complete)...")
+
+            end = min(start + chunk_length_samples, len(audio_data))
+            audio_chunk = audio_data[start:end]
+            input_features = processor(audio_chunk, return_tensors="pt", sampling_rate=sr).input_features
             input_features = input_features.to(device)
+            
             with torch.no_grad():
                 predicted_ids = model.generate(input_features)
-            transcription_segments.append(processor.batch_decode(predicted_ids)[0])
-        else:
-            # If the audio is longer, process it in chunks
-            start = 0
-            while start < len(audio_data):
-                end = start + chunk_length_samples
-                audio_chunk = audio_data[start:end]
-                input_features = processor(audio_chunk, return_tensors="pt", sampling_rate=sr).input_features
-                input_features = input_features.to(device)
-                
-                with torch.no_grad():
-                    predicted_ids = model.generate(input_features)
-                chunk_transcription = processor.batch_decode(predicted_ids)
-                transcription_segments.append(chunk_transcription[0])
-                start += (chunk_length_samples - overlap_samples)  # Move start forward, minus overlap
+            chunk_transcription = processor.batch_decode(predicted_ids)[0]
+            timestamped_transcription = f"[{chunk_start_time_formatted}] {chunk_transcription}"
+            transcription_segments.append(timestamped_transcription)
+
+            start += (chunk_length_samples - overlap_samples)
 
         full_transcription = " ".join(transcription_segments)
-        full_transcription = remove_transcription_tags(full_transcription)  # Clean the transcription
+        full_transcription = remove_transcription_tags(full_transcription)
 
         end_time = time.time()
-        print(f"Transcription completed in {end_time - start_time} seconds.")
+        logging.info(f"Transcription of {audio_file} completed in {end_time - start_time} seconds.")
+        # print(f"Transcription completed in {end_time - start_time} seconds.")
         return full_transcription
 
     except Exception as e:
-        print(f"Error during transcription: {e}")
+        logging.error(f"Error during transcription of {audio_file}: {e}")
+        # print(f"Error during transcription: {e}")
         raise
+
 
 
 def save_as_txt(transcription, output_file):

@@ -7,7 +7,7 @@ url = 'http://localhost:5000/transcribe'
 # # Data for three different files
 # files = ['4.mp3', '5.mp3', '6.mp3']
 # Data for three different files
-files = ['7.mp3']
+files = ['test.mp3']
 
 def send_transcribe_request(file_name):
     data = {
