@@ -159,6 +159,10 @@ function Page() {
     const storedAddress = localStorage.getItem("connectedWalletAddress");
     console.log("Stored wallet address:", storedAddress);
 
+    if (!isConnected) {
+      toast.error("Please connect wallet");
+    }
+
     if (isConnected && address && storedAddress !== address) {
       console.log("Attempting to connect wallet...");
 
@@ -169,7 +173,7 @@ function Page() {
         );
         const nonceData = await nonceResponse.json();
         const signatureData = await signMessage({ message: nonceData.nonce });
-        toast.success("Signed. Click again to start transcribing.");
+        toast.success("Signed. Kicking off the transcription process...");
 
         if (signatureData) {
           const payload = {
@@ -204,11 +208,17 @@ function Page() {
       } catch (error) {
         console.error("Catch block Error:", error);
       }
-    } else {
-      console.log("Skipping wallet connection process or already connected.");
+    } else if (isConnected && address && storedAddress == address) {
+      console.log("Already connected.");
       setSigned(true);
     }
   };
+
+  useEffect(() => {
+    if (signed) {
+      startTranscribe();
+    }
+  }, [signed]);
 
   useEffect(() => {
     console.log(
