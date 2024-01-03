@@ -89,7 +89,7 @@ export default function PreSaleCard() {
   const [ETHPriceUSD, setETHPriceUSD] = useState("");
   const [tokensToReceive, setTokensToReceive] = useState("");
   const [ethToPay, setEthToPay] = useState("");
-
+  const [fundsRaised, setFundsRaised] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const [transactionStatus, setTransactionStatus] = useState("idle"); // idle, loading, success
@@ -159,12 +159,35 @@ export default function PreSaleCard() {
     // Add a new state variable for ETH amount if needed
   };
 
+  useEffect(() => {
+    const fundsRaisedWei = async () => {
+      try {
+        const fundsRaised = await readContract({
+          address: contractAddress,
+          abi: abi,
+          functionName: "getFundsRaisedByPhase",
+        });
+
+        // Convert wei to ether
+        const fundsRaisedEther = ethers.utils.formatEther(fundsRaised[0]);
+
+        // Convert ether to USD
+        const fundsRaisedUSD = Number(fundsRaisedEther * ETHPriceUSD);
+
+        setFundsRaised(fundsRaisedUSD.toFixed(2));
+      } catch (error) {
+        console.error("Error fetching token balance:", error);
+        fundsRaisedWei("Error");
+      }
+    };
+
+    fundsRaisedWei();
+  }, [ETHPriceUSD]); // Add other dependencies as required
+
   const balance = useBalance({
     address: "0x1579CbB942a94f439a8b81924d13069799572ac0",
     formatUnits: "ether",
   });
-
-  console.log(balance);
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -225,7 +248,6 @@ export default function PreSaleCard() {
         value: parseEther(stringEthToPay),
         onSuccess(data) {
           setTransactionStatus("success");
-          gtag_report_conversion();
           console.log("Transaction successful:", data);
           refetchTokenBalance(); // Refetch token balance after successful purchase
         },
@@ -304,12 +326,7 @@ export default function PreSaleCard() {
         USD Raised: 9520.25
       </div> */}
       <div className="text-white text-md md:text-lg mb-4">
-        USD Raised:{" "}
-        {balance?.data?.formatted &&
-          (parseFloat(balance.data.formatted) * ETHPriceUSD).toLocaleString(
-            "en-US",
-            { maximumFractionDigits: 2 }
-          )}
+        USD Raised: {fundsRaised}
       </div>
       <div className="text-white text-sm md:text-md  mb-4">
         Listing price: $0.095
