@@ -19,8 +19,8 @@ export default function ServerLayout({ children }) {
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-NC6XQPY2SS"
-        ></Script>
-        <Script>
+        />
+        <Script id="google-analytics">
           {`  window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
