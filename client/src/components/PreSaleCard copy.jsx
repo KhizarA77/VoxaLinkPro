@@ -90,6 +90,7 @@ export default function PreSaleCard() {
   const [tokensToReceive, setTokensToReceive] = useState("");
   const [ethToPay, setEthToPay] = useState("");
   const [fundsRaised, setFundsRaised] = useState("");
+  const [isFundsRaisedLoading, setIsFundsRaisedLoading] = useState(true); // New state for loading status
   const [errorMessage, setErrorMessage] = useState("");
 
   const [transactionStatus, setTransactionStatus] = useState("idle"); // idle, loading, success
@@ -162,6 +163,8 @@ export default function PreSaleCard() {
   useEffect(() => {
     const fundsRaisedWei = async () => {
       try {
+        setIsFundsRaisedLoading(true); // Set loading to true
+
         const fundsRaised = await readContract({
           address: contractAddress,
           abi: abi,
@@ -172,17 +175,24 @@ export default function PreSaleCard() {
         const fundsRaisedEther = ethers.utils.formatEther(fundsRaised[0]);
 
         // Convert ether to USD
-        const fundsRaisedUSD = Number(fundsRaisedEther * ETHPriceUSD);
+        const ethPrice = parseFloat(ETHPriceUSD); // Convert string to number
+        const fundsRaisedUSD =
+          ethPrice > 0 ? Number(fundsRaisedEther * ethPrice) : 0;
 
         setFundsRaised(fundsRaisedUSD.toFixed(2));
       } catch (error) {
         console.error("Error fetching token balance:", error);
-        fundsRaisedWei("Error");
+        setFundsRaised("Error");
+      } finally {
+        setIsFundsRaisedLoading(false); // Set loading to false in both success and error scenarios
       }
     };
 
-    fundsRaisedWei();
-  }, [ETHPriceUSD]); // Add other dependencies as required
+    // Parse ETHPriceUSD to float and check if it's greater than zero
+    if (ETHPriceUSD && parseFloat(ETHPriceUSD) > 0) {
+      fundsRaisedWei();
+    }
+  }, [ETHPriceUSD]); // Ensure useEffect runs whenever ETHPriceUSD changes
 
   const balance = useBalance({
     address: "0x1579CbB942a94f439a8b81924d13069799572ac0",
@@ -326,7 +336,12 @@ export default function PreSaleCard() {
         USD Raised: 9520.25
       </div> */}
       <div className="text-white text-md md:text-lg mb-4">
-        USD Raised: {fundsRaised}
+        USD Raised:{" "}
+        {isFundsRaisedLoading
+          ? "Loading..."
+          : fundsRaised !== "0.00"
+          ? fundsRaised
+          : "Error"}
       </div>
       <div className="text-white text-sm md:text-md  mb-4">
         Listing price: $0.095
