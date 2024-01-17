@@ -131,6 +131,28 @@ export default function PreSaleCard() {
     // ...
   }, []); // Add dependencies as needed
 
+  useEffect(() => {
+    // fetchUSDRaised when the component mounts
+    const fetchUSDRaised = async () => {
+      try {
+        const response = await fetch("https://api.voxalinkpro.io/api/funds");
+        const data = await response.json();
+        setFundsRaised(data);
+      } catch (error) {
+        console.error("Error fetching USD Raised", error);
+        setFundsRaised("Error");
+        setErrorMessage("Error fetching USD Raised");
+      } finally {
+        setIsFundsRaisedLoading(false);
+      }
+    };
+
+    fetchUSDRaised();
+
+    // Other existing useEffect code
+    // ...
+  }, []); // Add dependencies as needed
+
   const calculateEquivalent = (inputValue, inputType) => {
     let usdAmount, ethAmount, tokenAmount;
 
@@ -160,46 +182,46 @@ export default function PreSaleCard() {
     // Add a new state variable for ETH amount if needed
   };
 
-  useEffect(() => {
-    const fundsRaisedWei = async () => {
-      try {
-        setIsFundsRaisedLoading(true); // Set loading to true
+  // useEffect(() => {
+  //   const fundsRaisedWei = async () => {
+  //     try {
+  //       setIsFundsRaisedLoading(true); // Set loading to true
 
-        const fundsRaised = await readContract({
-          address: contractAddress,
-          abi: abi,
-          functionName: "getFundsRaisedByPhase",
-        });
+  //       const fundsRaised = await readContract({
+  //         address: contractAddress,
+  //         abi: abi,
+  //         functionName: "getFundsRaisedByPhase",
+  //       });
 
-        // Convert wei to ether
-        const fundsRaisedEther = Number(ethers.utils.formatEther(fundsRaised[0])) + 25;
-        
-        console.log(fundsRaisedEther);
+  //       // Convert wei to ether
+  //       const fundsRaisedEther = Number(ethers.utils.formatEther(fundsRaised[0])) + 25;
 
-        // Convert ether to USD
-        const ethPrice = parseFloat(ETHPriceUSD); // Convert string to number
-        const fundsRaisedUSD =
-          ethPrice > 0 ? Number(fundsRaisedEther * ethPrice) : 0;
+  //       console.log(fundsRaisedEther);
 
-        setFundsRaised(fundsRaisedUSD.toFixed(2));
-      } catch (error) {
-        console.error("Error fetching token balance:", error);
-        setFundsRaised("Error");
-      } finally {
-        setIsFundsRaisedLoading(false); // Set loading to false in both success and error scenarios
-      }
-    };
+  //       // Convert ether to USD
+  //       const ethPrice = parseFloat(ETHPriceUSD); // Convert string to number
+  //       const fundsRaisedUSD =
+  //         ethPrice > 0 ? Number(fundsRaisedEther * ethPrice) : 0;
 
-    // Parse ETHPriceUSD to float and check if it's greater than zero
-    if (ETHPriceUSD && parseFloat(ETHPriceUSD) > 0) {
-      fundsRaisedWei();
-    }
-  }, [ETHPriceUSD]); // Ensure useEffect runs whenever ETHPriceUSD changes
+  //       setFundsRaised(fundsRaisedUSD.toFixed(2));
+  //     } catch (error) {
+  //       console.error("Error fetching token balance:", error);
+  //       setFundsRaised("Error");
+  //     } finally {
+  //       setIsFundsRaisedLoading(false); // Set loading to false in both success and error scenarios
+  //     }
+  //   };
 
-  const balance = useBalance({
-    address: "0x1579CbB942a94f439a8b81924d13069799572ac0",
-    formatUnits: "ether",
-  });
+  //   // Parse ETHPriceUSD to float and check if it's greater than zero
+  //   if (ETHPriceUSD && parseFloat(ETHPriceUSD) > 0) {
+  //     fundsRaisedWei();
+  //   }
+  // }, [ETHPriceUSD]); // Ensure useEffect runs whenever ETHPriceUSD changes
+
+  // const balance = useBalance({
+  //   address: "0x1579CbB942a94f439a8b81924d13069799572ac0",
+  //   formatUnits: "ether",
+  // });
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -302,10 +324,6 @@ export default function PreSaleCard() {
   //   }
   // }, [errorMessage]); // Dependency array with errorMessage
 
-  console.log("Token Balance:", tokenBalance);
-
-  console.log(address);
-
   return (
     <div className="bg-[#6664643f] p-8 rounded-xl backdrop-blur-lg shadow-xl w-full lg:w-[35rem] mx-auto mt-10 text-center">
       <h1 className="text-white text-2xl md:text-3xl font-bold mb-4">
@@ -341,9 +359,9 @@ export default function PreSaleCard() {
         USD Raised:{" "}
         {isFundsRaisedLoading
           ? "Loading..."
-          : fundsRaised !== "0.00"
-          ? fundsRaised
-          : "Error"}
+          : fundsRaised === "Error"
+          ? "Error"
+          : fundsRaised}
       </div>
       <div className="text-white text-sm md:text-md  mb-4">
         Listing price: $0.095
