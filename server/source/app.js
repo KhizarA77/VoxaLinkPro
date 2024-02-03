@@ -6,7 +6,7 @@ import logger from './logger.js';
 import walletRoutes from './routes/walletRoute.js';
 import fileRoutes from './routes/fileRoute.js';
 import fundsRoutes from './routes/fundsRaisedRoute.js'
-
+import newsletterRoutes from './routes/newsletterRoute.js';
 
 dotenv.config();
 const app = express();
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 app.use('/api/funds', fundsRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/services/transcription', fileRoutes);
-
+app.use('/api/newsletter', newsletterRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
