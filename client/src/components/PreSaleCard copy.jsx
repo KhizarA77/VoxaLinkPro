@@ -172,7 +172,7 @@ export default function PreSaleCard() {
         });
 
         // Convert wei to ether
-        const fundsRaisedEther = Number(ethers.utils.formatEther(fundsRaised[0])) + 25;
+        const fundsRaisedEther = Number(ethers.utils.formatEther(fundsRaised[0]));
         
         console.log(fundsRaisedEther);
 
